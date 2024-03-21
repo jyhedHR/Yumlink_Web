@@ -1,0 +1,22 @@
+<div class="col-lg-6 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">
+				<img src={{ asset(article.imgArticle) }} alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">
+					{{ article.datePublished ? article.datePublished|date('Y-m-d H:i:s') : '' }}
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">{{ article.titleArticle }}"
+				</a>
+			</h3>
+			<p>{{ article.descriptionArticle }}</p>
+			<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div>

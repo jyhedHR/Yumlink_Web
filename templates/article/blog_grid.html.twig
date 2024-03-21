@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog
+{% endblock %}
+
+{% block body %}
+	<div class="blog-widget-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="row justify-content-center">
+						<div class="row pt-45 justify-content-center">
+							{% for article in articles %}
+								{% include 'article/post_item.html.twig' with {'article': article} %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="side-bar-area pl-20">
+						<div class="search-widget">
+							<form class="search-form">
+								<input type="search" class="form-control" placeholder="Search...">
+								<button type="submit">
+									<i class="bx bx-search"></i>
+								</button>
+							</form>
+						</div>
+						<div class="side-bar-widget">
+							<h3 class="title">Recent Post</h3>
+							<div class="widget-popular-post">
+								{% for article in articlesSide %}
+									{% include 'article/sidePost_item.html.twig' with {'article': article} %}
+								{% endfor %}
+							</div>
+						</div>
+						<div class="side-bar-widget">
+							<h3 class="title-tag">Popular Tags</h3>
+							<ul class="side-bar-widget-tag">
+								<li>
+									<a href="tags.html" target="_blank">Health</a>
+								</li>
+								<li>
+									<a href="tags.html" target="_blank">Food</a>
+								</li>
+								<li>
+									<a href="tags.html" target="_blank">Happy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}
