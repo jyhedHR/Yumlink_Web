@@ -34,13 +34,6 @@ class Commentaire
     private $idArticle;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="idU", type="integer", nullable=false)
-     */
-    private $idu;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="comment_text", type="text", length=65535, nullable=false)
@@ -54,6 +47,12 @@ class Commentaire
      */
     private $commentDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
+     */
+    private ?User $user;
+
     public function getCommentId(): ?int
     {
         return $this->commentId;
@@ -62,18 +61,6 @@ class Commentaire
     public function getIdArticle(): ?int
     {
         return $this->idArticle;
-    }
-
-    public function getIdu(): ?int
-    {
-        return $this->idu;
-    }
-
-    public function setIdu(int $idu): static
-    {
-        $this->idu = $idu;
-
-        return $this;
     }
 
     public function getCommentText(): ?string
@@ -96,6 +83,18 @@ class Commentaire
     public function setCommentDate(\DateTimeInterface $commentDate): static
     {
         $this->commentDate = $commentDate;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

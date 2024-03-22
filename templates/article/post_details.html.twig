@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article
+{% endblock %}
+
+{% block body %}
+	<div class="blog-details-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="blog-details-content">
+						<div class="blog-preview-img">
+							<img src={{ asset(article.imgArticle) }} alt="Blog Images"/>
+						</div>
+						<ul class="tag-list">
+							<li class="active">
+								<a href="author.html">
+									<i class="bx bx-user"></i>
+									{{author}}
+								</a>
+							</li>
+							<li>
+								<i class="bx bx-calendar"></i>
+								{{ article.datePublished ? article.datePublished|date('Y-m-d H:i:s') : '' }}</li>
+							<li>
+								<i class="bx bx-comment-dots"></i>
+								{{commentsCount}}
+								comments</li>
+						</ul>
+						<h2>{{article.titleArticle}}</h2>
+						<p></p>
+
+						<div class="article-share">
+							<div class="row align-items-center">
+								<div class="col-lg-5 col-md-5">
+									<div class="article-tag">
+										<ul>
+											<li class="title">Tags :</li>
+											<li>
+												<a href="blog-details.html" target="_blank">Health,</a>
+											</li>
+											<li>
+												<a href="blog-details.html" target="_blank">Food,</a>
+											</li>
+											<li>
+												<a href="blog-details.html" target="_blank">Nutrition</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="col-lg-7 col-md-7">
+									<div class="article-social-icon">
+										<ul class="social-icon">
+											<li class="title">Share :</li>
+											<li>
+												<a href="https://www.facebook.com/" target="_blank">
+													<i class="bx bxl-facebook"></i>
+												</a>
+											</li>
+											<li>
+												<a href="https://www.instagram.com/" target="_blank">
+													<i class="bx bxl-instagram"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="comments-wrap">
+							<div class="comment-title">
+								<h4>{{commentsCount}}
+									Comments :</h4>
+							</div>
+							<ul class="comment-form">
+								{% for comment in comments %}
+									{% include 'article/comment_item.html.twig' with {'comment': comment} %}
+								{% endfor %}
+							</ul>
+						</div>
+						<div class="comments-form">
+							<div class="contact-form">
+								<h4>Leave A Reply</h4>
+								<form id="contactForm">
+									<div class="row">
+										<div class="col-lg-12 col-md-12">
+											<div class="form-group">
+												<label>Comment*</label>
+												<textarea name="message" class="form-control" id="message" cols="30" rows="8" required data-error="Write your message" placeholder="Your Message.."></textarea>
+											</div>
+										</div>
+										<div class="col-lg-12 col-md-12">
+											<button type="submit" class="default-btn">
+												Post A Comment
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				{# <div class="col-lg-4">
+												            <div class="side-bar-area pl-20">
+												              <div class="search-widget">
+												                <form class="search-form">
+												                  <input
+												                    type="search"
+												                    class="form-control"
+												                    placeholder="Search..."
+												                  />
+												                  <button type="submit">
+												                    <i class="bx bx-search"></i>
+												                  </button>
+												                </form>
+												              </div>
+												              <div class="side-bar-categories">
+												                <ul>
+												                  <li>
+												                    <a href="categories.html" target="_blank">
+												                      Personalized Nutrition
+												                      <i class="bx bx-right-arrow-alt"></i>
+												                    </a>
+												                  </li>
+												                  <li>
+												                    <a href="categories.html" target="_blank">
+												                      Health Nutrition
+												                      <i class="bx bx-right-arrow-alt"></i>
+												                    </a>
+												                  </li>
+												                  <li>
+												                    <a href="categories.html" target="_blank">
+												                      Weight Loss Program
+												                      <i class="bx bx-right-arrow-alt"></i>
+												                    </a>
+												                  </li>
+												                  <li>
+												                    <a href="categories.html" target="_blank">
+												                      Sports Nutritionist
+												                      <i class="bx bx-right-arrow-alt"></i>
+												                    </a>
+												                  </li>
+												                  <li>
+												                    <a href="categories.html" target="_blank">
+												                      Child Nutritionist
+												                      <i class="bx bx-right-arrow-alt"></i>
+												                    </a>
+												                  </li>
+												                  <li>
+												                    <a href="categories.html" target="_blank">
+												                      Workout Program
+												                      <i class="bx bx-right-arrow-alt"></i>
+												                    </a>
+												                  </li>
+												                </ul>
+												              </div>
+												              <div class="side-bar-widget">
+												                <h3 class="title">Recent Post</h3>
+												                <div class="widget-popular-post">
+												                  <article class="item">
+												                    <a href="blog-details.html" class="thumb">
+												                      <span class="full-image cover bg1" role="img"></span>
+												                    </a>
+												                    <div class="info">
+												                      <h4 class="title-text">
+												                        <a href="blog-details.html">
+												                          5 Tips For Making Delicious Food For all
+												                        </a>
+												                      </h4>
+												                      <a
+												                        href="blog-details.html"
+												                        class="read-btn"
+												                        target="_blank"
+												                        >Read More</a
+												                      >
+												                    </div>
+												                  </article>
+												                </div>
+												              </div>
+												              <div class="side-bar-widget">
+												                <h3 class="title-tag">Popular Tags</h3>
+												                <ul class="side-bar-widget-tag">
+												                  <li><a href="tags.html" target="_blank">Health</a></li>
+												                </ul>
+												              </div>
+												            </div>
+												          </div>#}
+			</div>
+		</div>
+	</div>
+{% endblock %}

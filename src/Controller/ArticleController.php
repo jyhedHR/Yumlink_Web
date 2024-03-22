@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/articles')]
 class ArticleController extends AbstractController
 {
+    #[Route('/listAdmin', name: 'article_test_list', methods: ['GET'])]
+    public function listArticlesAdmin(ArticleRepository $articleRepository): Response
+    {
+        return $this->render('article/index.html.twig', [
+            'articles' => $articleRepository->findAll(),
+        ]);
+    }
     #[Route('/', name: 'app_article_blog', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
     {
@@ -45,10 +53,15 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    public function show(Article $article, ArticleRepository $articleRepository, CommentaireRepository $commentaireRepository): Response
     {
-        return $this->render('article/show.html.twig', [
+        $comments = $commentaireRepository->fetchComments($article->getIdArticle());
+        $author = $article->getUser()->getNom();
+        return $this->render('article/post_details.html.twig', [
             'article' => $article,
+            'author' => $author,
+            'comments' => $comments,
+            'commentsCount' => count($comments),
         ]);
     }
 
@@ -63,7 +76,7 @@ class ArticleController extends AbstractController
             $user = $entityManager->getReference(User::class, $userId);
             $article->setUser($user);
             $tagsArray = [
-                'tags' =>['healthy', 'diet']
+                'tags' => ['healthy', 'diet']
             ];
             $article->setTags($tagsArray);
             $entityManager->flush();
@@ -79,7 +92,7 @@ class ArticleController extends AbstractController
     #[Route('/{idArticle}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getIdArticle(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getIdArticle(), $request->request->get('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
         }
