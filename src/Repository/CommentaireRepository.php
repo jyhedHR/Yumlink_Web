@@ -20,7 +20,14 @@ class CommentaireRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commentaire::class);
     }
-
+    public function fetchComments(int $idArticle): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.idArticle = :idArticle')
+            ->setParameter('idArticle', $idArticle)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Commentaire[] Returns an array of Commentaire objects
 //     */

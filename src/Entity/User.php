@@ -76,8 +76,7 @@ class User
     /**
     
      * @ORM\OneToOne(targetEntity="Adresse")
-    * JoinColumn(name="idA", referencedColumnName="idA")
-     * })
+     * @ORM\JoinColumn(name="idA", referencedColumnName="idA")
      */
     private ?Adresse $adresse;
 
@@ -173,13 +172,6 @@ class User
     public function getAdresse(): ?Adresse
     {
         return $this->adresse;
-    }
-
-    public function setIda(?Adresse $adresse): static
-    {
-        $this->adresse = $adresse;
-
-        return $this;
     }
 
     public function setAdresse(?Adresse $adresse): static
