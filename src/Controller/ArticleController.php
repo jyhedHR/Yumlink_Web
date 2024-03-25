@@ -4,14 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\User;
+use App\Entity\Tag;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use DateTime;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/articles')]
 class ArticleController extends AbstractController
@@ -36,20 +41,70 @@ class ArticleController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class);
         $form->handleRequest($request);
-
+        //temporary
+        $userId = 39;
+        $user = $entityManager->getReference(User::class, $userId);
+        //
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('img_article')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'An error occurred while uploading the image.');
+                    return $this->redirectToRoute('app_produit_new');
+                }
+                $article->setImgArticle('assets/images/' . $newFilename);
+            }
+            $formData = $form->getData();
+            $article->setTitleArticle($formData['title_article']);
+            $article->setDescriptionArticle($formData['description_article']);
+            $tagsArray = json_decode($formData['tags'], true);
+            $this->handleTags($tagsArray, $entityManager);
+            $article->setTags(json_decode($formData['tags'], true));
+            $article->setDatePublished(new DateTime());
+            //temporary
+            $article->setUser($user);
+            //
+            $article->setNbLikesArticle(0);
+
             $entityManager->persist($article);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_article_blog', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('article/new.html.twig', [
+        return $this->renderForm('article/create_post.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);
+    }
+
+    public function handleTags(array $tagsArray, EntityManagerInterface $entityManager)
+    {
+        $existingTags = $entityManager->getRepository(Tag::class)->findBy(['tagValue' => $tagsArray['tags']]);
+        $existingTagsMap = [];
+        foreach ($existingTags as $existingTag) {
+            $existingTagsMap[$existingTag->getTagValue()] = $existingTag;
+        }
+        foreach ($tagsArray['tags'] as $tagValue) {
+            if (isset($existingTagsMap[$tagValue])) {
+                $existingTag = $existingTagsMap[$tagValue];
+                $existingTag->setTagNbUsage($existingTag->getTagNbUsage() + 1);
+            } else {
+                $newTag = new Tag();
+                $newTag->setTagValue($tagValue);
+                $newTag->setTagNbUsage(1);
+                $entityManager->persist($newTag);
+            }
+        }
     }
 
     #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET'])]
@@ -72,7 +127,9 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userId = 9;
+
+            //temporary
+            $userId = 39;
             $user = $entityManager->getReference(User::class, $userId);
             $article->setUser($user);
             $tagsArray = [

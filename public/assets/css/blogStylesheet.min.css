@@ -1,0 +1,42 @@
+.suggested-tag {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.suggested-tag:hover {
+    background-color: #a9b7ff;
+}
+
+.suggested-tag:focus {
+    outline: none;
+}
+
+.suggested-tag:active {
+    background-color: #d9d9d9;
+}
+
+.selected-tag {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #aedeac;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.selected-tag:hover {
+    background-color: #73de70;
+}
+
+
+.selected-tag:focus {
+    outline: none;
+}
