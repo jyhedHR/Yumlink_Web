@@ -4,6 +4,11 @@ namespace App\Form;
 
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,18 +17,33 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titleArticle')
-            ->add('imgArticle')
-            ->add('descriptionArticle')
-            ->add('nbLikesArticle')
-            ->add('datePublished')
-        ;
+            ->add('title_article', TextType::class, [
+                'label' => 'Title*',
+                'required' => true,
+            ])
+            ->add('img_article', FileType::class, [
+                'label' => 'Upload Image*',
+                'required' => true,
+                'mapped' => false,
+                'attr' => [
+                    'accept' => 'image/*',],
+            ])
+            ->add('description_article', TextareaType::class, [
+                'label' => 'Content*',
+                'required' => true,
+            ])
+            ->add('tags', HiddenType::class, [
+                'data' => '',
+            ])
+            ->add('submit', SubmitType::class,[
+                'label' => 'Submit Now',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Article::class,
+            'data_class' => null,
         ]);
     }
 }
