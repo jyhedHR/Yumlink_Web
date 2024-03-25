@@ -26,10 +26,10 @@ class RecettesIngredient
      * @ORM\JoinColumn(name="ingredient_id", referencedColumnName="id_ing")
      */
     private $ingredient;
-    /**
+    /*
      * @ORM\Column(type="integer")
-     */
-    private $quantite;
+   
+    private $quantite;  */
 
     public function getRecette(): ?Recettes
     {
@@ -51,7 +51,7 @@ class RecettesIngredient
         $this->ingredient = $ingredient;
     }
 
-    public function getQuantite(): ?int
+   /* public function getQuantite(): ?int
     {
         return $this->quantite;
     }
@@ -59,6 +59,6 @@ class RecettesIngredient
     public function setQuantite(int $quantite): void
     {
         $this->quantite = $quantite;
-    }
+    }*/
 
 }

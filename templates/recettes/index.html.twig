@@ -11,7 +11,6 @@
                 <th>IdR</th>
                 <th>Nom</th>
                 <th>Chef</th>
-                <th>Ingredients</th>
                 <th>Categorie</th>
                 <th>Description</th>
                 <th>Imgsrc</th>
@@ -26,16 +25,6 @@
                 <td>{{ recette.idR }}</td>
                 <td>{{ recette.nom }}</td>
                 <td>{{ recette.chef }}</td>
-               <td>
-    {% if recette.ingredients is not empty %}
-        {% for ingredient in recette.ingredients %}
-            {{ ingredient.nom }}
-            {% if not loop.last %}, {% endif %}
-        {% endfor %}
-    {% else %}
-        No ingredients
-    {% endif %}
-</td>
                 <td>{{ recette.categorie }}</td>
                 <td>{{ recette.description }}</td>
                 <td>{{ recette.imgsrc }}</td>
