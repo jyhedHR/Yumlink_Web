@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recettes index{% endblock %}
+
+{% block body %}
+    <h1>Recettes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdR</th>
+                <th>Nom</th>
+                <th>Chef</th>
+                <th>Ingredients</th>
+                <th>Categorie</th>
+                <th>Description</th>
+                <th>Imgsrc</th>
+                <th>Calorie</th>
+                <th>Protein</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}
+            <tr>
+                <td>{{ recette.idR }}</td>
+                <td>{{ recette.nom }}</td>
+                <td>{{ recette.chef }}</td>
+               <td>
+    {% if recette.ingredients is not empty %}
+        {% for ingredient in recette.ingredients %}
+            {{ ingredient.nom }}
+            {% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% else %}
+        No ingredients
+    {% endif %}
+</td>
+                <td>{{ recette.categorie }}</td>
+                <td>{{ recette.description }}</td>
+                <td>{{ recette.imgsrc }}</td>
+                <td>{{ recette.calorie }}</td>
+                <td>{{ recette.protein }}</td>
+                <td>
+                    <a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">show</a>
+                    <a href="{{ path('app_recettes_edit', {'idR': recette.idR}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recettes_new') }}">Create new</a>
+{% endblock %}

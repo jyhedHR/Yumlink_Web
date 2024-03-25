@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Entity;
-
+use App\Repository\RecettesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -64,18 +65,21 @@ class Recettes
      *   @ORM\JoinColumn(name="iduser", referencedColumnName="idU")
      * })
      */
-    private $iduser;
+    private ?User $user;
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+    }
 
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idu", referencedColumnName="idU")
-     * })
-     */
-    private $idu;
+    public function getIngredients(): ArrayCollection
+    {
+        return $this->ingredients;
+    }
 
+    public function setIngredients(ArrayCollection $ingredients): void
+    {
+        $this->ingredients = $ingredients;
+    }
     public function getIdR(): ?int
     {
         return $this->idR;
@@ -89,6 +93,42 @@ class Recettes
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getChef(): ?string
+    {
+        return $this->chef;
+    }
+
+    public function setChef(?string $chef): static
+    {
+        $this->chef = $chef;
+
+        return $this;
+    }
+
+   /* public function getIngredients(): array
+    {
+        return $this->ingredients;
+    }
+
+    public function setIngredients(array $ingredients): static
+    {
+        $this->ingredients = $ingredients;
+
+        return $this;
+    }*/
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?string $categorie): static
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
