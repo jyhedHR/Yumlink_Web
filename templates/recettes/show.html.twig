@@ -3,6 +3,163 @@
 {% block title %}Recettes{% endblock %}
 
 {% block body %}
+<div class="recipe-details-area pt-100 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="recipe-details-content">
+                    <div class="recipe-preview-img">
+                        <img src="/assets/images/recipe-img/recipe-details.jpg" alt="Images">
+                    </div>
+                    <ul class="tag-list">
+                        <li class="active"><a href="author.html"> <i class="bx bx-user"></i>{{ recette.chef }} </a></li>
+                        <li><i class="bx bx-calendar"></i> 16 April </li>
+                        <li><i class="bx bx-comment-dots"></i> 3 Comments </li>
+                    </ul>
+                    <h2>Delicious Steek Tohma</h2>
+                    <div class="rating">
+                        <i class="bx bxs-star"></i>
+                        <i class="bx bxs-star"></i>
+                        <i class="bx bxs-star"></i>
+                        <i class="bx bxs-star"></i>
+                        <i class="bx bxs-star"></i>
+                    </div>
+
+                    <ul class="recipe-tag-list">
+                        <li><i class="bx bx-dish"></i>Calories : {{ recette.calorie }}</li>
+                        <li><i class="bx bxs-user-pin"></i>Proteins : {{ recette.protein }}</li>
+                        <li><i class="bx bx-time-five"></i> 10 Minutes</li>
+                        <li><i class="bx bx-show-alt"></i> 3,450 View </li>
+                    </ul>
+                    <h3>Ingredients</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nunc nulla, imperdiet at libero in, volutpat dapibus sapien. Duis venenatis enim dolor, vel lobortis tortor molestie eu. Proin egestas dolor gravida tellus consequat ultrices. Integer volutpat tempus tincidunt. Nunc eros arcu, iaculis vitae tellus eget, auctor commodo risus. Quisque dignissim, tortor ac sagittis vehicula, lorem orci pharetra eros, ut ultrices ante odio a justo. Curabitur ut ligula libero. Morbi aliquam dolor ut mauris cursus, ac viverra ligula fringilla. Sed tempor commodo feugiat. Quisque vitae turpis laoreet, facilisis est eu, dictum ante. Vestibulum quis ullamcorper est
+                    </p>
+                    <h3>Directions</h3>
+                    <p>
+                        {{ recette.description }}
+                    </p>
+                    <div class="recipe-details-video">
+                        <h3>Watch Video</h3>
+                        <div class="video-btn-ara">
+                            <a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play video-btn">
+                                <i class="bx bx-play"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="recipe-details-share">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5 col-md-5">
+                                <div class="article-tag">
+                                    <ul>
+                                        <li class="title">Tags :</li>
+                                        <li><a href="tags.html" target="_blank">Health,</a></li>
+                                        <li><a href="tags.html" target="_blank">Food,</a></li>
+                                        <li><a href="tags.html" target="_blank">Nutrition</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7">
+                                <div class="article-social-icon">
+                                    <ul class="social-icon">
+                                        <li class="title">Share :</li>
+                                        <li>
+                                            <a href="https://www.facebook.com/" target="_blank">
+                                                <i class="bx bxl-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/" target="_blank">
+                                                <i class="bx bxl-linkedin"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://twitter.com/" target="_blank">
+                                                <i class="bx bxl-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.instagram.com/" target="_blank">
+                                                <i class="bx bxl-instagram"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div class="col-lg-4">
+                <div class="side-bar-area pl-20">
+                    <div class="row align-items-right">
+                        <div class="recipe-side-bar-categories">
+                            <h3>Categories</h3>
+                            <ul>
+                                <li>
+                                    <a href="categories.html" target="_blank">
+                                        Dinner
+                                        <span>(09)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="categories.html" target="_blank">
+                                        Dessert
+                                        <span>(10)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="categories.html" target="_blank">
+                                        Pasta
+                                        <span>(12)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="categories.html" target="_blank">
+                                        Cake
+                                        <span>(09)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="categories.html" target="_blank">
+                                        Fruits
+                                        <span>(08)</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="categories.html" target="_blank">
+                                        Soft drinks
+                                        <span> (05)</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="side-bar-widget side-bar-widget-bg">
+                            <h3 class="title">Recent Recipe</h3>
+                            <div class="widget-popular-post">
+                                <!-- Recent recipe items can go here -->
+                            </div>
+                        </div>
+                        <div class="side-bar-widget">
+                            <h3 class="title-tag">Popular Tags</h3>
+                            <ul class="side-bar-widget-tag">
+                                <li><a href="tags.html" target="_blank">Health</a></li>
+                                <li><a href="tags.html" target="_blank">Food</a></li>
+                                <li><a href="tags.html" target="_blank">Happy</a></li>
+                                <li><a href="tags.html" target="_blank">Nutrition</a></li>
+                                <li><a href="tags.html" target="_blank">Doctor</a></li>
+                                <li><a href="tags.html" target="_blank">Work</a></li>
+                                <li><a href="tags.html" target="_blank">Organic</a></li>
+                                <li><a href="tags.html" target="_blank">Healthy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <h1>Recettes</h1>
 
     <table class="table">

@@ -61,24 +61,23 @@ class RecettesController extends AbstractController
     }
 
     #[Route('/{idR}/edit', name: 'app_recettes_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Recettes $recette, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(RecettesType::class, $recette);
-        $form->handleRequest($request);
+public function edit(Request $request, Recettes $recette, EntityManagerInterface $entityManager): Response
+{
+    $form = $this->createForm(RecettesType::class, $recette);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_recettes_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('recettes/edit.html.twig', [
-            'recette' => $recette,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_recettes_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    return $this->renderForm('recettes/edit.html.twig', [
+        'recette' => $recette,
+        'form' => $form,
+    ]);
+}
+  
     #[Route('/{idR}', name: 'app_recettes_delete', methods: ['POST'])]
     public function delete(Request $request, Recettes $recette, EntityManagerInterface $entityManager): Response
     {
