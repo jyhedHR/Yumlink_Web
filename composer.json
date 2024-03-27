@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^2.0",
@@ -27,6 +27,7 @@
         "php-flasher/flasher-symfony": "^1.15",
         "php-flasher/flasher-toastr": "^1.15",
         "phpdocumentor/reflection-docblock": "^5.3",
+       "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.24",
         "scheb/2fa-google-authenticator": "^6.12",
         "sensio/framework-extra-bundle": "^6.2",

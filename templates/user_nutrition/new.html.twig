@@ -1,0 +1,12 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}New UserNutrition{% endblock %}
+
+{% block body %}
+    <h1>Create new UserNutrition</h1>
+
+    {{ include('user_nutrition/_form.html.twig') }}
+
+    <a href="{{ path('app_user_nutrition_index') }}">back to list</a>
+{% endblock %}
