@@ -76,7 +76,7 @@ class User
     /**
     
      * @ORM\OneToOne(targetEntity="Adresse")
-    * JoinColumn(name="idA", referencedColumnName="idA")
+    * @ORM\JoinColumn(name="idA", referencedColumnName="idA")
      * })
      */
     private ?Adresse $adresse;

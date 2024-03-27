@@ -5,12 +5,10 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+
      {% block css %}
      
-        <link rel="stylesheet" href={{asset("assets/css/bootstrap.min.css")}}>
+         <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href={{asset("assets/css/animate.min.css")}}>
         <link rel="stylesheet" href={{asset("assets/fonts/flaticon.css")}}>
         <link rel="stylesheet" href={{asset("assets/css/boxicons.min.css")}}>
@@ -22,7 +20,7 @@
         <link rel="stylesheet" href={{asset("assets/css/meanmenu.min.css")}}>
         <link rel="stylesheet" href={{asset("assets/css/style.css")}}>
         <link rel="stylesheet" href={{asset("assets/css/responsive.css")}}>
-        <link rel="stylesheet" href={{asset("assets/css/theme-dark.css")}}>
+        <link rel="stylesheet" href={{asset("assets/css/theme-dark.css")}}> 
     {% endblock %}
  {% block js %}
         <script src="assets/js/jquery.min.js"></script>
@@ -38,7 +36,7 @@
 <script src={{asset("assets/js/ajaxchimp.min.js")}}></script>
 <script src={{asset("assets/js/form-validator.min.js")}}></script>
 <script src={{asset("assets/js/contact-form-script.js")}}></script>
-<script src={{asset("assets/js/custom.js")}}></script>
+<script src={{asset("assets/js/custom.js")}}></script> 
 </body>
     {% endblock %}
 </head>
@@ -93,15 +91,15 @@
 </button>
 <div class="dropdown-menu language-dropdown-menu" aria-labelledby="language1">
 <a class="dropdown-item" href="#">
-<img src={{ asset("assets/images/uk.png") }} alt="flag">
+<img src={{ asset("assets/images/uk.png") }} alt="flag"> 
 English
 </a>
 <a class="dropdown-item" href="#">
-<img src={{ asset("assets/images/china.png") }} alt="flag">
+ <img src={{ asset("assets/images/china.png") }} alt="flag"> 
 简体中文
 </a>
 <a class="dropdown-item" href="#">
-<img src={{ asset("assets/images/uae.png") }} alt="flag">
+<img src={{ asset("assets/images/uae.png") }} alt="flag"> 
 العربيّة
 </a>
 </div>
@@ -118,8 +116,8 @@ English
 <div class="mobile-responsive-menu">
 <div class="logo">
 <a href="index.html">
-<img src={{asset("assets/images/logo.png")}}  class="logo-one" alt="Logo">
-<img src={{asset("assets/images/logo-white.png" )}} class="logo-two" alt="Logo">
+<img src={{asset("assets/images/logo.png")}}  class="logo-one" alt="Logo"> 
+<img src={{asset("assets/images/logo-white.png" )}} class="logo-two" alt="Logo"> 
 </a>
 </div>
 </div>
@@ -130,8 +128,8 @@ English
 <div class="container-fluid">
 <nav class="navbar navbar-expand-md navbar-light ">
 <a class="navbar-brand" href="index.html">
-<img src={{asset("assets/images/logo.png")}}  class="logo-one" alt="Logo">
-<img src={{asset("assets/images/logo-white.png")}}  class="logo-two" alt="Logo">
+<img src={{asset("assets/images/logo.png")}}  class="logo-one" alt="Logo"> 
+<img src={{asset("assets/images/logo-white.png")}}  class="logo-two" alt="Logo"> 
 </a>
 <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
 <ul class="navbar-nav m-auto">
@@ -227,7 +225,7 @@ Recipe Details
 </li>
 <li class="nav-item">
 <a href="pricing.html" class="nav-link">
-Pricing Plan
+nutritional plan 
 </a>
 </li>
 <li class="nav-item">
@@ -421,7 +419,7 @@ Contact Us
 <div class="footer-widget">
 <div class="footer-logo">
 <a href="index.html">
-<img src={{asset("assets/images/footer-logo.png")}} alt="Images">
+<img src={{asset("assets/images/footer-logo.png")}} alt="Images"> 
 </a>
 </div>
 <p>
@@ -534,7 +532,7 @@ Subscribe
 <div class="container">
 <div class="copy-right-text text-center">
 <p>
-Copyright @<script data-cfasync="false" src={{asset("../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js")}}></script><script>document.write(new Date().getFullYear())</script> Arrola. All Rights Reserved by
+{# Copyright @<script data-cfasync="false" src={{asset("../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js")}}></script><script>document.write(new Date().getFullYear())</script> Arrola. All Rights Reserved by #}
 <a href="https://hibootstrap.com/" target="_blank">HiBootstrap</a>
 </p>
 </div>

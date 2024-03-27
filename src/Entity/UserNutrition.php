@@ -84,6 +84,7 @@ class UserNutrition
      *   @ORM\JoinColumn(name="id", referencedColumnName="idU")
      */
     private ?User $user;
+    
     public function getAge(): ?int
     {
         return $this->age;
@@ -203,5 +204,48 @@ class UserNutrition
 
         return $this;
     }
+public function __toString(): string
+    {
+        // Retourne une représentation string de l'objet, par exemple le nom de l'aéroport
+        return $this->age;
+    }
 
+    public function calculateTDEE(): float
+    {
+        $bmr = ($this->gender === 'male') ? (10 * $this->weight + 6.25 * $this->height - 5 * $this->age + 5) : (10 * $this->weight + 6.25 * $this->height - 5 * $this->age - 161);
+
+        $activityFactors = [
+            'sedentary' => 1.2,
+            'lightly_active' => 1.375,
+            'moderately_active' => 1.55,
+            'very_active' => 1.725,
+            'extra_active' => 1.9
+        ];
+
+        $activityFactor = $activityFactors[$this->activityLevel];
+
+        return $bmr * $activityFactor;
+    }
+
+    // Function to distribute calories into macronutrients based on user input
+    public function distributeMacronutrients(): array
+    {
+        // Assuming a standard macronutrient distribution
+        $proteinRatio = 0.3; // 30%
+        $carbRatio = 0.4; // 40%
+        $fatRatio = 0.3; // 30%
+    
+        $totalCalories = $this->calorie;
+    
+        $proteinCalories = $totalCalories * $proteinRatio;
+        $carbCalories = $totalCalories * $carbRatio;
+        $fatCalories = $totalCalories * $fatRatio;
+    
+        return [
+            'calorie' => $totalCalories, // Total calories
+            'protein' => $proteinCalories / 4, // Convert protein calories to grams
+            'carbs' => $carbCalories / 4, // Convert carb calories to grams
+            'fat' => $fatCalories / 9 // Convert fat calories to grams
+        ];
+    }
 }
