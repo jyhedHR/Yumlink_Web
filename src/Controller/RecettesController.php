@@ -32,7 +32,7 @@ class RecettesController extends AbstractController
        
         if ($form->isSubmitted() && $form->isValid()) {
             $selectedIngredients = $form->get('ingredients')->getData();
-            $recette->setIngredients($selectedIngredients);
+            //$recette->setIngredients($selectedIngredients);
     
             foreach ($selectedIngredients as $ingredient) {
                 $recetteIngredient = new RecettesIngredient();
@@ -67,6 +67,13 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        $selectedIngredients = $form->get('ingredients')->getData();
+        foreach ($selectedIngredients as $ingredient) {
+            $recetteIngredient = new RecettesIngredient();
+            $recetteIngredient->setRecette($recette); 
+            $recetteIngredient->setIngredient($ingredient);
+            $entityManager->persist($recetteIngredient); 
+        }
         $entityManager->flush();
 
         return $this->redirectToRoute('app_recettes_index', [], Response::HTTP_SEE_OTHER);

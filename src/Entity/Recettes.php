@@ -37,12 +37,6 @@ class Recettes
      */
     private $chef;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="ingredients", type="json", nullable=false)
-     */
-    private $ingredients;
 
     /**
      * @var string|null
@@ -84,20 +78,7 @@ class Recettes
      * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
      */
     private ?User $user;
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
-
-    public function getIngredients(): ArrayCollection
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(ArrayCollection $ingredients): void
-    {
-        $this->ingredients = $ingredients;
-    }
+   
     public function getIdR(): ?int
     {
         return $this->idR;
@@ -126,18 +107,6 @@ class Recettes
 
         return $this;
     }
-
-   /* public function getIngredients(): array
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients): static
-    {
-        $this->ingredients = $ingredients;
-
-        return $this;
-    }*/
 
     public function getCategorie(): ?string
     {

@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class RecettesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -20,7 +21,16 @@ class RecettesType extends AbstractType
                 'choice_label' => 'nom', 
                 'multiple' => true,
             ])
-            ->add('categorie')
+            ->add('categorie', ChoiceType::class, [
+                'choices' => [
+                    'Dinner' => 'Dinner',
+                    'Lunch' => 'Lunch',
+                    'Dessert' => 'Dessert',
+                    'Breakfast' => 'Breakfast',
+                ],
+                'placeholder' => 'Choose a category', 
+                'required' => true,
+            ])
             ->add('description')
             ->add('imgsrc')
             ->add('calorie')
