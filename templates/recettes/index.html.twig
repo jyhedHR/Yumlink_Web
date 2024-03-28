@@ -30,10 +30,10 @@
             {% for recette in recettes %}
             <div class="col-lg-4 col-md-6">
                 <div class="recent-recipe-item">
-                    <!-- You can replace the link with the appropriate path for your application -->
+                  
                     <a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">
                         <!-- You can replace the image source with the appropriate URL or use a dynamic source from your entity -->
-                        <img src="/assets/images/recipe-img/recipe-another-img1.jpg" alt="Images">
+                        <img src="{{ recette.imgsrc }}" alt="Images">
                     </a>
                     <div class="content">
                         <h3><a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">{{ recette.nom }}</a></h3>

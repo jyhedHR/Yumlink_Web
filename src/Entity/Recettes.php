@@ -82,6 +82,13 @@ class Recettes
      */
     private ?User $user;
    
+    private Ingredient $ingredient ; 
+
+    public function getIngredient() : ?ingredient 
+    {
+        return $this->ingredient ; 
+    }
+
     public function getIdR(): ?int
     {
         return $this->idR;

@@ -40,6 +40,19 @@ class RecettesController extends AbstractController
                 $recetteIngredient->setIngredient($ingredient);
                 $entityManager->persist($recetteIngredient); 
             }
+            $imageFile = $form->get('imgsrc')->getData();
+
+            if ($imageFile) {
+                $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('uploads_directory'), 
+                    $fileName
+                );
+    
+                // Update the recette entity with the file path
+                $recette->setImgsrc('/uploads/'.$fileName);
+            }
+
             $entityManager->persist($recette);
             $entityManager->flush();
     
