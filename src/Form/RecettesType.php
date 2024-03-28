@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class RecettesType extends AbstractType
 {
@@ -20,6 +21,7 @@ class RecettesType extends AbstractType
                 'class' => Ingredient::class,
                 'choice_label' => 'nom', 
                 'multiple' => true,
+                'mapped' => false, 
             ])
             ->add('categorie', ChoiceType::class, [
                 'choices' => [
@@ -32,7 +34,10 @@ class RecettesType extends AbstractType
                 'required' => true,
             ])
             ->add('description')
-            ->add('imgsrc')
+            ->add('imgsrc' , FileType::class,[
+                'label' => 'Image',
+                'required' => false, 
+            ])
             ->add('calorie')
             ->add('protein')
            
