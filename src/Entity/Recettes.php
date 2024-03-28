@@ -30,6 +30,21 @@ class Recettes
     private $nom;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="chef", type="string", length=50, nullable=true)
+     */
+    private $chef;
+
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Categorie", type="string", length=50, nullable=true)
+     */
+    private $categorie;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=100, nullable=false)
@@ -66,20 +81,7 @@ class Recettes
      * })
      */
     private ?User $user;
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
-
-    public function getIngredients(): ArrayCollection
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(ArrayCollection $ingredients): void
-    {
-        $this->ingredients = $ingredients;
-    }
+   
     public function getIdR(): ?int
     {
         return $this->idR;
@@ -108,18 +110,6 @@ class Recettes
 
         return $this;
     }
-
-   /* public function getIngredients(): array
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients): static
-    {
-        $this->ingredients = $ingredients;
-
-        return $this;
-    }*/
 
     public function getCategorie(): ?string
     {
