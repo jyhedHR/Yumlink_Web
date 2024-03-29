@@ -32,9 +32,11 @@
                         <li><i class="bx bx-show-alt"></i> 3,450 View </li>
                     </ul>
                     <h3>Ingredients</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nunc nulla, imperdiet at libero in, volutpat dapibus sapien. Duis venenatis enim dolor, vel lobortis tortor molestie eu. Proin egestas dolor gravida tellus consequat ultrices. Integer volutpat tempus tincidunt. Nunc eros arcu, iaculis vitae tellus eget, auctor commodo risus. Quisque dignissim, tortor ac sagittis vehicula, lorem orci pharetra eros, ut ultrices ante odio a justo. Curabitur ut ligula libero. Morbi aliquam dolor ut mauris cursus, ac viverra ligula fringilla. Sed tempor commodo feugiat. Quisque vitae turpis laoreet, facilisis est eu, dictum ante. Vestibulum quis ullamcorper est
-                    </p>
+                    <ul>
+    {% for ingredient in ingredients %}
+        <li>{{ ingredient.nom }}</li>
+    {% endfor %}
+</ul>
                     <h3>Directions</h3>
                     <p>
                         {{ recette.description }}
