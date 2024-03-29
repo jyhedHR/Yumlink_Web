@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Recettes;
+
+use App\Entity\Ingredient ;
 use App\Entity\RecettesIngredient ;
 use App\Form\RecettesType;
 use App\Repository\RecettesRepository;
@@ -66,10 +68,23 @@ class RecettesController extends AbstractController
     }
 
     #[Route('/{idR}', name: 'app_recettes_show', methods: ['GET'])]
-    public function show(Recettes $recette): Response
+    public function show(Recettes $recette, EntityManagerInterface $entityManager): Response
     {
+        $recetteId = $recette->getIdR();
+        $recettesIngredientRepository = $entityManager->getRepository(RecettesIngredient::class);
+        $recettesIngredients = $recettesIngredientRepository->findBy(['recette' => $recetteId]);
+    
+        $ingredientIds = [];
+        foreach ($recettesIngredients as $recettesIngredient) {
+            $ingredientIds[] = $recettesIngredient->getIngredient()->getIdIng();
+        }
+    
+        // Retrieve the ingredients by their IDs
+        $ingredients = $entityManager->getRepository(Ingredient::class)->findBy(['idIng' => $ingredientIds]);
+    
         return $this->render('recettes/show.html.twig', [
             'recette' => $recette,
+            'ingredients' => $ingredients,
         ]);
     }
 
@@ -80,6 +95,14 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        $imageFile = $form->get('imgsrc')->getData();
+        if ($imageFile) {
+            $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+            $imageFile->move(
+                $this->getParameter('uploads_directory'), 
+                $fileName
+            );
+            $recette->setImgsrc($fileName);}
         $selectedIngredients = $form->get('ingredients')->getData();
         foreach ($selectedIngredients as $ingredient) {
             $recetteIngredient = new RecettesIngredient();
