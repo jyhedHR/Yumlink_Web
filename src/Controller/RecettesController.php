@@ -96,13 +96,19 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
 
     if ($form->isSubmitted() && $form->isValid()) {
         $imageFile = $form->get('imgsrc')->getData();
+        
+        // Check if a new image file is uploaded
         if ($imageFile) {
+            // Generate a unique filename
             $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+            // Move the uploaded file to the desired directory
             $imageFile->move(
                 $this->getParameter('uploads_directory'), 
                 $fileName
             );
-            $recette->setImgsrc($fileName);}
+            // Set the image source attribute of the recipe entity
+            $recette->setImgsrc($fileName);
+        }
         $selectedIngredients = $form->get('ingredients')->getData();
         foreach ($selectedIngredients as $ingredient) {
             $recetteIngredient = new RecettesIngredient();
