@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class FileTransformer implements DataTransformerInterface
 {
+    
     public function transform($file)
     {
         // Transform the file path string to a File object

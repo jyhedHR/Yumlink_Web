@@ -34,16 +34,19 @@ class RecettesType extends AbstractType
                 ],
                 'placeholder' => 'Choose a category', 
                 'required' => true,
+                
             ])
             ->add('description')
             ->add('imgsrc' , FileType::class,[
                 'label' => 'Image',
                 'required' => false, 
+                
             ])
             ->add('calorie')
             ->add('protein')
            
         ;
+      
     }
 
     public function configureOptions(OptionsResolver $resolver): void
