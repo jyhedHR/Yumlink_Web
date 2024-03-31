@@ -4,6 +4,8 @@ namespace App\Entity;
 use App\Repository\RecettesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Recettes
@@ -24,14 +26,14 @@ class Recettes
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=20, nullable=false)
+     * @Assert\NotBlank
+     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private $nom;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="chef", type="string", length=50, nullable=true)
      */
     private $chef;
@@ -39,35 +41,37 @@ class Recettes
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="Categorie", type="string", length=50, nullable=true)
      */
     private $categorie;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=100, nullable=false)
+     * @Assert\NotBlank
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="imgSrc", type="string", length=255, nullable=false)
      */
     private $imgsrc;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="numeric")
      * @ORM\Column(name="calorie", type="integer", nullable=false)
      */
     private $calorie;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="numeric")
      * @ORM\Column(name="protein", type="integer", nullable=false)
      */
     private $protein;

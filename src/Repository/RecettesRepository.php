@@ -37,6 +37,31 @@ class RecettesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function searchByNameOrChef($query)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.nom LIKE :query OR r.chef LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+//    /**
+//     * @return Recettes[] Returns an array of Recettes objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('r')
+//            ->andWhere('r.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('r.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
+
     public function deleteRecommendationsForUser($userId): void
     {
         $qb = $this->createQueryBuilder('r');

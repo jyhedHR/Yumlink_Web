@@ -29,12 +29,6 @@ class Ingredient
      */
     private $nom;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="quantite", type="integer", nullable=false)
-     */
-    private $quantite;
 
     public function getIdIng(): ?int
     {
@@ -53,17 +47,6 @@ class Ingredient
         return $this;
     }
 
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(int $quantite): static
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
 
 
 }

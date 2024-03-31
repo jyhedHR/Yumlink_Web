@@ -1,0 +1,11 @@
+{# recettes/_search_results.html.twig #}
+
+{% if recipes is not empty %}
+    <ul>
+        {% for recipe in recipes %}
+            <li>{{ recipe.nom }} - {{ recipe.chef }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No recipes found.</p>
+{% endif %}

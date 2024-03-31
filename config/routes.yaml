@@ -33,4 +33,7 @@ botman_handle:
     controller: App\Controller\BotManController::handle
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\DefaultController::index4
+search_recipes:
+    path: /search_recipes
+    controller: App\Controller\RecettesController::searchRecipes
