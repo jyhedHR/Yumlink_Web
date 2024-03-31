@@ -3,23 +3,10 @@
 {% block title %}Edit Your Information{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <style>
-        /* Container styling */
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa; /* Set a light background color */
-        }
-
         /* Form card styling */
         .form-card {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            font-family: 'Roboto', sans-serif;
             width: 400px; /* Set a fixed width */
             max-width: 90%; /* Set maximum width for responsiveness */
         }
@@ -48,9 +35,6 @@
 
         /* Button styling */
         .button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
@@ -61,21 +45,36 @@
         }
 
         .button:hover {
-            background-color: #0056b3;
+            filter: brightness(90%);
         }
 
         /* Back to list button */
         .back-to-list {
             background-color: #28a745;
+            color: #fff;
+            border: none;
         }
 
         .back-to-list:hover {
             background-color: #218838;
         }
 
+        /* Update button */
+        .update-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .update-button:hover {
+            background-color: #0056b3;
+        }
+
         /* Delete button */
         .delete-button {
             background-color: #dc3545;
+            color: #fff;
+            border: none;
         }
 
         .delete-button:hover {

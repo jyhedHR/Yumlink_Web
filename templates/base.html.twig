@@ -261,24 +261,30 @@
 						</li>
 
 						<li class="nav-item">
-							<a href="#" class="nav-link">
-								Nutritions
-								<i class="bx bx-chevron-down"></i>
+                        <a href="{{ path('user_nutrition_index') }}" class="nav-link">
+							Nutritions
+							<i class="bx bx-chevron-down"></i>
+						</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item">
+                                <a href="{{ path('user_nutrition_new') }}" class="nav-link">
+                                    Ajouter 
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                              <a href="{{ path('user_nutrition_edit', {'id':{{app.user.getIdu()}} }) }}" class="nav-link">
+  								  Modifier
+								</a>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+						<li class="nav-item">
+							<a href="contact.html" class="nav-link">
+								Contact Us
 							</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
-										Ajouter
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
-										Modifier
-									</a>
-								</li>
-							</ul>
 						</li>
-						
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">

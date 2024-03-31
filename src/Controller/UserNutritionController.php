@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\UserNutrition;
 use App\Form\UserNutritionType;
 use App\Repository\UserNutritionRepository;
@@ -14,21 +15,42 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/nutrition')]
 class UserNutritionController extends AbstractController
 {
+    // #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
+    // public function index(UserNutritionRepository $userNutritionRepository): Response
+    // {
+        
+    //     return $this->render('user_nutrition/index.html.twig', [
+    //         'user_nutritions' => $userNutritionRepository->findAll(),
+    //     ]);
+    // }
+
     #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
     public function index(UserNutritionRepository $userNutritionRepository): Response
     {
+        $UNbyId = [];
+        $userNutritions = $userNutritionRepository->findAll();
+        foreach ($userNutritions as $usernutrition ) {
+        if ($usernutrition->getUser()->getIdu()  == 39) {
+            $UNbyId[] = $usernutrition;
+        }
         return $this->render('user_nutrition/index.html.twig', [
-            'user_nutritions' => $userNutritionRepository->findAll(),
+            'user_nutritions' => $UNbyId,
         ]);
     }
-
-
+}
+    
 
 
     #[Route('/new', name: 'app_user_nutrition_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
+    // Get the user with ID 39
+    $user = $entityManager->getRepository(User::class)->find(39);
+
+
     $userNutrition = new UserNutrition();
+    $userNutrition->setUser($user);
+
     $form = $this->createForm(UserNutritionType::class, $userNutrition);
     $form->handleRequest($request);
 
