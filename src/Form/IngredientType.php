@@ -13,7 +13,7 @@ class IngredientType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('quantite')
+          
         ;
     }
 

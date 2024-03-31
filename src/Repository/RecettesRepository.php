@@ -21,6 +21,17 @@ class RecettesRepository extends ServiceEntityRepository
         parent::__construct($registry, Recettes::class);
     }
 
+
+    public function searchByNameOrChef($query)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.nom LIKE :query OR r.chef LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Recettes[] Returns an array of Recettes objects
 //     */

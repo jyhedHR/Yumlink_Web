@@ -24,7 +24,14 @@
             <h2>Our Latest Recipe</h2>
         </div>
     </div>
-
+    <div class="col-lg-4">
+    <div class="side-bar-area pl-20">
+        <div class="search-widget">
+            <input type="search" id="searchInput" class="form-control" placeholder="Search...">
+            <div id="searchResults"></div> {# Container for displaying search results #}
+        </div>
+    </div>
+</div>
     <div class="container">
         <div class="row pt-45 justify-content-center">
             {% for recette in recettes %}
@@ -63,46 +70,31 @@
         </div>
     </div>
 </div>
+<script>
+    // JavaScript code for handling search input and displaying search results
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
 
-    <h1>Recettes index</h1>
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.trim();
+            if (query.length === 0) {
+                // Clear the search results container if the search input is empty
+                searchResults.innerHTML = '';
+                return;
+            }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdR</th>
-                <th>Nom</th>
-                <th>Chef</th>
-                <th>Categorie</th>
-                <th>Description</th>
-                <th>Imgsrc</th>
-                <th>Calorie</th>
-                <th>Protein</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for recette in recettes %}
-            <tr>
-                <td>{{ recette.idR }}</td>
-                <td>{{ recette.nom }}</td>
-                <td>{{ recette.chef }}</td>
-                <td>{{ recette.categorie }}</td>
-                <td>{{ recette.description }}</td>
-                <td>{{ recette.imgsrc }}</td>
-                <td>{{ recette.calorie }}</td>
-                <td>{{ recette.protein }}</td>
-                <td>
-                    <a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">show</a>
-                    <a href="{{ path('app_recettes_edit', {'idR': recette.idR}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_recettes_new') }}">Create new</a>
+            // Make an AJAX request to your Symfony controller to fetch search results
+            const url = '{{ path('search_recipes') }}?query=' + encodeURIComponent(query);
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    // Update the search results container with the fetched HTML
+                    searchResults.innerHTML = html;
+                })
+                .catch(error => console.error('Error fetching search results:', error));
+        });
+    });
+</script>
+   
 {% endblock %}

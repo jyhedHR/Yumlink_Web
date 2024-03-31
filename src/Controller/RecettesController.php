@@ -137,4 +137,18 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
 
         return $this->redirectToRoute('app_recettes_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/search_recipes', name: 'search_recipes', methods: ['GET'])]
+    public function searchRecipes(Request $request)
+{
+    $query = $request->query->get('query');
+
+    $recipes = $this->getDoctrine()
+        ->getRepository(Recette::class)
+        ->searchByNameOrChef($query); 
+
+    return $this->render('recettes/_search_results.html.twig', [
+        'recipes' => $recipes,
+        'query' => $query,
+    ]);
+}
 }
