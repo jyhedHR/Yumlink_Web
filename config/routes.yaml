@@ -1,3 +1,14 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+user_nutrition_new:
+    path: '/user_nutrition/new'
+    controller: App\Controller\UserNutritionController::new
+
+user_nutrition_edit:
+    path: /user/nutrition/edit/{id}
+    controller: App\Controller\UserNutritionController::edit
+
+user_nutrition_index:
+    path: /user/nutrition
+    controller: App\Controller\UserNutritionController::index    
