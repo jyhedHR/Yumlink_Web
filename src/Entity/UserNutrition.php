@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use App\Repository\UserNutritionRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,6 +20,9 @@ class UserNutrition
      * @var int
      *
      * @ORM\Column(name="age", type="integer", nullable=false)
+      * @Assert\NotBlank
+     * @Assert\Type(type="integer")
+     * @Assert\Range(min=18, max=99)
      */
     private $age;
 
@@ -25,6 +30,9 @@ class UserNutrition
      * @var float
      *
      * @ORM\Column(name="weight", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Type(type="float")
+     * @Assert\Range(min=45, max=200)
      */
     private $weight;
 
@@ -32,6 +40,9 @@ class UserNutrition
      * @var float
      *
      * @ORM\Column(name="height", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Type(type="float")
+     * @Assert\Range(min=110, max=230)
      */
     private $height;
 
