@@ -46,16 +46,18 @@
         {% if recommendations is not empty %}
             <table>
                 <thead>
-                    <tr>
-                        <th>Recommendation Name</th>
-                    </tr>
+                 <tr>
+                    <th>Name</th>
+                   <th>Calorie</th>
+                 </tr>
                 </thead>
                 <tbody>
-                    {% for recommendation in recommendations %}
-                        <tr>
-                            <td>{{ recommendation.getNom() }}</td>
-                        </tr>
-                    {% endfor %}
+                      {% for recommendation in recommendations %}
+                    <tr>
+                        <td>{{ recommendation.nom }}</td>
+                        <td>{{ recommendation.calorie }}</td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         {% else %}
