@@ -1,0 +1,48 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>User index</h1>
+
+    <!-- Striped table start -->
+					<div class="pd-20 card-box mb-30">
+					
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Nom</th>
+									<th scope="col">Prenom</th>
+									<th scope="col">Email</th>
+									<th scope="col">Telephone</th>
+                                                                        <th scope="col">Role</th>			
+                                                                        <th scope="col">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+                                                          {% for user in users %}
+								<tr>
+                                                                        //<th scope="row">{{ user.idu }}</th>
+									 <td>{{ user.idu }}</td>
+                                                                          <td>{{ user.nom }}</td>
+                                                                          <td>{{ user.prenom }}</td>
+                                                                          <td>{{ user.email }}</td>
+                                                                          <td>{{ user.tel }}</td>
+                                                                           <td>{{ user.role }}</td>
+									<td><span class="badge badge-primary">Block</span></td>
+								</tr>
+								  {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+							</tbody>
+						</table>
+						
+						</div>
+					</div>
+					<!-- Striped table End -->
+
+   
+{% endblock %}

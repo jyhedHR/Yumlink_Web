@@ -1,19 +1,22 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\UserRepository;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
- *
+ * @UniqueEntity(fields={"email"}, message="Cet e-mail est déjà utilisé.")
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="unique_email", columns={"email"})}, indexes={@ORM\Index(name="fk_idA", columns={"idA"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
@@ -23,30 +26,37 @@ class User
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idu;
-
     /**
      * @var string
-     *
+     * @Assert\NotBlank
+     * @Assert\Length(max=20)
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
      */
     private $nom;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
+     * @Assert\Length(max=20)
      * @ORM\Column(name="prenom", type="string", length=20, nullable=false)
      */
     private $prenom;
 
-    /**
+ /**
      * @var string
-     *
+     * @Assert\NotBlank
+     * @Assert\Email
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
      */
     private $email;
 
     /**
-     * @var string
+     * @var string The hashed password
+     * @Assert\NotBlank
+     * @Assert\Length(min=8)
+     * @Assert\Regex(
+     *      pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/"
+     * )
      *
      * @ORM\Column(name="mdp", type="string", length=150, nullable=false)
      */
@@ -54,32 +64,35 @@ class User
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank
+      * @Assert\Length(min=8, max=8)
+     * @Assert\Regex(
+     *      pattern="/^[2-5|9]\d{7}$/",
+     * )
      * @ORM\Column(name="tel", type="integer", nullable=false)
      */
     private $tel;
 
     /**
      * @var string
-     *
+      * @Assert\NotBlank
      * @ORM\Column(name="role", type="string", length=20, nullable=false)
      */
     private $role;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="Image", type="string", length=100, nullable=false)
      */
     private $image;
-
-    /**
+     /**
     
      * @ORM\OneToOne(targetEntity="Adresse")
-    * JoinColumn(name="idA", referencedColumnName="idA")
-     * })
+     * @ORM\JoinColumn(name="idA", referencedColumnName="idA")
      */
     private ?Adresse $adresse;
+ 
 
     public function getIdu(): ?int
     {
@@ -175,12 +188,7 @@ class User
         return $this->adresse;
     }
 
-    public function setIda(?Adresse $adresse): static
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
+   
 
     public function setAdresse(?Adresse $adresse): static
     {
@@ -188,6 +196,81 @@ class User
 
         return $this;
     }
+    public function getAdresseId(): ?int
+{
+    return $this->adresse ? $this->adresse->getIda() : null;
+}
 
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = [$this->role];
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->role = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->mdp;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->mdp = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }

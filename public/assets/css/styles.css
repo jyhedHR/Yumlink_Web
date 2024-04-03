@@ -1,0 +1,13 @@
+
+
+.radio-custom {
+    transform: scale(1.2);
+    margin-right: 10px; 
+    font-size: 10px; 
+}
+/* CSS pour augmenter l'espace vertical entre le label "Role" et les boutons radios */
+.role-field {
+    margin-bottom: 50px; /* Ajustez la valeur selon vos besoins */
+}
+
+
