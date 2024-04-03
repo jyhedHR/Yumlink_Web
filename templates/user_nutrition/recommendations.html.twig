@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recommendations{% endblock %}
+
+{% block body %}
+    <style>
+        /* CSS styles for Recommendation page */
+        .recommendations {
+            margin-bottom: 20px;
+        }
+
+        .recommendations table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .recommendations th, .recommendations td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .recommendations th {
+            background-color: #f2f2f2;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 10px;
+            background-color: #6c757d;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #555;
+        }
+    </style>
+
+    <div class="recommendations">
+        <h1>Recommendations</h1>
+        {% if recommendations is not empty %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Recommendation Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recommendation in recommendations %}
+                        <tr>
+                            <td>{{ recommendation.getNom() }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No recommendations available</p>
+        {% endif %}
+        <a href="{{ path('recommendations') }}" class="btn-secondary">Refresh Recommendations</a>
+                <a href="{{ path('app_user_nutrition_index') }}" class="btn-secondary">votre dashboard</a>
+
+    </div>
+{% endblock %}

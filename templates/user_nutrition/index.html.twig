@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}UserNutrition index{% endblock %}
+{% block title %}Votre espace du nutrition {% endblock %}
 
 {% block body %}
     <style>
@@ -50,7 +50,7 @@
         }
     </style>
 
-    <h1>UserNutrition index</h1>
+    <h1>Votre espace du nutrition</h1>
 
     <table class="table">
         <thead>
@@ -93,4 +93,6 @@
     </table>
 
     <a href="{{ path('app_user_nutrition_new') }}" class="btn-secondary btn">Create new</a>
+        <a href="{{ path('recommendations') }}" class="btn-secondary btn">View Recommendations</a>
+
 {% endblock %}
