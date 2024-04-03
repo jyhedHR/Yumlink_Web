@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\UserNutrition;
-use App\Repository\RecetteRepository ;
+use App\Entity\Recettes;
+use App\Repository\RecettesRepository ;
 use App\Repository\UserNutritionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecommendationController extends AbstractController
 {
     #[Route('/recommendations', name: 'recommendations')]
-    public function recommendations(UserNutritionRepository $userNutritionRepository, RecetteRepository $recetteRepository): Response
+    public function recommendations(UserNutritionRepository $userNutritionRepository, RecettesRepository $recettesRepository): Response // Corrected argument name
     {
         // Fetch user's nutrition data based on the logged-in user or any identifier you use
         $userNutrition = $userNutritionRepository->findOneBy(['user' => 39]);
@@ -29,12 +30,12 @@ class RecommendationController extends AbstractController
         $calorieIntake = $userNutrition->getCalorie();
 
         // Fetch recommendations of recipes based on calorie intake
-        $recommendations = $recetteRepository->getRecettesUnderCalorieThreshold($calorieIntake);
+        $recommendations = $recettesRepository->getRecettesUnderCalorieThreshold($calorieIntake);
 
         // Check if there are recommendations
         if ($recommendations) {
             // Insert recommendations into the nutrition_recommandation table
-            $recetteRepository->insertRecommendations($recommendations, 39);
+            $recettesRepository->insertRecommendations($recommendations, 39);
         }
 
         // Render the view with the recommendations

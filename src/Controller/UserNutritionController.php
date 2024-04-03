@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Recette;
 use App\Entity\Recettes;
 use App\Entity\User;
 use App\Entity\UserNutrition;
 use App\Form\UserNutritionType;
 use App\Repository\UserNutritionRepository;
-use App\Repository\RecetteRepository; 
+use App\Repository\RecettesRepository; 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -178,7 +177,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
     
 
     #[Route('/{user}', name: 'app_user_nutrition_delete', methods: ['POST'])]
-    public function delete(Request $request, UserNutrition $userNutrition, RecetteRepository $recetteRepository, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, UserNutrition $userNutrition, RecettesRepository $recettesRepository, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$userNutrition->getUser()->getIdu(), $request->request->get('_token'))) {
             $entityManager->remove($userNutrition);
