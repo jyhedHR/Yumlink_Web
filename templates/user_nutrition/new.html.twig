@@ -3,10 +3,22 @@
 
 {% block title %}New UserNutrition{% endblock %}
 
+
 {% block body %}
-    <h1>Create new UserNutrition</h1>
+    <section class="inner-banner inner-bg6">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3>Add your Information</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                    </li>
+                    <li>New</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     {{ include('user_nutrition/_form.html.twig') }}
 
-    <a href="{{ path('app_user_nutrition_index') }}">back to list</a>
 {% endblock %}

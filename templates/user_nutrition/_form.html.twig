@@ -1,43 +1,155 @@
-<div style="display: flex; justify-content: center; align-items: center; height: 130vh;">
-    <div style="background-color: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); font-family: 'Roboto', sans-serif;">
-        {{ form_start(form) }}
-            <div style="margin-bottom: 20px;">
-                <div style="display: flex; align-items: center;">
-                    <label for="{{ form.age.vars.id }}" style="color: #333; font-size: 16px; font-weight: bold; margin-right: 10px; min-width: 100px;">Age:</label>
-                    {{ form_widget(form.age, {'attr': {'class': 'form-control', 'style': 'padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100px;'}}) }}
-                </div>
-                
-                <div style="display: flex; align-items: center;">
-                    <label for="{{ form.weight.vars.id }}" style="color: #333; font-size: 16px; font-weight: bold; margin-right: 10px; min-width: 100px;">Weight:</label>
-                    {{ form_widget(form.weight, {'attr': {'class': 'form-control', 'style': 'padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100px;'}}) }}
-                </div>
-                
-                <div style="display: flex; align-items: center;">
-                    <label for="{{ form.height.vars.id }}" style="color: #333; font-size: 16px; font-weight: bold; margin-right: 10px; min-width: 100px;">Height:</label>
-                    {{ form_widget(form.height, {'attr': {'class': 'form-control', 'style': 'padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100px;'}}) }}
-                </div>
-                
-                <div style="display: flex; align-items: center;">
-                    <label for="{{ form.activityLevel.vars.id }}" style="color: #333; font-size: 16px; font-weight: bold; margin-right: 10px; min-width: 100px;">Activity Level:</label>
-                    {{ form_widget(form.activityLevel, {'attr': {'class': 'form-control', 'style': 'padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 200px;'}}) }}
-                </div>
-
-                <div style="display: flex; align-items: center;">
-                    <label for="{{ form.gender.vars.id }}" style="color: #333; font-size: 16px; font-weight: bold; margin-right: 10px; min-width: 100px;">Gender:</label>
-                    {{ form_widget(form.gender, {'attr': {'class': 'form-control', 'style': 'padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 200px;'}}) }}
-                </div>
-            </div>
-
+<div class="">
+    <div class="container">
+        <div class="appointment-form">
             <div>
-                <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 20px; font-weight: bold;">{{ button_label|default('Save') }}</button>
+                {{ form_start(form) }}
+                
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="{{ form.age.vars.id }}" class="form-label">Age:</label>
+                        {{ form_widget(form.age, {'attr': {'class': 'form-input'}}) }}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.weight.vars.id }}" class="form-label">Weight:</label>
+                        {{ form_widget(form.weight, {'attr': {'class': 'form-input'}}) }}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.height.vars.id }}" class="form-label">Height:</label>
+                        {{ form_widget(form.height, {'attr': {'class': 'form-input'}}) }}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.activityLevel.vars.id }}" class="form-label">Activity Level:</label>
+                        {{ form_widget(form.activityLevel, {'attr': {'class': 'form-input'}}) }}
+                    </div>
+
+                    <div class="form-field">
+                        <label for="{{ form.gender.vars.id }}" class="form-label">Gender:</label>
+                        {{ form_widget(form.gender, {'attr': {'class': 'form-input'}}) }}
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="button update-button">{{ button_label|default('Save') }}</button>
+                </div>
+                {{ form_end(form) }}
+
+                <div class="form-values">
+                    <div class="value-group">
+                        <div class="value animated"><strong>Calorie:</strong> {{ form.vars.value.calorie }}</div>
+                        <div class="value animated"><strong>Protein:</strong> {{ form.vars.value.protein }}</div>
+                    </div>
+                    <div class="value-group">
+                        <div class="value animated"><strong>Carbs:</strong> {{ form.vars.value.carbs }}</div>
+                        <div class="value animated"><strong>Fat:</strong> {{ form.vars.value.fat }}</div>
+                    </div>
+                </div>
             </div>
-        {{ form_end(form) }}
-        
-        <div style="margin-top: 20px;">
-            <div><strong>Calorie:</strong> {{ form.vars.value.calorie }}</div>
-            <div><strong>Protein:</strong> {{ form.vars.value.protein }}</div>
-            <div><strong>Carbs:</strong> {{ form.vars.value.carbs }}</div>
-            <div><strong>Fat:</strong> {{ form.vars.value.fat }}</div>
         </div>
     </div>
 </div>
+
+<style>
+    .appointment-area {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 960px;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+
+    .appointment-form {
+        background-color: transparent;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .form-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        color: #333;
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 10px;
+        min-width: 100px;
+    }
+
+    .form-input {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        width: 100px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+    }
+
+    .button:hover {
+        filter: brightness(90%);
+    }
+
+    .update-button {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .value {
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: #333; /* Text color */
+    }
+
+    .animated {
+        animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+     .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+        justify-items: center; /* Centers the items horizontally */
+    }
+     .form-values {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+      .value-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-right: 20px;
+    }
+</style>
