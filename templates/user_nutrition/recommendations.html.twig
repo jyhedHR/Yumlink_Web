@@ -2,25 +2,102 @@
 
 {% block title %}Recommendations{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
     <style>
         /* CSS styles for Recommendation page */
-        .recommendations {
-            margin-bottom: 20px;
+        .cart-wraps-area {
+            padding-top: 100px; /* Adjust as needed */
+            padding-bottom: 70px; /* Adjust as needed */
         }
 
-        .recommendations table {
+        .container {
             width: 100%;
-            border-collapse: collapse;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
         }
 
-        .recommendations th, .recommendations td {
-            padding: 8px;
-            border: 1px solid #ddd;
+        .cart-table.table-bordered th,
+        .cart-table.table-bordered td {
+            border: 1px solid #dee2e6;
         }
 
-        .recommendations th {
-            background-color: #f2f2f2;
+        .cart-table.table-bordered thead th,
+        .cart-table.table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+
+        .cart-table.table-bordered th,
+        .cart-table.table-bordered td {
+            padding: .75rem;
+            vertical-align: top;
+        }
+
+        .cart-table.table-bordered thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .cart-table td {
+            vertical-align: middle;
+        }
+
+        .cart-wraps-area .cart-wraps {
+            padding: 20px;
+            border: 1px solid #e6e6e6;
+            border-radius: 5px;
+        }
+
+        .cart-wraps-area .cart-wraps .cart-table {
+            margin-bottom: 0;
+        }
+
+        .cart-table.table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+            border: none;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .search-button {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 10px;
+            background-color: #6c757d;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #555;
+        }
+
+        .bottom-buttons {
+            margin-top: 20px;
+            text-align: center;
         }
 
         .btn-secondary {
@@ -34,37 +111,85 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-right: 10px;
         }
 
         .btn-secondary:hover {
             background-color: #555;
         }
     </style>
+{% endblock %}
 
-    <div class="recommendations">
-        <h1>Recommendations</h1>
-        {% if recommendations is not empty %}
-            <table>
-                <thead>
-                 <tr>
-                    <th>Name</th>
-                   <th>Calorie</th>
-                 </tr>
-                </thead>
-                <tbody>
-                      {% for recommendation in recommendations %}
-                    <tr>
-                        <td>{{ recommendation.nom }}</td>
-                        <td>{{ recommendation.calorie }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>No recommendations available</p>
-        {% endif %}
-        <a href="{{ path('recommendations') }}" class="btn-secondary">Refresh Recommendations</a>
-                <a href="{{ path('app_user_nutrition_index') }}" class="btn-secondary">votre dashboard</a>
+{% block body %}
 
+<section class="inner-banner inner-bg4">
+    <div class="container">
+        <div class="inner-title text-center">
+            <h3>Recommandations</h3>
+            <ul>
+                <li>
+                    <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                </li>
+                <li>Recommandations</li>
+            </ul>
+            
+        </div>
     </div>
+</section>
+
+<section class="cart-wraps-area pt-100 pb-70">
+    <div class="container">
+        <div class="search-form">
+            <form action="{{ path('recommendations') }}" method="GET">
+                <input type="text" id="query" name="query" class="search-input" placeholder="Search...">
+            </form>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form>
+                    <div class="cart-wraps">
+                        <div class="cart-table table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Calorie</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if recommendations is not empty %}
+                                        {% for recommendation in recommendations %}
+                                            <tr class="recommendation-row">
+                                                <td>{{ recommendation.nom }}</td>
+                                                <td>{{ recommendation.calorie }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="2">No recommendations available</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#query").on("keyup", function() {
+            var searchQuery = $(this).val().toLowerCase();
+            $(".recommendation-row").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(searchQuery) > -1);
+            });
+        });
+    });
+</script>
 {% endblock %}

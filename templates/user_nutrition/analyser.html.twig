@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe Analyzer{% endblock %}
+
+{% block body %}
+    <h1>Recipe Analyzer</h1>
+    <form id="recipeForm" action="{{ path('get_regime') }}" method="post">
+        {{ form_start(form) }}
+        {{ form_widget(form.plat_choisie) }}
+        {{ form_widget(form.submit) }}
+        {{ form_end(form) }}
+    </form>
+
+    {% if plat_choisie is defined %}
+        <div id="resultContainer">
+            <h2>Analysis Result</h2>
+            <p>Calories: {{ calories }} kcal</p>
+            <p>Protein: {{ protein }} g</p>
+            <p>Fats: {{ fats }} g</p>
+            <p>Carbs: {{ carbs }} g</p>
+        </div>
+    {% endif %}
+{% endblock %}
