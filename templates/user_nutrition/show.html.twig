@@ -3,6 +3,19 @@
 {% block title %}UserNutrition{% endblock %}
 
 {% block body %}
+    <section class="inner-banner inner-bg6">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3> Your Information</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                    </li>
+                    <li>Information</li>
+                </ul>
+            </div>
+        </div>
+    </section>
     <style>
         /* Add your CSS styles here */
         table {
@@ -51,9 +64,8 @@
         }
     </style>
 
-    <h1>UserNutrition</h1>
 
-    <table>
+    <table class="table table-bordered"  >
         <tbody>
             <tr>
                 <th>Age</th>
