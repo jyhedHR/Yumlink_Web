@@ -12,3 +12,7 @@ user_nutrition_edit:
 user_nutrition_index:
     path: /user/nutrition
     controller: App\Controller\UserNutritionController::index    
+
+recipe_analyzer:
+    path: /get-regime
+    controller: App\Controller\RecipeAnalyzerController::index    
