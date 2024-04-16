@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,13 +29,13 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/user/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
-    public function logout(): void
+    public function logout(): Response
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        return $this->redirectToRoute('Welcome');
     }
     public function onLoginSuccess()
     {
@@ -43,9 +43,32 @@ class SecurityController extends AbstractController
     }
     #[Route('/', name: 'homeOn')]
     public function homeOn(): Response
-    { return $this->redirectToRoute('app_user_new');}
+    {$user = $this->getUser();
+        if (!$user)
+        {
+            // Redirect to login if no user is authenticated
+            return $this->redirectToRoute('app_login');
+        }else
+       
+        $roles = $user->getRoles(); 
+        $role = $roles[0]; 
+    
+        
+        switch($role) 
+        {
+            case 'Client':
+                return $this->render('user/ClientHome.html.twig');
+            case 'Chef':
+                return $this->render('user/ChefHome.html.twig');
+            
+            default:
+            return $this->redirectToRoute('app_user_new'); 
+            break;
+        }
+       
+    }
     #[Route('/Welcome', name: 'Welcome')]
     public function Welcome(): Response
-    {  return $this->render('WelcomeBase.html.twig');;}
+    {  return $this->render('Home.html.twig');}
     
 }

@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Repository\AdresseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -69,9 +70,19 @@ class UserController extends AbstractController
             $user->setMdp($hashedpassword);
       /** @var UploadedFile $imageFile */
       $imageFile = $userForm->get('image')->getData();
+
       if ($imageFile) {
-          $user->setImage($imageFile->getClientOriginalName());
+          $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+          $imageFile->move(
+              $this->getParameter('uploads_directory'), 
+              $fileName
+          );
+
+          // Update the recette entity with the file path
+          $user->setImage('/usersProfile/'.$fileName);
       }
+     
+      
             $entityManager->persist($user);
             $entityManager->flush();
             $request->getSession()->remove('user_form_data');
@@ -115,5 +126,35 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/nosChefs', name: 'app_chef', methods: ['GET'])]
+    public function afficherChefs(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findByRole('chef');
+
+        return $this->render('user/show.html.twig', [
+            'users' => $users,
+        ]);
+    }
+    #[Route('/search', name: 'user_search')]
+    public function search(Request $request,UserRepository $userRepository): Response
+    {
+        $criteria = $request->query->get('q');
+
+        // Utiliser Doctrine pour effectuer la recherche en fonction des critères
+        $users = $userRepository->findBySearchCriteria($criteria);
+
+        // Convertir les résultats en un tableau utilisable pour la réponse JSON
+        $usersArray = [];
+        foreach ($users as $user) {
+            $usersArray[] = [
+                'id' => $user->getIdU(),
+                'name' => $user->getNom(), // Modifier selon vos besoins
+                // Ajoutez d'autres attributs d'utilisateur si nécessaire
+            ];
+        }
+
+        // Renvoyer les résultats de la recherche au format JSON
+        return new JsonResponse($usersArray);
     }
 }

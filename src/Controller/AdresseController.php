@@ -7,6 +7,7 @@ use App\Form\AdresseType;
 use App\Repository\AdresseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +24,7 @@ class AdresseController extends AbstractController
     }
 
     #[Route('/new', name: 'app_adresse_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(EntityManagerInterface $entityManager,Request $request): Response
     {
         $adresse = new Adresse();
         $form = $this->createForm(AdresseType::class, $adresse);
@@ -40,15 +41,8 @@ class AdresseController extends AbstractController
             'adresse' => $adresse,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/{ida}', name: 'app_adresse_show', methods: ['GET'])]
-    public function show(Adresse $adresse): Response
-    {
-        return $this->render('adresse/show.html.twig', [
-            'adresse' => $adresse,
-        ]);
-    }
+     }
+    
 
     #[Route('/{ida}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response

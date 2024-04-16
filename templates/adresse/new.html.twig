@@ -1,70 +1,97 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-<div class="inner-banner inner-bg9">
-    <div class="container">
-        <div class="inner-title text-center">
-            <h3>Ajouter votre Adresse</h3>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li>Adresse</li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="user-area pt-100 pb-70">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-12">
-                <div class="user-all-form">
-                    <div class="contact-form">
-                        <h3>Ajouter votre adresse!</h3>
-                        {# Début du formulaire Symfony #}
-                        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-
-                        {{ form_widget(form._token) }}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    {{ form_row(form.gouvernorat, {'attr': {'class': 'form-control', 'placeholder': 'Gouvernorat'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    {{ form_row(form.ville, {'attr': {'class': 'form-control', 'placeholder': 'Ville'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    {{ form_row(form.rue, {'attr': {'class': 'form-control', 'placeholder': 'Rue'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    {{ form_row(form.codepostal, {'attr': {'class': 'form-control', 'placeholder': 'Code Postal'}}) }}
-                                </div>
-                            </div>
-                        </div>
-                        {# Fin du formulaire Adresse Symfony #}
-                        <div class="col-lg-12 col-md-12 text-center d-flex justify-content-center">
-                            <button type="submit" class="default-btn">
-                                ajouter votre adresse
-                            </button>
-                        </div>
-                        {{ form_end(form) }}
-                        
-                                    
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="{{ path('app_adresse_index') }}">back to list</a>
-</div>
-
+{% block title %}Ajouter une adresse
 {% endblock %}
 
+{% block body %}
+	<div class="inner-banner inner-bg9">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Register</h3>
+				<ul>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>Ajouter votre adresse</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="user-area pt-100 pb-70">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<div class="user-all-form">
+						<div class="contact-form">
+							<h3>Ajouter votre adresse!</h3>
+							<div id="mapid" style="height: 400px;"></div>
+							<form method="post" action="{{ path('app_adresse_new') }}">
+								{{ form_start(form) }}
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+											{{ form_label(form.gouvernorat) }}
+											{{ form_widget(form.gouvernorat, {'attr': {'class': 'form-control'}}) }}
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="form-group">
+											{{ form_label(form.ville) }}
+											{{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="form-group">
+											{{ form_label(form.rue) }}
+											{{ form_widget(form.rue, {'attr': {'class': 'form-control'}}) }}
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="form-group">
+											{{ form_label(form.codepostal) }}
+											{{ form_widget(form.codepostal, {'attr': {'class': 'form-control'}}) }}
+										</div>
+									</div>
+									<input type="hidden" id="latitude" name="latitude">
+									<input type="hidden" id="longitude" name="longitude">
+									<div class="col-lg-12 col-md-12 text-center d-flex justify-content-center">
+										<button type="submit" class="default-btn">
+											ajouter votre adresse
+										</button>
+									</div>
+									{{ form_end(form) }}
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+				var map = L.map('mapid').setView([
+0, 0
+], 13);
 
-    
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; OpenStreetMap contributors'}).addTo(map);
 
+map.on('click', function (event) {
+var latitude = event.latlng.lat;
+var longitude = event.latlng.lng;
+
+document.getElementById('latitude').value = latitude;
+document.getElementById('longitude').value = longitude;
+
+fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`).then(response => response.json()).then(data => {
+var addressParts = data.address;
+
+document.getElementById('{{ form.gouvernorat.vars.id }}').value = addressParts.state || '';
+document.getElementById('{{ form.ville.vars.id }}').value = addressParts.city || addressParts.town || addressParts.county || addressParts.state_district || '';
+document.getElementById('{{ form.rue.vars.id }}').value = addressParts.road || '';
+document.getElementById('{{ form.codepostal.vars.id }}').value = addressParts.postcode || '';
+}).catch(error => {
+console.error('Erreur lors de la récupération de l\'adresse:', error);
+});
+
+L.marker([latitude, longitude]).addTo(map);
+});
+			</script>
+		{% endblock %}

@@ -82,7 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="Image", type="string", length=100, nullable=false)
      */
     private $image;
@@ -225,11 +224,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = [$this->role];
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return [$this->role];
     }
 
     public function setRoles(array $roles): static
