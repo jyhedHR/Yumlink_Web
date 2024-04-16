@@ -1,0 +1,33 @@
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card rounded shadow-lg">
+                <div class="card-body">
+                    {{ form_start(form) }}
+
+                    <div class="mb-3">
+                        {{ form_label(form.photoP) }}
+                        {{ form_widget(form.photoP, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.photoP) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.vote) }}
+                        {{ form_widget(form.vote, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.vote) }}
+                    </div>
+
+                    
+
+                    <div class="text-center">
+                        <button class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">{{ button_label|default('Save') }}</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
