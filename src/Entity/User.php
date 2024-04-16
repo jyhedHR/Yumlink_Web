@@ -95,15 +95,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      /**
     
      * @ORM\OneToOne(targetEntity="Adresse")
-<<<<<<< HEAD
+
     * @ORM\JoinColumn(name="idA", referencedColumnName="idA")
      * })
-=======
-     * @ORM\JoinColumn(name="idA", referencedColumnName="idA")
->>>>>>> gestion_nutrition
      */
     private ?Adresse $adresse;
- 
+
 
     public function getIdu(): ?int
     {

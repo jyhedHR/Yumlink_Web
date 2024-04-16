@@ -5,6 +5,7 @@ use App\Repository\DefisRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert; 
 
 /**
  * @ORM\Table(name="defis", indexes={@ORM\Index(name="fk_id_u", columns={"idU"})})
@@ -22,30 +23,35 @@ class Defis
 
     /**
      * @ORM\Column(name="nom_d", type="string", length=50)
+     * @Assert\NotBlank
      */
     private string $nomD;
 
     /**
      * @ORM\Column(name="photo_d", type="string", length=255)
+     * @Assert\NotBlank
      */
     private string $photoD;
 
     /**
      * @ORM\Column(name="dis_d", type="string", length=50)
+     * @Assert\NotBlank
      */
     private string $disD;
 
     /**
      * @ORM\Column(name="delai", type="date")
+     * @Assert\NotBlank
      */
     private \DateTimeInterface $delai;
 
     /**
      * @ORM\Column(name="heure", type="time")
+     * @Assert\NotBlank
      */
     private \DateTimeInterface $heure;
 
-    /**
+   /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
      */
@@ -55,6 +61,7 @@ class Defis
     {
         return $this->idD;
     }
+   
 
     public function getNomD(): string
     {
@@ -121,9 +128,10 @@ class Defis
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+   
+    public function setUser(?User $user): static
     {
-        $this->user = $user;
+        $this->user =$user;
 
         return $this;
     }

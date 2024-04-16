@@ -31,3 +31,6 @@ botman:
 botman_handle:
     path: /botman/chat
     controller: App\Controller\BotManController::handle
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index

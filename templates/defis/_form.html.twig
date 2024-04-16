@@ -1,0 +1,53 @@
+
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card rounded shadow-lg">
+            
+                <div class="card-body">
+                    
+
+                    {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_label(form.nomD) }}
+                        {{ form_widget(form.nomD, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.nomD) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.photoD) }}
+                        {{ form_widget(form.photoD, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.photoD) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.disD) }}
+                        {{ form_widget(form.disD, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.disD) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.delai) }}
+                        {{ form_widget(form.delai, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.delai) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.heure) }}
+                        {{ form_widget(form.heure, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.heure) }}
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">{{ button_label|default('Save') }}</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

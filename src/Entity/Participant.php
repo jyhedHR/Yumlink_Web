@@ -4,6 +4,7 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert; 
 
 /**
  * Participant
@@ -27,6 +28,7 @@ class Participant
      * @var string
      *
      * @ORM\Column(name="photo_p", type="string", length=255, nullable=false)
+     * @Assert\NotBlank
      */
     private $photoP;
 
@@ -102,6 +104,7 @@ class Participant
 
         return $this;
     }
+   
 
     public function setDefis(?Defis $defis): static
     {
@@ -109,6 +112,7 @@ class Participant
 
         return $this;
     }
+   
 
 
 }

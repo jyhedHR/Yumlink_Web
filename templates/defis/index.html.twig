@@ -1,0 +1,32 @@
+{% extends 'chefbase.html.twig' %}
+
+{% block title %}Défis{% endblock %}
+
+{% block body %}
+
+<div class="text-center">
+    <img src="{{ asset('assets/images/background.jpg') }}" data-aos="fade-in" class="aos-init aos-animate" alt="" width="1488" height="350">
+    <h1>Défis</h1>
+</div>
+    <div class="row">
+        {% for defi in defis %}
+            <div class="col-md-4 mb-4" >
+                <div class="card" >
+                    <div class="card-body text-center" >
+                        <h5 class="card-title" style="text-align: center;">{{ defi.nomD }}</h5>
+                        <img src="{{ asset(defi.photoD) }}" class="card-img-top mx-auto d-block" alt="..." style="width:300px; height: 200px;">
+                        <p class="card-text">{{ defi.disD }}</p>
+                        <p class="card-text">Créé par: {{ defi.user.nom }}</p>
+                        <p class="card-text"><small class="text-muted">Date limite: {{ defi.delai ? defi.delai|date('Y-m-d') : '' }} {{ defi.heure ? defi.heure|date('H:i:s') : '' }}</small></p>
+                        <a href="{{ path('app_defis_edit', {'idD': defi.idD}) }}" class="btn btn-secondary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">Modifier</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
+    </div>
+<div class="text-center">
+    <a href="{{ path('app_defis_new') }}" class="btn btn-success"  style="background-color: #0e1125; color: white; border-color: #0e1125 ">Ajouter</a>
+</div>
+{% endblock %}
