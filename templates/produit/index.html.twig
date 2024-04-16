@@ -1,149 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit index{% endblock %}
+{% block title %}Produit index
+{% endblock %}
 
 {% block body %}
-<div class="inner-banner inner-bg3">
-<div class="container">
-<div class="inner-title text-center">
-<h3>Shop</h3>
-<ul>
-<li>
-<a href="index.html">Home</a>
-</li>
+	<div class="inner-banner inner-bg3">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Shop</h3>
+				<ul>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
 
-</div>
-</div>
-</div>
+				</div>
+			</div>
+		</div>
 
-<div class="product-area pt-100 pb-70">
-<div class="container">
-<div class="product-topper">
-<div class="row align-items-center">
-<div class="col-lg-8 col-md-7">
-<div class="product-title">
-<h3>Showing 1-9 of 40 results</h3>
-</div>
-</div>
-<div class="col-lg-4 col-md-5">
-<div class="product-list">
-<select class="form-select" aria-label="Default select example">
-<option selected>Default Price</option>
-<option value="1">Price High To Low</option>
-<option value="2">Price Low To High</option>
-</select>
-<i class="bx bx-chevron-down"></i>
-</div>
-</div>
-</div>
-</div>
-<div class="row pt-45">
-<div class="col-lg-8">
-  
-<div class="row">
-{% for produit in produits %}
-<div class="col-lg-4 col-sm-6">
-    <div class="product-card">
-        <div class="product-img">
-            <a href="shop-details.html">
-                <img src="{{ asset(produit.image) }}" alt="Product Image">
-            </a>
-            <form method="post" action="{{ path('app_panier_new') }}">
-            <ul class="product-item-action">
-                <li><a href="wishlist.html"><i class="bx bx-heart"></i></a></li>
-                
-                    <input type="hidden" name="id_client" value="3">
-                    <input type="hidden" name="id_produit" value="{{ produit.id }}">
-                    
-                    <!-- Add a hidden input field for product name -->
-                    <button type="submit" style="border: none; background: none; cursor: pointer;">
-                        <i class="bx bx-cart"></i>
-                    </button>
-                
-            </ul>
-        </div>
-          <td class="product-quantity">
-        <div class="input-counter">
-            <span class="minus-btn">
-                <i class="bx bx-minus"></i>
-            </span>
-            <input type="number" name="quantite" value="1" inputmode="numeric">
-            <!-- type="number" allows only numeric input -->
-            <span class="plus-btn">
-                <i class="bx bx-plus"></i>
-            </span>
-        </div>
-    </td>
-</form>
-
-        <div class="content">
-            <h3><a href="shop-details.html">{{ produit.nom }}</a></h3>
-            <span>{{ produit.prix ~ "DT" }}</span>
-
-        </div>
-    </div>
-</div>
-{% endfor %}
-
- </div>
-</div>
-<div class="col-lg-4">
-<div class="side-bar-area pl-20">
-<div class="recipe-side-bar-categories">
-<h3>Categories</h3>
-<ul>
-<li>
-<a href="categories.html" target="_blank">
-Dinner
-<span>(09)</span>
-</a>
-</li>
-<li>
-<a href="categories.html" target="_blank">
-Dessert
-<span>(10)</span>
-</a>
-</li>
-<li>
-<a href="categories.html" target="_blank">
-Pasta
-<span>(12)</span>
-</a>
-</li>
-<li>
-<a href="categories.html" target="_blank">
-Cake
-<span>(09)</span>
-</a>
-</li>
-<li>
-<a href="categories.html" target="_blank">
-Fruits
-<span>(08)</span>
-</a>
-</li>
-<li>
-<a href="categories.html" target="_blank">
-Soft drinks
-<span> (05)</span>
-</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+		
 
 
+	</ul>
+</div></div></div><section class="py-5"><div class="container px-4 px-lg-5 mt-5">
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+	{% for produit in produits %}
+		<div class="col mb-5">
+			<div
+				class="card h-100">
+				<!-- Product image-->
+				<img
+				src="{{ asset(produit.image) }}" alt="Product Image">
+				<!-- Product details-->
+                <form method="post" action="{{ path('app_panier_new') }}">
+				<div class="card-body p-4">
+					<div
+						class="text-center">
+						<!-- Product name-->
+						<h5 class="fw-bolder">{{ produit.nom }}</h5>
+						<!-- Product price-->
+						{{ produit.prix ~ "DT" }}<br>
+                        <input type="number" name="quantite" min="1" value="1" inputmode="numeric" style="width: 50px; padding: 5px;">
+					</div>
+				</div>
+				<!-- Product actions-->
+				
+
+					<input type="hidden" name="id_client" value="3">
+					<input type="hidden" name="id_produit" value="{{ produit.id }}">
 
 
-<li>Shop</li>
-</ul>
-</div>
-</div>
-</div>
+					<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+						<div class="text-center">
+							<button type="submit" class="btn btn-outline-dark mt-auto">Ajouter panier</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	{% endfor %}
 
-    <a href="{{ path('app_produit_new') }}">Create new</a>
-{% endblock %}
+</div></div></section><a href="{{ path('app_produit_new') }}">Create new</a>{% endblock %}

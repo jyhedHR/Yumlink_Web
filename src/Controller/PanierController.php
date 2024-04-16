@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Commande;
+use App\Form\CommandeType;
 use App\Entity\Panier;
 use App\Form\PanierType;
 use App\Repository\PanierRepository;
@@ -19,7 +20,7 @@ use App\Entity\Produit;
 class PanierController extends AbstractController
 {
     #[Route('/', name: 'app_panier_index', methods: ['GET'])]
-public function index(PanierRepository $panierRepository, EntityManagerInterface $entityManager): Response
+public function index(PanierRepository $panierRepository, EntityManagerInterface $entityManager,Request $request): Response
 {
     // Fetch paniers along with associated Produit entities using custom DQL query
     $query = $entityManager->createQuery(
@@ -28,9 +29,38 @@ public function index(PanierRepository $panierRepository, EntityManagerInterface
     );
     $paniers = $query->getResult();
 
+        
+
+        // Create a new Commande entity and set the current system date and the user ID
+        $commande = new Commande();
+        $commande->setDate(new \DateTime());
+        $commande->setIdClient(3);
+
+        // Create the form with the populated Commande entity
+        $form = $this->createForm(CommandeType::class, $commande);
+
+        $form->handleRequest($request);
+        
+            // Save the submitted data to the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commande);
+            $entityManager->flush();
+
+            // Redirect to a success page or do something else
+       
+
     return $this->render('panier/index.html.twig', [
         'paniers' => $paniers,
     ]);
+
+
+   
+        // Get the current user ID (assuming you are using Symfony's security component)
+    
+  
+
+
+    
 }
 
 
@@ -65,6 +95,8 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
     // Persist the new Panier entity to the database
     $entityManager->persist($panier);
     $entityManager->flush();
+
+    
 
     // Redirect to the Panier index page or any other page after adding the Panier
     return $this->redirectToRoute('app_panier_index');

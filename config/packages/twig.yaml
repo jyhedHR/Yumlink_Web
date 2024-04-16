@@ -1,5 +1,9 @@
 parameters:
-    images_directory: '%kernel.project_dir%/public/assets/images'
+    images_directory: '%kernel.project_dir%/public/frontend/assets/images'
+
+
+    
+
 twig:
     default_path: '%kernel.project_dir%/templates'
 

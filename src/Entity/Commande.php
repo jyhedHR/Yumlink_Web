@@ -23,9 +23,9 @@ class Commande
     private $idCom;
 
     /**
-     * @var int
+     * @var \DateTimeInterface|null
      *
-     * @ORM\Column(name="date", type="integer", nullable=false)
+     * @ORM\Column(name="date", type="datetime", nullable=false)
      */
     private $date;
 
@@ -41,12 +41,12 @@ class Commande
         return $this->idCom;
     }
 
-    public function getDate(): ?int
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(int $date): static
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 use App\Repository\ProduitRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Produit
 {
+    
+
     /**
      * @var int
      *
@@ -22,34 +25,42 @@ class Produit
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
+    
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Le nom ne peut pas être vide")
+     * @Assert\Length(max=50, maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères")
      */
     private $nom;
-
+    
     /**
      * @var float
      *
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(message="Le prix ne peut pas être vide")
+     * @Assert\PositiveOrZero(message="Le prix doit être un nombre positif ou zéro")
      */
     private $prix;
-
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="diescription", type="string", length=50, nullable=false)
+     * @ORM\Column(name="diescription", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="La description ne peut pas être vide")
+     * @Assert\Length(max=255, maxMessage="La description ne peut pas dépasser {{ limit }} caractères")
      */
     private $diescription;
-
+    
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
+     * @Assert\Url(message="L'image doit être une URL valide")
      */
     private $image;
+    
 
     public function getId(): ?int
     {

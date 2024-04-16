@@ -1,0 +1,147 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Product</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Product
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="header-left">
+                        <div class="header-search">
+                            <form id="searchForm">
+                                <div class="form-group mb-0">
+                                    <i class="dw dw-search2 search-icon"></i>
+                                    <input type="text" class="form-control search-input" id="searchInput" placeholder="Search Here" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-wrap">
+                <div class="product-list">
+                    <ul id="productList" class="row">
+                        {% for produit in produits %}
+    <li class="col-lg-4 col-md-6 col-sm-12">
+        <div class="product-box">
+            <div class="producct-img">
+                <img src="{{ asset( produit.image ) }}" alt="Product Image">
+            </div>
+            <div class="product-caption">
+                <h4>
+                    <a href="#">{{ "id: " ~ produit.id }}</a>
+                </h4>
+                <h4>
+                    <a href="#">{{ "Nom: " ~ produit.nom }}</a>
+                </h4>
+                <h10>
+                    <a href="#">{{ produit.diescription }}</a>
+                </h10>
+                <div class="price">
+                    <del>$75.5</del>
+                    <ins>{{ produit.prix ~ "DT" }}</ins>
+                </div>
+                <a href="#" class="btn btn-outline-primary" onclick="event.preventDefault(); document.getElementById('editForm_{{ produit.id }}').submit();">Edit</a>
+
+                <form id="editForm_{{ produit.id }}" method="get" action="{{ path('app_produit_edit', {'id': produit.id}) }}" style="display: none;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ produit.id) }}">
+                </form>
+
+                <a href="#" class="btn btn-outline-primary" onclick="confirmAndSubmit({{ produit.id }})">Delete</a>
+
+                <form id="deleteForm_{{ produit.id }}" method="post" action="{{ path('app_produit_delete', {'id': produit.id}) }}" style="display: none;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                </form>
+            </div>
+        </div>
+    </li>
+{% endfor %}
+
+                    </ul>
+                </div>
+                <div class="blog-pagination mb-30">
+                    <div class="btn-toolbar justify-content-center mb-15">
+                        <div class="btn-group">
+                            <!-- Pagination buttons -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+            var query = $(this).val().trim();
+            if (query.length > 0) {
+                $.ajax({
+                    url: '{{ path('search_product') }}',
+                    method: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        // Update product list with search results
+                        $('#productList').empty();
+                        response.forEach(function(product) {
+                            var html = `
+                                <li class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="product-box">
+                                        <div class="producct-img">
+                                            <img src="${product.image}" alt="Product Image">
+                                        </div>
+                                        <div class="product-caption">
+                                            <h4><a href="#">id: ${product.id}</a></h4>
+                                            <h4><a href="#">Nom: ${product.nom}</a></h4>
+                                            <h10><a href="#">${product.diescription}</a></h10>
+                                            <div class="price">
+                                                <del>$75.5</del>
+                                                <ins>${product.prix} DT</ins>
+                                            </div>
+                                            <!-- Add edit and delete buttons as necessary -->
+                                        </div>
+                                    </div>
+                                </li>`;
+                            $('#productList').append(html);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            } else {
+                // Clear search results and show all products
+                location.reload();
+            }
+        });
+    });
+</script>
+
+
+<script>
+    function confirmAndSubmit(productId) {
+        if (confirm('Are you sure you want to delete this item?')) {
+            document.getElementById('deleteForm_' + productId).submit();
+        }
+    }
+</script>
+{% endblock %}
