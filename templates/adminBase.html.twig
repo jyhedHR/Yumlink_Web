@@ -23,7 +23,7 @@
 {% block js %}
 			
 
-			<script src={{asset("backend/vendors/scripts/core.js")}}></script>
+			<script src= {{asset("backend/vendors/scripts/core.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/script.min.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/process.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/layout-settings.js")}}></script>
@@ -134,7 +134,7 @@
 								<ul>
 									<li>
 										<a href="#">
-											<img src="vendors/images/img.jpg" alt="" />
+											<img src={{asset("vendors/images/img.jpg")}} alt="" />
 											<h3>John Doe</h3>
 											<p>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -144,7 +144,7 @@
 									</li>
 									<li>
 										<a href="#">
-											<img src="vendors/images/photo1.jpg" alt="" />
+											<img src={{asset("vendors/images/photo1.jpg")}} alt="" />
 											<h3>Lea R. Frith</h3>
 											<p>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -154,7 +154,7 @@
 									</li>
 									<li>
 										<a href="#">
-											<img src="vendors/images/photo2.jpg" alt="" />
+											<img src={{asset("vendors/images/photo2.jpg")}} alt="" />
 											<h3>Erik L. Richards</h3>
 											<p>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -164,7 +164,7 @@
 									</li>
 									<li>
 										<a href="#">
-											<img src="vendors/images/photo3.jpg" alt="" />
+											<img src={{asset( "vendors/images/photo3.jpg")}} alt="" />
 											<h3>John Doe</h3>
 											<p>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -174,7 +174,7 @@
 									</li>
 									<li>
 										<a href="#">
-											<img src="vendors/images/photo4.jpg" alt="" />
+											<img src={{asset( "vendors/images/photo4.jpg")}} alt="" />
 											<h3>Renee I. Hansen</h3>
 											<p>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -184,7 +184,7 @@
 									</li>
 									<li>
 										<a href="#">
-											<img src="vendors/images/img.jpg" alt="" />
+											<img src={{asset( "vendors/images/img.jpg")}} alt="" />
 											<h3>Vicki M. Coleman</h3>
 											<p>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -206,7 +206,7 @@
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="vendors/images/photo1.jpg" alt="" />
+								<img src={{asset( "vendors/images/photo1.jpg")}} alt="" />
 							</span>
 							<span class="user-name">Ross C. Lopez</span>
 						</a>
@@ -230,7 +230,7 @@
 				</div>
 				<div class="github-link">
 					<a href="https://github.com/dropways/deskapp" target="_blank"
-						><img src="vendors/images/github.svg" alt=""
+						><img src={{asset( "vendors/images/github.svg")}} alt=""
 					/></a>
 				</div>
 			</div>
@@ -418,12 +418,8 @@
         <div class="left-side-bar">
 			<div class="brand-logo">
 				<a href="index.html">
-					<img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-					<img
-						src="vendors/images/deskapp-logo-white.svg"
-						alt=""
-						class="light-logo"
-					/>
+					<img src={{asset("frontend/assets/images/YumLink_logo.png")}} class="dark-logo" alt="Logo" style="max-width: 100px; height: auto;">
+					<img src={{asset("frontend/assets/images/YumLink_logo.png")}} class="light-logo" alt="Logo" style="max-width: 100px; height: auto;">
 				</a>
 				<div class="close-sidebar" data-toggle="left-sidebar-close">
 					<i class="ion-close-round"></i>
@@ -641,7 +637,7 @@
 								<span class="micon bi bi-layout-text-window-reverse"></span>
 								<span class="mtext"
 									>Landing Page
-									<img src="vendors/images/coming-soon.png" alt="" width="25"
+									<img src={{asset( "vendors/images/coming-soon.png")}} alt="" width="25"
 								/></span>
 							</a>
 						</li>

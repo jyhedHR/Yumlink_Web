@@ -95,15 +95,15 @@
 							</button>
 							<div class="dropdown-menu language-dropdown-menu" aria-labelledby="language1">
 								<a class="dropdown-item" href="#">
-									<img src={{ asset("assets/images/uk.png") }} alt="flag">
+									<img src={{ asset("frontend/assets/images/uk.png") }} alt="flag">
 									English
 								</a>
 								<a class="dropdown-item" href="#">
-									<img src={{ asset("assets/images/china.png") }} alt="flag">
+									<img src={{ asset("frontend/assets/images/china.png") }} alt="flag">
 									简体中文
 								</a>
 								<a class="dropdown-item" href="#">
-									<img src={{ asset("assets/images/uae.png") }} alt="flag">
+									<img src={{ asset("frontend/assets/images/uae.png") }} alt="flag">
 									العربيّة
 								</a>
 							</div>
@@ -120,7 +120,7 @@
 			<div class="mobile-responsive-menu">
 				<div class="logo">
 					<a href="index.html">
-						<img src={{asset("assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
+						<img src={{asset("frontend/assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
 
 
 					</a>
@@ -133,7 +133,7 @@
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md navbar-light ">
 				<a class="navbar-brand" href="index.html">
-					<img src={{asset("assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
+					<img src={{asset("frontend/assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
 
 
 				</a>
@@ -173,17 +173,11 @@
 									<a href="shop.html" class="nav-link">Shop</a>
 								</li>
 								<li class="nav-item">
-									<a href="cart.html" class="nav-link">Cart</a>
+									<a href="cart.html" class="nav-link">panier</a>
 								</li>
-								<li class="nav-item">
-									<a href="checkout.html" class="nav-link">Checkout</a>
-								</li>
-								<li class="nav-item">
-									<a href="wishlist.html" class="nav-link">Wishlist</a>
-								</li>
-								<li class="nav-item">
-									<a href="shop-details.html" class="nav-link">Shop Details</a>
-								</li>
+								
+								
+								
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -286,13 +280,13 @@
 		<div class="footer-widget">
 			<div class="footer-logo">
 				<a href="index.html">
-					<img src={{asset("assets/images/YumLink_logo.png")}} alt="Images">
+					<img src={{asset("frontend/assets/images/YumLink_logo.png")}} alt="Images">
 				</a>
 			</div>
 			
 			<ul class="social-link">
 				<li>
-					<a href="https://www.facebook.com/" target="_blank">
+					<a href={{asset("https://www.facebook.com/")}} target="_blank">
 						<i class="bx bxl-facebook"></i>
 					</a>
 				</li>

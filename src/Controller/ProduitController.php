@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 
 
@@ -25,6 +27,37 @@ class ProduitController extends AbstractController
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
         ]);
+    }
+    #[Route('/admin', name: 'app_produit_indexadmin', methods: ['GET'])]
+    public function index_admin(ProduitRepository $produitRepository): Response
+    {
+        return $this->render('produit/indexadmin.html.twig', [
+            'produits' => $produitRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/search/product', name: 'search_product', methods: ['GET'])]
+    public function search(Request $request): JsonResponse
+    {
+        // Retrieve the search query from the request
+        $query = $request->query->get('query');
+
+        // Perform the search logic here
+        $entityManager = $this->getDoctrine()->getManager();
+        $results = $entityManager->getRepository(Produit::class)->searchByNom($query);
+
+        // Format the search results as needed
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[] = [
+                'id' => $result->getId(),
+                'nom' => $result->getNom(),
+                // Add other properties as needed
+            ];
+        }
+
+        // Return the search results as JSON response
+        return $this->json($formattedResults);
     }
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
@@ -55,7 +88,7 @@ public function new(Request $request,EntityManagerInterface $em): Response
             }
 
             // Set the image property in the entity to the relative path of the uploaded file
-            $produit->setImage('assets/images/'.$newFilename);
+            $produit->setImage('frontend/assets/images/'.$newFilename);
         }
 
         // Persist the entity
@@ -63,7 +96,7 @@ public function new(Request $request,EntityManagerInterface $em): Response
         $em->flush();
 
         // Redirect to the index page or any other page as needed
-        return $this->redirectToRoute('app_produit_index');
+        return $this->redirectToRoute('app_produit_indexadmin');
     }
 
     // If form is not submitted or not valid, render the form
@@ -78,7 +111,7 @@ public function new(Request $request,EntityManagerInterface $em): Response
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
-        return $this->render('produit/show.html.twig', [
+        return $this->render('produit/show.html.twig', [    
             'produit' => $produit,
         ]);
     }
@@ -90,9 +123,36 @@ public function new(Request $request,EntityManagerInterface $em): Response
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form->get('imageFile')->getData();
+
+            if ($imageFile) {
+                // Generate a unique filename
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+    
+                // Move the file to the directory where images are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle file upload exception
+                    $this->addFlash('error', 'An error occurred while uploading the image.');
+                    return $this->redirectToRoute('app_produit_new');
+                }
+    
+                // Set the image property in the entity to the relative path of the uploaded file
+                $produit->setImage('frontend/assets/images/'.$newFilename);
+            }
+    
+
+
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produit_indexadmin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('produit/edit.html.twig', [
@@ -109,6 +169,6 @@ public function new(Request $request,EntityManagerInterface $em): Response
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_produit_indexadmin', [], Response::HTTP_SEE_OTHER);
     }
 }
