@@ -28,8 +28,6 @@ class Commentaire
      * @var int
      *
      * @ORM\Column(name="id_article", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idArticle;
 
@@ -56,11 +54,6 @@ class Commentaire
     public function getCommentId(): ?int
     {
         return $this->commentId;
-    }
-
-    public function getIdArticle(): ?int
-    {
-        return $this->idArticle;
     }
 
     public function getCommentText(): ?string
@@ -99,5 +92,15 @@ class Commentaire
         return $this;
     }
 
+    public function getIdArticle(): ?int
+    {
+        return $this->idArticle;
+    }
 
+    public function setIdArticle(int $idArticle): static
+    {
+        $this->idArticle = $idArticle;
+
+        return $this;
+    }
 }

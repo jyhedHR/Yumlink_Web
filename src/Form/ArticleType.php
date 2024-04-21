@@ -19,18 +19,15 @@ class ArticleType extends AbstractType
         $builder
             ->add('title_article', TextType::class, [
                 'label' => 'Title*',
-                'required' => true,
             ])
             ->add('img_article', FileType::class, [
                 'label' => 'Upload Image*',
-                'required' => true,
                 'mapped' => false,
                 'attr' => [
                     'accept' => 'image/*',],
             ])
             ->add('description_article', TextareaType::class, [
                 'label' => 'Content*',
-                'required' => true,
             ])
             ->add('tags', HiddenType::class, [
                 'data' => '',

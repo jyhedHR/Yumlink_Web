@@ -13,7 +13,7 @@
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 		{% block css %}
-
+			<link rel="stylesheet" href={{asset("assets/css/blogStylesheet.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/css/bootstrap.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/css/animate.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/fonts/flaticon.css")}}>
@@ -214,12 +214,12 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
+									<a href="{{ path('app_article_blog')}}" class="nav-link">
 										Mes Publications
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
+									<a href="{{ path('app_article_new')}}" class="nav-link">
 										Ajouter Publication
 									</a>
 								</li>
