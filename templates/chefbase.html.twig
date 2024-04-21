@@ -147,18 +147,18 @@
 						</li>
 						<li class="nav-item">
 							<a href="#" class="nav-link">
-								Recette
+								Recettes
 								<i class="bx bx-chevron-down"></i>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
 									<a href="404.html" class="nav-link">
-										Recette Favorie
+										Mes Recettes
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="coming-soon.html" class="nav-link">
-										Nos Chefs
+										Ajouter Recette
 									</a>
 								</li>
 							</ul>
@@ -215,12 +215,12 @@
 							<ul class="dropdown-menu">
 								<li class="nav-item">
 									<a href="{{ path('app_article_blog')}}" class="nav-link">
-										Publications récentes
+										Mes Publications
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
-										Tags
+									<a href="{{ path('app_article_new')}}" class="nav-link">
+										Ajouter Publication
 									</a>
 								</li>
 							</ul>
@@ -229,20 +229,9 @@
 						<li class="nav-item">
 							<a href="#" class="nav-link">
 								Nutritions
-								<i class="bx bx-chevron-down"></i>
+								
 							</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
-										Ajouter
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
-										Modifier
-									</a>
-								</li>
-							</ul>
+							
 						</li>
 						<li class="nav-item">
 							<a href="contact.html" class="nav-link">
@@ -259,7 +248,7 @@
 							</div>
 						</div>
 						<div class="optional-item">
-							<a href="login.html" class="default-btn two">Log in</a>
+							<a href="appointment.html" class="default-btn two">Book An Appointment</a>
 						</div>
 					</div>
 					<div class="mobile-nav">
@@ -289,7 +278,10 @@
 					<img src={{asset("assets/images/YumLink_logo.png")}} alt="Images">
 				</a>
 			</div>
-			
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+																				aliqua quis ipsum suspendisse.
+			</p>
 			<ul class="social-link">
 				<li>
 					<a href="https://www.facebook.com/" target="_blank">
@@ -361,7 +353,6 @@
 				<li>
 					Email:
 					<span>
-                    
 						<a href="">yumlink2@gmail.com</a><br>
 					</span>
 				</li>
@@ -378,12 +369,12 @@
 	<div class="col-lg-4 col-sm-6">
 		<div class="footer-widget ps-5">
 			<h3>Newsletter</h3>
-			<p>Hello</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
 			<div class="newsletter-area">
 				<form class="newsletter-form" data-toggle="validator" method="POST">
 					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
 					<button class="subscribe-btn" type="submit">
-						Send
+						Subscribe
 					</button>
 					<div id="validator-newsletter" class="form-result"></div>
 				</form>

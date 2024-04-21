@@ -5,6 +5,7 @@ use App\Repository\ArticleRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -28,6 +29,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="title_article", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Title is required")
      */
     private $titleArticle;
 
@@ -35,6 +37,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="img_article", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Image URL is required")
      */
     private $imgArticle;
 
@@ -42,6 +45,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="description_article", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Description is required")
      */
     private $descriptionArticle;
 
@@ -159,6 +163,17 @@ class Article
 
         return $this;
     }
+    
+    public function incrementLikes(): void
+    {
+        $this->nbLikesArticle++;
+    }
 
+    public function decrementLikes(): void
+    {
+        if ($this->nbLikesArticle > 0) {
+            $this->nbLikesArticle--;
+        }
+    }
 
 }
