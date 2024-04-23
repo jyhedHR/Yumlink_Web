@@ -1,0 +1,96 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}
+	Nouvelle recette
+{% endblock %}
+
+{% block body %}
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div
+				class="min-height-200px">
+				<!-- horizontal Basic Forms Start -->
+				<div class="pd-20 card-box mb-30">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h1 class="text-blue h4">Ajouter un nouveau admin</h1>
+						</div>
+					</div>
+					{{ form_start(form) }}
+					<h2>Nouvelle recette</h2>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.nom, 'Nom') }}
+								{{ form_widget(form.nom, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Nom de la recette'}}) }}
+								{% if form_errors(form.nom) is not empty %}
+									<div class="alert alert-danger">
+										{{ form_errors(form.nom) }}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.chef, 'Chef') }}
+								{{ form_widget(form.chef, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Nom chef', 'required': 'required'}}) }}
+								{{ form_errors(form.chef) }}
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.ingredients, 'Ingredients') }}
+								{{ form_widget(form.ingredients, {'attr': {'class': 'form-select form-control', 'required': 'required'}}) }}
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<p>Your ingredient is not here?
+								<a href="{{ path('app_ingredient_new') }}">Click here</a>
+								to add</p>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.description, 'Description') }}
+								{{ form_widget(form.description, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Description', 'required': 'required' ,'rows': '5'}}) }}
+								{{ form_errors(form.description) }}
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.imgsrc, 'image') }}
+								{{ form_widget(form.imgsrc, {'attr': {'class': 'form-control ', 'placeholder': 'Ajouter une image', 'required': 'required'}}) }}
+								{{ form_errors(form.imgsrc) }}
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.categorie, 'Categorie') }}
+								{{ form_widget(form.categorie, {'attr': {'class': 'form-select form-control','nonvalidate ':'nonvalidate' , 'required': 'required'}}) }}
+								{{ form_errors(form.categorie) }}
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								{{ form_label(form.calorie, 'Calorie') }}
+								{{ form_widget(form.calorie, {'attr': {'class': 'form-control ','nonvalidate ':'nonvalidate' , 'placeholder': 'Calorie', 'required': 'required'}}) }}
+								{{ form_errors(form.calorie) }}
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								{{ form_label(form.protein, 'Protein') }}
+								{{ form_widget(form.protein, {'attr': {'class': 'form-control ','nonvalidate ':'nonvalidate' , 'placeholder': 'Protein', 'required': 'required'}}) }}
+								{{ form_errors(form.protein) }}
+							</div>
+
+							<div class="col-lg-12 col-md-12">
+								<button type="submit" class="default-btn">Submit Now</button>
+							</div>
+						</div>
+					</div>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

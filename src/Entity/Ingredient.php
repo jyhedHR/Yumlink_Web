@@ -3,7 +3,7 @@
 namespace App\Entity;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ingredient
  *
@@ -24,7 +24,7 @@ class Ingredient
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Veuillez remplir ce champ")
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
      */
     private $nom;

@@ -1,0 +1,89 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Recettes index{% endblock %}
+
+{% block body %}
+
+						
+<!DOCTYPE html>
+<html>
+	
+	<body>
+		<div class="pre-loader">
+			<div class="pre-loader-box">
+				<div class="loader-logo">
+					<img src="assets/backend/vendors/images/deskapp-logo.svg" alt="" />
+				</div>
+				<div class="loader-progress" id="progress_div">
+					<div class="bar" id="bar1"></div>
+				</div>
+				<div class="percent" id="percent1">0%</div>
+				<div class="loading-text">Loading...</div>
+			</div>
+		</div>
+			
+		<div class="mobile-menu-overlay"></div>
+
+		<div class="main-container">
+			<div class="pd-ltr-20 xs-pd-20-10">
+				<div class="min-height-200px">
+					<div class="page-header">
+						<div class="row">
+							<div class="col-md-12 col-sm-12">
+								<div class="title">
+									<h4>Cards</h4>
+								</div>
+								<nav aria-label="breadcrumb" role="navigation">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item">
+											<a href="index.html">Home</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">
+											Cards
+										</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<div class="row clearfix">
+                     {% for recette in recettes %}
+						<div class="col-lg-3 col-md-6 col-sm-12 mb-30">
+							<div class="card card-box">
+								
+                        <img src="{{ recette.imgsrc }}" alt="Images">
+                    
+								<div class="card-body">
+									<h5 class="card-title weight-500">{{ recette.nom }}</h5>
+									<p class="card-text">
+										{{ recette.description }}
+									</p>
+									<a href="{{ path('app_recettes_show_admin', {'idR': recette.idR}) }}" class="btn btn-primary">Show more</a>
+								</div>
+							</div>
+						</div>
+						 {% endfor %}
+			
+			
+		
+		<!-- welcome modal end -->
+		<!-- js -->
+		<script src="vendors/scripts/core.js"></script>
+		<script src="vendors/scripts/script.min.js"></script>
+		<script src="vendors/scripts/process.js"></script>
+		<script src="vendors/scripts/layout-settings.js"></script>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+	</body>
+</html>
+
+						
+{% endblock %}

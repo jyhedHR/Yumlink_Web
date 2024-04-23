@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Form;
 
+
+namespace App\Form;
+// use blackknight467\StarRatingBundle\Form\RatingType;
 use App\Entity\Recettes;
 use App\Entity\Ingredient;
 use App\Entity\FileTransformer;
@@ -17,37 +19,35 @@ class RecettesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('chef')
-            ->add('ingredients', EntityType::class, [
-                'class' => Ingredient::class,
-                'choice_label' => 'nom', 
-                'multiple' => true,
-                'mapped' => false, 
-            ])
-            ->add('categorie', ChoiceType::class, [
-                'choices' => [
-                    'Dinner' => 'Dinner',
-                    'Lunch' => 'Lunch',
-                    'Dessert' => 'Dessert',
-                    'Breakfast' => 'Breakfast',
-                ],
-                'placeholder' => 'Choose a category', 
-                'required' => true,
-                
-            ])
-            ->add('description')
-            ->add('imgsrc' , FileType::class,[
-                'label' => 'Image',
-                'required' => false, 
-                
-            ])
-            ->add('calorie')
-            ->add('protein')
-           
-        ;
-      
-    }
+        ->add('nom')
+        ->add('chef')
+        ->add('ingredients', EntityType::class, [
+            'class' => Ingredient::class,
+            'choice_label' => 'nom', 
+            'multiple' => true,
+            'mapped' => false, 
+        ])
+        ->add('categorie', ChoiceType::class, [
+            'choices' => [
+                'Dinner' => 'Dinner',
+                'Lunch' => 'Lunch',
+                'Dessert' => 'Dessert',
+                'Breakfast' => 'Breakfast',
+            ],
+            'placeholder' => 'Choose a category', 
+            'required' => true,
+        ])
+        ->add('description')
+        ->add('imgsrc' , FileType::class,[
+            'label' => 'Image',
+            'required' => false, 
+        ])
+        // ->add('rating', RatingType::class, [ 
+        //     'label' => 'Rating'
+        // ])
+        ->add('calorie')
+        ->add('protein');
+}
 
     public function configureOptions(OptionsResolver $resolver): void
     {

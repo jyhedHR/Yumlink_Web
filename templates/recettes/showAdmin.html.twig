@@ -1,0 +1,156 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}Recettes{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html>
+	
+	<body>
+		<div class="pre-loader">
+			<div class="pre-loader-box">
+				<div class="loader-logo">
+					<img src="vendors/images/deskapp-logo.svg" alt="" />
+				</div>
+				<div class="loader-progress" id="progress_div">
+					<div class="bar" id="bar1"></div>
+				</div>
+				<div class="percent" id="percent1">0%</div>
+				<div class="loading-text">Loading...</div>
+			</div>
+		</div>
+
+		
+			
+		<div class="mobile-menu-overlay"></div>
+
+		<div class="main-container">
+			<div class="pd-ltr-20 xs-pd-20-10">
+				<div class="min-height-200px">
+					<div class="page-header">
+						<div class="row">
+							<div class="col-md-12 col-sm-12">
+								<div class="title">
+									<h4>Recipe Details</h4>
+								</div>
+								<nav aria-label="breadcrumb" role="navigation">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item">
+											<a href="index.html">Home</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">
+											{{ recette.nom }} 
+										</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<div class="blog-wrap">
+						<div class="container pd-0">
+							<div class="row">
+								<div class="col-md-8 col-sm-12">
+									<div class="blog-detail card-box overflow-hidden mb-30">
+										<div class="blog-img">
+											<img src="vendors/images/img2.jpg" alt="" />
+										</div>
+										<div class="blog-caption">
+										
+                                              <img src="{{ recette.imgsrc }}" alt="Images">
+              <div>
+              
+                 </div>
+											<p>
+                                                Calorie  : {{ recette.calorie }}
+												Proteins : {{ recette.protein }}
+											</p>
+											<h5 class="mb-10">
+											      chef : 
+											</h5>
+											<p>
+												{{ recette.chef }}
+											</p>
+											
+											<h5 class="mb-10">Directions</h5>
+						 					<p>
+                                             {{ recette.description }}
+                                             </p>
+											<h5 class="mb-10">Ingredients</h5>
+											  <ul>
+                                               {% for ingredient in ingredients %}
+                                                <li>{{ ingredient.nom }}</li>
+                                                 {% endfor %}
+                                              </ul>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-sm-12">
+									<div class="card-box mb-30">
+										<h5 class="pd-20 h5 mb-0">Categories</h5>
+										<div class="list-group">
+											<a
+												href="#"
+												class="list-group-item d-flex align-items-center justify-content-between"
+												>Lunch
+												<span class="badge badge-primary badge-pill">7</span></a
+											>
+											<a
+												href="#"
+												class="list-group-item d-flex align-items-center justify-content-between"
+												>Dinner
+												<span class="badge badge-primary badge-pill"
+													>10</span
+												></a
+											>
+											<a
+												href="#"
+												class="list-group-item d-flex align-items-center justify-content-between active"
+												>Snack
+												<span class="badge badge-primary badge-pill">8</span></a
+											>
+											<a
+												href="#"
+												class="list-group-item d-flex align-items-center justify-content-between"
+												>Breakfast
+												<span class="badge badge-primary badge-pill"
+													>15</span
+												></a>
+										
+											
+										</div>
+									
+									
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+			
+			
+				
+		
+		<script src="vendors/scripts/core.js"></script>
+		<script src="vendors/scripts/script.min.js"></script>
+		<script src="vendors/scripts/process.js"></script>
+		<script src="vendors/scripts/layout-settings.js"></script>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+	</body>
+</html>
+
+
+
+{% endblock %}

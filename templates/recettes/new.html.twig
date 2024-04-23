@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseChef.html.twig' %}
 
 {% block title %}New Recettes{% endblock %}
 
@@ -28,5 +28,7 @@
 </div>
     {{ include('recettes/_form.html.twig') }}
 
-    <a href="{{ path('app_recettes_index') }}">back to list</a>
+     <form action="{{ path('app_recettes_index') }}" method="get">
+    <button type="submit">Back to List</button>
+</form>
 {% endblock %}
