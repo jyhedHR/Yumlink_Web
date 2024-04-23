@@ -1,0 +1,51 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Average Calorie Consumption Chart{% endblock %}
+
+{% block body %}
+    <section class="inner-banner inner-bg3">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3>Average Calorie Consumption Chart</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_user_nutrition_index') }}">Back to List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="chart-container">
+        <canvas id="calorieChart" width="400" height="400"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Fetch the average calorie data from your controller
+        const averageCalories = {{ averageCalories | json_encode | raw }};
+
+        // Chart.js configuration
+        const ctx = document.getElementById('calorieChart').getContext('2d');
+        const calorieChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Average Calorie Consumption'],
+                datasets: [{
+                    label: 'Average Calorie Consumption',
+                    data: [averageCalories],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}
