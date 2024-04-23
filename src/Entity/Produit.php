@@ -31,7 +31,12 @@ class Produit
      *
      * @ORM\Column(name="nom", type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Le nom ne peut pas être vide")
-     * @Assert\Length(max=50, maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères")
+     * @Assert\Length(
+     *      min=3,
+     *      max=50,
+     *      minMessage="Le nom doit contenir au moins {{ limit }} caractères",
+     *      maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private $nom;
     
@@ -50,6 +55,10 @@ class Produit
      * @ORM\Column(name="diescription", type="string", length=255, nullable=false)
      * @Assert\NotBlank(message="La description ne peut pas être vide")
      * @Assert\Length(max=255, maxMessage="La description ne peut pas dépasser {{ limit }} caractères")
+     * * @Assert\Expression(
+     *     "not (value matches '/^[0-9\W].*$/')",
+     *     message="La description ne peut pas commencer par un chiffre ou un symbole."
+     * )
      */
     private $diescription;
     
@@ -57,7 +66,7 @@ class Produit
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=false)
-     * @Assert\Url(message="L'image doit être une URL valide")
+    
      */
     private $image;
     

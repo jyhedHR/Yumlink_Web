@@ -29,8 +29,9 @@
 			<link rel="stylesheet" href={{asset("frontend/assets/css/theme-dark.css")}}>
 		{% endblock %}
 		{% block js %}
-			<script src="frontend/assets/js/jquery.min.js"></script>
 
+		
+	
 			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
 			<script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
 			<script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
@@ -170,14 +171,13 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="shop.html" class="nav-link">Shop</a>
+									<a href="{{ path('app_produit_index') }}" class="nav-link">Shop</a>
 								</li>
 								<li class="nav-item">
-									<a href="cart.html" class="nav-link">panier</a>
+									<a href="{{ path('app_panier_index') }}" class="nav-link">panier</a>
 								</li>
-								
-								
-								
+
+
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -283,7 +283,7 @@
 					<img src={{asset("frontend/assets/images/YumLink_logo.png")}} alt="Images">
 				</a>
 			</div>
-			
+
 			<ul class="social-link">
 				<li>
 					<a href={{asset("https://www.facebook.com/")}} target="_blank">
@@ -349,13 +349,13 @@
 					<span>
 						<a href="tel:+50711106">+50711106</a><br>
 						<a href="tel:+26956338">+26956338</a><br>
-                        <a href="tel:+93588870">+93588870</a><br>
+						<a href="tel:+93588870">+93588870</a><br>
 					</span>
 				</li>
 				<li>
 					Email:
 					<span>
-                    
+
 						<a href="">yumlink2@gmail.com</a><br>
 					</span>
 				</li>
@@ -372,10 +372,11 @@
 	<div class="col-lg-4 col-sm-6">
 		<div class="footer-widget ps-5">
 			<h3>Newsletter</h3>
-			<p>Hello</p>
+			<p>Any reclamation ?</p>
 			<div class="newsletter-area">
 				<form class="newsletter-form" data-toggle="validator" method="POST">
-					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
+					<textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order rclamation " class="form-control"></textarea>
+
 					<button class="subscribe-btn" type="submit">
 						Send
 					</button>

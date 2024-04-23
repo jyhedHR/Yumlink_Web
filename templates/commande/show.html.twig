@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'Adminbase.html.twig' %}
 
 {% block title %}Commande{% endblock %}
 
@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Date</th>
-                <td>{{ commande.date }}</td>
+                <td>{{ commande.date|date('Y-m-d H:i:s') }}</td>
             </tr>
             <tr>
                 <th>IdClient</th>

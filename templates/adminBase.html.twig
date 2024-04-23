@@ -9,7 +9,13 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
         {% block css %}
+		<!-- Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/core.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/icon-font.min.css")}}>
 			<link rel="stylesheet" href={{asset("backend/src/plugins/datatables/css/dataTables.bootstrap4.min.css")}}>
@@ -21,7 +27,8 @@
 			
 		{% endblock %}
 {% block js %}
-			
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+			<link rel="stylesheet" href="/error.css">
 
 			<script src= {{asset("backend/vendors/scripts/core.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/script.min.js")}}></script>
@@ -33,6 +40,18 @@
 			<script src={{asset("backend/src/plugins/datatables/js/dataTables.responsive.min.js")}}></script>
 			<script src={{asset("backend/src/plugins/datatables/js/responsive.bootstrap4.min.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/dashboard.js")}}></script>
+			<script>
+  toastr.options = {
+     "closeButton": true,
+    "progressBar": true,
+    "timeOut": 1200,
+    "positionClass": "toast-top-right"
+};
+
+    {% for flash in app.flashes %}
+        toastr["{{ flash.type }}"]("{{ flash.message }}");
+    {% endfor %}
+</script>
 			
 		</head>
 	</html>
@@ -435,25 +454,19 @@
 							</a>
 							<ul class="submenu">
 								<li><a href="index.html">Dashboard style 1</a></li>
-								<li><a href="index2.html">Dashboard style 2</a></li>
-								<li><a href="index3.html">Dashboard style 3</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle">
 								<span class="micon bi bi-textarea-resize"></span
-								><span class="mtext">Forms</span>
+								><span class="mtext">Produit</span>
 							</a>
 							<ul class="submenu">
-								<li><a href="form-basic.html">Form Basic</a></li>
-								<li>
-									<a href="advanced-components.html">Advanced Components</a>
-								</li>
-								<li><a href="form-wizard.html">Form Wizard</a></li>
-								<li><a href="html5-editor.html">HTML5 Editor</a></li>
-								<li><a href="form-pickers.html">Form Pickers</a></li>
-								<li><a href="image-cropper.html">Image Cropper</a></li>
-								<li><a href="image-dropzone.html">Image Dropzone</a></li>
+								<li><a href="{{ path('app_produit_indexadmin') }}">List Produit</a></li>
+								<li><a href="{{ path('app_commande_index') }}">List Commande</a></li>
+								<li><a href="{{ path('app_panier_indexadmin') }}">List Panier</a></li>
+								<li><a href="{{ path('app_produit_new') }}">Add Produit</a></li>
+								
 							</ul>
 						</li>
 						<li class="dropdown">
