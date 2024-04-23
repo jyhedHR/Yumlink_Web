@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitRepository;
 use App\Entity\Produit;
+use App\Service\StripeService;
+
+use \Exception;
 
 
 
@@ -29,29 +32,51 @@ public function index(PanierRepository $panierRepository, EntityManagerInterface
     );
     $paniers = $query->getResult();
 
-        
-
-        // Create a new Commande entity and set the current system date and the user ID
-        $commande = new Commande();
-        $commande->setDate(new \DateTime());
-        $commande->setIdClient(3);
-
-        // Create the form with the populated Commande entity
-        $form = $this->createForm(CommandeType::class, $commande);
-
-        $form->handleRequest($request);
-        
-            // Save the submitted data to the database
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($commande);
-            $entityManager->flush();
-
-            // Redirect to a success page or do something else
+         // Use $stripeService to create a charge
+   
        
 
     return $this->render('panier/index.html.twig', [
         'paniers' => $paniers,
     ]);
+}
+
+
+
+
+    #[Route('/admin', name: 'app_panier_indexadmin', methods: ['GET'])]
+    public function indexadmin(PanierRepository $panierRepository, EntityManagerInterface $entityManager,Request $request): Response
+    {
+        // Fetch paniers along with associated Produit entities using custom DQL query
+        $query = $entityManager->createQuery(
+            'SELECT p, produit FROM App\Entity\Panier p
+            LEFT JOIN p.produit produit'
+        );
+        $paniers = $query->getResult();
+    
+            
+    
+            // Create a new Commande entity and set the current system date and the user ID
+            $commande = new Commande();
+            $commande->setDate(new \DateTime());
+            $commande->setIdClient(3);
+    
+            // Create the form with the populated Commande entity
+            $form = $this->createForm(CommandeType::class, $commande);
+    
+            $form->handleRequest($request);
+            
+                // Save the submitted data to the database
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($commande);
+                $entityManager->flush();
+    
+                // Redirect to a success page or do something else
+           
+    
+        return $this->render('panier/indexadmin.html.twig', [
+            'paniers' => $paniers,
+        ]);
 
 
    
@@ -120,7 +145,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_panier_indexadmin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('panier/edit.html.twig', [
@@ -138,5 +163,17 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         }
 
         return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/admin/{idp}', name: 'app_panier_deleteadmin', methods: ['POST'])]
+    public function deleteadmin(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$panier->getIdp(), $request->request->get('_token'))) {
+            $entityManager->remove($panier);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_panier_indexadmin', [], Response::HTTP_SEE_OTHER);
     }
 }

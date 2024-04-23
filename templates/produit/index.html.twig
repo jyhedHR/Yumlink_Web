@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+
+
+
 	<div class="inner-banner inner-bg3">
 		<div class="container">
 			<div class="inner-title text-center">
@@ -17,8 +20,6 @@
 			</div>
 		</div>
 
-		
-
 
 	</ul>
 </div></div></div><section class="py-5"><div class="container px-4 px-lg-5 mt-5">
@@ -31,19 +32,19 @@
 				<img
 				src="{{ asset(produit.image) }}" alt="Product Image">
 				<!-- Product details-->
-                <form method="post" action="{{ path('app_panier_new') }}">
-				<div class="card-body p-4">
-					<div
-						class="text-center">
-						<!-- Product name-->
-						<h5 class="fw-bolder">{{ produit.nom }}</h5>
-						<!-- Product price-->
-						{{ produit.prix ~ "DT" }}<br>
-                        <input type="number" name="quantite" min="1" value="1" inputmode="numeric" style="width: 50px; padding: 5px;">
+				<form method="post" action="{{ path('app_panier_new') }}">
+					<div class="card-body p-4">
+						<div
+							class="text-center">
+							<!-- Product name-->
+							<h5 class="fw-bolder">{{ produit.nom }}</h5>
+							<!-- Product price-->
+							{{ produit.prix ~ "DT" }}<br>
+							<input type="number" name="quantite" min="1" value="1" inputmode="numeric" style="width: 50px; padding: 5px;">
+						</div>
 					</div>
-				</div>
-				<!-- Product actions-->
-				
+					<!-- Product actions-->
+
 
 					<input type="hidden" name="id_client" value="3">
 					<input type="hidden" name="id_produit" value="{{ produit.id }}">
@@ -59,4 +60,4 @@
 		</div>
 	{% endfor %}
 
-</div></div></section><a href="{{ path('app_produit_new') }}">Create new</a>{% endblock %}
+</div></div>{% endblock %}

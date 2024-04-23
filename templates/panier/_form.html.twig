@@ -1,4 +1,88 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="main-container">
+	<div class="pd-ltr-20 xs-pd-20-10">
+		<div class="min-height-200px">
+			<div class="page-header">
+				<div class="row">
+					<div class="col-md-6 col-sm-12">
+						<div class="title">
+							<h4>Form</h4>
+						</div>
+						<nav aria-label="breadcrumb" role="navigation">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item">
+									<a href="index.html">Home</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">
+									Panier form
+								</li>
+							</ol>
+						</nav>
+					</div>
+					<div class="col-md-6 col-sm-12 text-right">
+						<div class="dropdown">
+							<a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+								January 2018
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a class="dropdown-item" href="#">Export List</a>
+								<a class="dropdown-item" href="#">Policies</a>
+								<a class="dropdown-item" href="#">View Assets</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Default Basic Forms Start -->
+			<div class="pd-20 card-box mb-30">
+				<div class="clearfix">
+					<div class="pull-left">
+						<h4 class="text-blue h4">Panier form</h4>
+					</div>
+					<div class="pull-right"></div>
+				</div>
+				<form method="post" action="{{ panier.idp is defined and panier.idp ? path('app_panier_edit', {'idp': panier.idp}) : path('app_produit_new') }}">
+					{{ form_start(form) }}
+
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">quantite</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form_widget(form.quantite, { 'attr': {'class': 'form-control' ~ (form_errors(form.quantite)|length ? ' error' : (form.quantite.vars.valid ? ' success' : '')) , 'placeholder': 'nom produit'} }) }}
+							<span class="error-message">{{ form_errors(form.quantite) }}</span>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">Prix</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form_widget(form.prixtotal, { 'attr': {'class': 'form-control' ~ (form_errors(form.prixtotal)|length ? ' error' : (form.prixtotal.vars.valid ? ' success' : '')), 'placeholder': '100 dt', 'type': 'number'} }) }}
+						<span class="error-message">{{ form_errors(form.prixtotal) }}</span>
+                        </div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">idClient</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form_widget(form.idClient, { 'attr': {'class': 'form-control' ~ (form_errors(form.idClient)|length ? ' error' : (form.idClient.vars.valid ? ' success' : '')), 'description': 'Enter description'} }) }}
+						<span class="error-message">{{ form_errors(form.idClient) }}</span>
+                        </div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-12 col-md-2 col-form-label">produit</label>
+						<div class="col-sm-12 col-md-10">
+							{{ form_widget(form.produit, { 'attr': {'class': 'form-control' ~ (form_errors(form.produit)|length ? ' error' : (form.produit.vars.valid ? ' success' : '')), 'description': 'Enter description'} }) }}
+						<span class="error-message">{{ form_errors(form.produit) }}</span>
+                        </div>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Submit</button>
+
+					{{ form_end(form) }}
+				</form>
+			</div>
+			<!-- Default Basic Forms End -->
+
+
+		</div>
+	</div>
+</div>

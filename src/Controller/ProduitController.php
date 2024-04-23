@@ -8,12 +8,18 @@ use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
+use Flasher\Toastr\Prime\ToastrFactory;
+use Psr\Log\LoggerInterface;
+
 
 
 
@@ -61,7 +67,7 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
-public function new(Request $request,EntityManagerInterface $em): Response
+public function new(Request $request,EntityManagerInterface $em , ToastrFactory $toastr , LoggerInterface $logger): Response
 {
     $produit = new Produit();
     $form = $this->createForm(ProduitType::class, $produit);
@@ -89,8 +95,17 @@ public function new(Request $request,EntityManagerInterface $em): Response
 
             // Set the image property in the entity to the relative path of the uploaded file
             $produit->setImage('frontend/assets/images/'.$newFilename);
+           
         }
+        $logger->info('Before showing Toastr success notification.');
 
+        // Show the success notification
+        $toastr->success('Add Produit successfully!', ['timeOut' => 1200]);
+    
+        // Log after showing the notification
+        $logger->info('After showing Toastr success notification.');
+
+;
         // Persist the entity
         $em->persist($produit);
         $em->flush();

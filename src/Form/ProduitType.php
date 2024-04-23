@@ -18,18 +18,21 @@ class ProduitType extends AbstractType
     {
         $builder
         ->add('nom', TextType::class, [
+            'required' => false,
             'attr' => ['class' => 'form-control', 'placeholder' => 'Johnny Brown'],
             'constraints' => [
                 new NotBlank(['message' => '']),
             ],
         ])
         ->add('prix', NumberType::class, [
+            'required' => false,
             'attr' => ['class' => 'form-control', 'placeholder' => '100', 'type' => 'number'],
             'constraints' => [
                 new NotBlank(['message' => '']),
             ],
         ])
         ->add('diescription', TextareaType::class, [
+            'required' => false,
             'attr' => ['class' => 'form-control', 'placeholder' => 'Enter description'],
             'constraints' => [
                 new NotBlank(['message' => '']),

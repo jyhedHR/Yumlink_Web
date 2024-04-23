@@ -175,14 +175,13 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="shop.html" class="nav-link">Shop</a>
+									<a href="{{ path('app_produit_index') }}" class="nav-link">Shop</a>
 								</li>
 								<li class="nav-item">
-									<a href="cart.html" class="nav-link">panier</a>
+									<a href="{{ path('app_panier_index') }}" class="nav-link">panier</a>
 								</li>
-								
-								
-								
+
+
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -412,10 +411,11 @@
 	<div class="col-lg-4 col-sm-6">
 		<div class="footer-widget ps-5">
 			<h3>Newsletter</h3>
-			<p>Hello</p>
+			<p>Any reclamation ?</p>
 			<div class="newsletter-area">
 				<form class="newsletter-form" data-toggle="validator" method="POST">
-					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
+					<textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order rclamation " class="form-control"></textarea>
+
 					<button class="subscribe-btn" type="submit">
 						Send
 					</button>
