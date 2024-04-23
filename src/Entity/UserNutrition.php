@@ -4,6 +4,10 @@ namespace App\Entity;
 use App\Repository\UserNutritionRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
+//add log 
+
+use Psr\Log\LoggerInterface;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -259,4 +263,7 @@ public function __toString(): string
             'fat' => $fatCalories / 9 // Convert fat calories to grams
         ];
     }
+
+   
+ 
 }

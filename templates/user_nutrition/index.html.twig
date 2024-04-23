@@ -1,7 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block title %}Votre espace du nutrition {% endblock %}
-
 {% block body %}
+    <section class="inner-banner inner-bg3">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3> your Information</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </section>
     <style>
         /* Add your CSS styles here */
         .table {
@@ -10,13 +22,13 @@
         }
 
         th, td {
-            padding: 8px;
-            text-align: left;
+            padding: 13px;
+            text-align: middle;
             border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #555353;
             color: #333;
         }
 
@@ -50,7 +62,6 @@
         }
     </style>
 
-    <h1>Votre espace du nutrition</h1>
 
     <table class="table">
         <thead>
@@ -82,6 +93,8 @@
                 <td>
                     <a href="{{ path('app_user_nutrition_show', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Show</a>
                     <a href="{{ path('app_user_nutrition_edit', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Edit</a>
+                    <a href="{{ path('app_generate_pdf', {'userId': user_nutrition.user.getIdu()}) }}" class="btn btn-secondary">Generate your bilan</a>
+
                 </td>
             </tr>
         {% else %}
@@ -92,7 +105,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_nutrition_new') }}" class="btn-secondary btn">Create new</a>
-        <a href="{{ path('recommendations') }}" class="btn-secondary btn">View Recommendations</a>
+    {# <a href="{{ path('app_user_nutrition_new') }}" class="btn-secondary btn">Create new</a>#}
+        <a href="{{ path('recommendations') }}" class="btn-secondary btn">View Recommendations</a> 
 
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Nutrition History{% endblock %}
+
+{% block body %}
+    <h1>User Nutrition History</h1>
+    <p>User ID: {{ userNutrition.id }}</p>
+    <ul>
+        {% for entry in history %}
+            <li>
+                <strong>Revision {{ entry.revision }}</strong>
+                <ul>
+                    <li>Age: {{ entry.data.age }}</li>
+                    <li>Weight: {{ entry.data.weight }}</li>
+                    <li>Height: {{ entry.data.height }}</li>
+                    <!-- Add other fields as needed -->
+                    <li>Revision Date: {{ entry.createdAt|date('Y-m-d H:i:s') }}</li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

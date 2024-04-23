@@ -14,6 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//pdf 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+//log history
+use Psr\Log\LoggerInterface;
+
+
 #[Route('/nutrition')]
 class UserNutritionController extends AbstractController
 {
@@ -31,15 +39,15 @@ class UserNutritionController extends AbstractController
     {
         $UNbyId = [];
         $userNutritions = $userNutritionRepository->findAll();
-        foreach ($userNutritions as $usernutrition ) {
-        if ($usernutrition->getUser()->getIdu()  == 39) {
-            $UNbyId[] = $usernutrition;
+        foreach ($userNutritions as $usernutrition) {
+            if ($usernutrition->getUser()->getIdu() == 39) {
+                $UNbyId[] = $usernutrition;
+            }
+            return $this->render('user_nutrition/index.html.twig', [
+                'user_nutritions' => $UNbyId,
+            ]);
         }
-        return $this->render('user_nutrition/index.html.twig', [
-            'user_nutritions' => $UNbyId,
-        ]);
     }
-}
     
 
 
@@ -110,12 +118,13 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
 
     
     #[Route('/{user}/edit', name: 'app_user_nutrition_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserNutrition $userNutrition, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, UserNutrition $userNutrition, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
     {
         $form = $this->createForm(UserNutritionType::class, $userNutrition);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            //log 
             // Get user input
             $age = $form->get('age')->getData();
             $weight = $form->get('weight')->getData();
@@ -190,5 +199,65 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
 
         return $this->redirectToRoute('app_user_nutrition_index', [], Response::HTTP_SEE_OTHER);
     }
-    
+
+
+    #[Route('/generate-pdf/{userId}', name: 'app_generate_pdf')]
+public function generatePdf(UserNutritionRepository $userNutritionRepository, $userId): Response
+{
+    // Retrieve the user with the given ID
+    $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+
+    // Retrieve the user's nutrition data from the repository
+    $userNutrition = $userNutritionRepository->findOneBy(['user' => $user]);
+
+    // Make sure userNutrition exists before generating PDF
+    if (!$userNutrition) {
+        throw $this->createNotFoundException('User nutrition data not found.');
+    }
+
+    // Configure Dompdf options
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+
+    // Instantiate Dompdf with options
+    $dompdf = new Dompdf($options);
+
+    // Render the Twig template to HTML
+    $html = $this->renderView('user_nutrition/body_bilan.html.twig', [
+        'userNutrition' => $userNutrition,
+    ]);
+
+    // Load HTML content into Dompdf
+    $dompdf->loadHtml($html);
+
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render PDF (optional: you can directly output the PDF, or save it to a file)
+    $dompdf->render();
+
+    // Output PDF to the browser
+    return new Response(
+        $dompdf->output(),
+        Response::HTTP_OK,
+        [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="personalized_nutritional_body_bilan.pdf"',
+        ]
+    );
+}
+
+    #[Route('/{id}/history', name: 'user_nutrition_history')]
+    public function history(int $id, UserNutritionRepository $repository): Response
+    {
+        $userNutrition = $repository->find($id);
+        $history = $repository->getAuditEntries($userNutrition);
+
+        return $this->render('user_nutrition/history.html.twig', [
+            'userNutrition' => $userNutrition,
+            'history' => $history,
+        ]);
+    }
+
+
 }
