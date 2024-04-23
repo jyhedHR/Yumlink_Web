@@ -1,4 +1,4 @@
-{% extends 'baseChef.html.twig' %}
+{% extends 'adminbase.html.twig' %}
 
 {% block title %}New Recettes{% endblock %}
 
@@ -26,9 +26,9 @@
 </div>
 </div>
 </div>
-    {{ include('recettes/_form.html.twig') }}
+    {{ include('recettes/formAdmin.html.twig') }}
 
-     <form action="{{ path('app_recettes_index') }}" method="get">
+     <form action="{{ path('indexAdmin') }}" method="get">
     <button type="submit">Back to List</button>
 </form>
 {% endblock %}

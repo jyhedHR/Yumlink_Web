@@ -26,14 +26,14 @@ class Recettes
 
     /**
      * @var string
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Veuillez remplir ce champ")
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     private $nom;
 
     /**
      * @var string|null
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Veuillez remplir ce champ")
      * @ORM\Column(name="chef", type="string", length=50, nullable=true)
      */
     private $chef;
@@ -41,21 +41,20 @@ class Recettes
 
     /**
      * @var string|null
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Veuillez remplir ce champ")
      * @ORM\Column(name="Categorie", type="string", length=50, nullable=true)
      */
     private $categorie;
 
     /**
      * @var string
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Veuillez remplir ce champ")
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
      * @var string
-     * @Assert\NotBlank
      * @ORM\Column(name="imgSrc", type="string", length=255, nullable=false)
      */
     private $imgsrc;
@@ -75,6 +74,10 @@ class Recettes
      * @ORM\Column(name="protein", type="integer", nullable=false)
      */
     private $protein;
+      /**
+     * @ORM\Column(name="rating",type="integer")
+     */
+    private $rating;
 
     /**
      * @var \User
@@ -181,10 +184,18 @@ class Recettes
 
         return $this;
     }
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
 
-    
+    public function setRating(int $rating): static
+    {
+        $this->rating = $rating;
 
-    public function setIduser(?User $iduser): static
+        return $this;
+    }
+    public function getUser(): ?User
     {
         $this->iduser = $iduser;
 
