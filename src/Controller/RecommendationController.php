@@ -20,10 +20,6 @@ class RecommendationController extends AbstractController
 
         // Check if user nutrition data exists
         if (!$userNutrition) {
-            // Redirect or show an error message indicating that nutrition data is not available
-            // For example:
-            // return $this->redirectToRoute('show_user_nutrition_form');
-          //  return $this->render('user_nutrition/recommendations.html.twig', ['message' => 'User nutrition data not found']);
         }
 
         // Get the calorie intake from user nutrition data

@@ -22,4 +22,6 @@ return [
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
     Flasher\Symfony\FlasherSymfonyBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+    Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
+    SimpleThings\EntityAudit\SimpleThingsEntityAuditBundle::class => ['all' => true],
 ];

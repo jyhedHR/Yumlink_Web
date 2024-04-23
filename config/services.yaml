@@ -45,3 +45,6 @@ services:
     # Define the ToastrFactory service
     Flasher\Toastr\Prime\ToastrFactory:
         public: true  # Allow this service to be autowired
+    # Define your controller as a service
+    App\Controller\AdminUserNutritionController:
+        tags: ['controller.service_arguments']

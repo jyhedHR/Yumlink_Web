@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Personalized Nutritional Body Bilan</title>
+    <style>
+        /* Define your PDF styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #33f;
+            text-shadow: 1px 1px 1px #ccc;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border: 2px solid red; /* Red border for the table */
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+        th {
+            background-color: #f0f0f0;
+            color: #33f;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Personalized Nutritional Body Bilan</h1>
+
+    <h2>User Information:</h2>
+    <p>Age: {{ userNutrition.age }}</p>
+    <p>Weight: {{ userNutrition.weight }} kg</p>
+    <p>Height: {{ userNutrition.height }} cm</p>
+    <p>Activity Level: {{ userNutrition.activityLevel }}</p>
+    <p>Gender: {{ userNutrition.gender }}</p>
+
+    <h2>Calculated Nutritional Values:</h2>
+    <p>Calories: {{ userNutrition.calorie }} kcal</p>
+    <p>Protein: {{ userNutrition.protein }} g</p>
+    <p>Carbs: {{ userNutrition.carbs }} g</p>
+    <p>Fat: {{ userNutrition.fat }} g</p>
+
+    <h2>Daily Vitamin Requirements:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Vitamin</th>
+            <th>Recommended Daily Intake</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Vitamin A</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    900 micrograms (mcg)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    700 mcg
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin B1 (Thiamine)</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    1.2 milligrams (mg)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    1.1 mg
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin B2 (Riboflavin)</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    1.3 milligrams (mg)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    1.1 mg
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin B3 (Niacin)</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    16 milligrams (mg)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    14 mg
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin B5 (Pantothenic acid)</td>
+            <td>No specific recommendation</td>
+        </tr>
+        <tr>
+            <td>Vitamin B6</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    1.3 milligrams (mg) (under 50 years), 1.7 mg (over 50 years)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    1.3 mg (under 50 years), 1.5 mg (over 50 years)
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin B7 (Biotin)</td>
+            <td>No specific recommendation</td>
+        </tr>
+        <tr>
+            <td>Vitamin B9 (Folate)</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' or userNutrition.gender == 'Femme' %}
+                    400 micrograms (mcg)
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin B12</td>
+            <td>2.4 micrograms (mcg)</td>
+        </tr>
+        <tr>
+            <td>Vitamin C</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    90 milligrams (mg)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    75 mg
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Vitamin D</td>
+            <td>No specific recommendation, typically 600-800 IU</td>
+        </tr>
+        <tr>
+            <td>Vitamin E</td>
+            <td>15 milligrams (mg)</td>
+        </tr>
+        <tr>
+            <td>Vitamin K</td>
+            <td>
+                {% if userNutrition.gender == 'Homme' %}
+                    120 micrograms (mcg)
+                {% elseif userNutrition.gender == 'Femme' %}
+                    90 mcg
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
