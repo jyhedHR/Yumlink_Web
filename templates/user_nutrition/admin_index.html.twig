@@ -3,7 +3,15 @@
 {% block title %}Admin Graph{% endblock %}
 
 {% block body %}
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br><br>
+   <br>
    
+
     <table class="table">
         <thead>
             <tr>
@@ -25,10 +33,7 @@
                 <td>{{ user_nutrition.height }}</td>
                 <td>{{ user_nutrition.activityLevel }}</td>
                 <td>{{ user_nutrition.gender }}</td>
-                <td>{{ user_nutrition.calorie }}</td>
-                <td>{{ user_nutrition.protein }}</td>
-                <td>{{ user_nutrition.carbs }}</td>
-                <td>{{ user_nutrition.fat }}</td>
+                
                 <td>
                     <a href="{{ path('admin_user_nutrition_show', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Show</a>
                 </td>
