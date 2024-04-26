@@ -19,10 +19,19 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class DefisControllerUserController extends AbstractController
 {
     #[Route('/', name: 'app_defis_controller_user_index', methods: ['GET'])]
-    public function index(DefisRepository $defisRepository): Response
+    public function index(Request $request, DefisRepository $defisRepository): Response
     {
+        $searchTerm = $request->query->get('search');
+        $defis = [];
+        if ($searchTerm) {
+            $defis = $defisRepository->findByNom($searchTerm);
+        } else {
+            $defis = $defisRepository->findActiveDefis();
+        }
+    
+    
         return $this->render('defis_controller_user/index.html.twig', [
-            'defis' => $defisRepository->findAll(),
+            'defis' => $defis,
         ]);
     }
 
@@ -80,7 +89,15 @@ class DefisControllerUserController extends AbstractController
         ]);
     }
     
-
+    #[Route('/historique_user', name: 'app_defis_historique_user', methods: ['GET'])]
+public function historique(DefisRepository $defisRepository): Response
+{
+    $expiredDefis = $defisRepository->findExpiredDefis();
+    
+    return $this->render('defis_controller_user/historique_user.html.twig', [
+        'defis' => $expiredDefis,
+    ]);
+}
    
 
    
