@@ -45,4 +45,15 @@ class DefisRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function saveOrUpdate(Defis $defis)
+{
+    $now = new \DateTime();
+    if ($defis->getDelai() < $now) {
+        throw new \Exception('The challenge date has already expired.');
+        // or you can return an error message instead of throwing an exception
+    }
+
+    $this->_em->persist($defis);
+    $this->_em->flush();
+}
 }

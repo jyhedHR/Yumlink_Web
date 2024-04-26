@@ -22,32 +22,32 @@ class Defis
     private int $idD;
 
     /**
-     * @ORM\Column(name="nom_d", type="string", length=50)
-     * @Assert\NotBlank
+     * @ORM\Column(name="nom_d", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="ce champ ne peut pas être vide")
      */
     private string $nomD;
 
     /**
-     * @ORM\Column(name="photo_d", type="string", length=255)
-     * @Assert\NotBlank
+     * @ORM\Column(name="photo_d", type="string", length=255 , )
+     
      */
     private string $photoD;
 
     /**
-     * @ORM\Column(name="dis_d", type="string", length=50)
-     * @Assert\NotBlank
+     * @ORM\Column(name="dis_d", type="string", length=50 , nullable=false)
+     * @Assert\NotBlank(message="ce champ ne peut pas être vide")
      */
     private string $disD;
 
     /**
-     * @ORM\Column(name="delai", type="date")
-     * @Assert\NotBlank
+     * @ORM\Column(name="delai", type="date" , nullable=false)
+     * @Assert\NotBlank(message="ce champ ne peut pas être vide")
      */
     private \DateTimeInterface $delai;
 
     /**
-     * @ORM\Column(name="heure", type="time")
-     * @Assert\NotBlank
+     * @ORM\Column(name="heure", type="time" , nullable=false)
+     * @Assert\NotBlank(message="ce champ ne peut pas être vide")
      */
     private \DateTimeInterface $heure;
 

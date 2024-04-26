@@ -20,6 +20,20 @@ class ParticipantRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Participant::class);
     }
+      /**
+     * Find participants related to a specific defis.
+     *
+     * @param int $defisId The ID of the defis
+     * @return Participant[] Returns an array of Participant objects
+     */
+    public function findByDefis(int $defisId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.defis = :defisId')
+            ->setParameter('defisId', $defisId)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Participant[] Returns an array of Participant objects

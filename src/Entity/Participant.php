@@ -28,7 +28,7 @@ class Participant
      * @var string
      *
      * @ORM\Column(name="photo_p", type="string", length=255, nullable=false)
-     * @Assert\NotBlank
+    
      */
     private $photoP;
 

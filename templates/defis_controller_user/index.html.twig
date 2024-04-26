@@ -17,7 +17,7 @@
                         <img src="{{ asset(defi.photoD) }}" class="card-img-top mx-auto d-block" alt="..." style="width:300px; height: 200px;">
                         <p class="card-text">{{ defi.disD }}</p>
                         <p class="card-text">Date limite: {{ defi.delai ? defi.delai|date('Y-m-d') : '' }} {{ defi.heure ? defi.heure|date('H:i:s') : '' }}</p>
-                        <a href="{{ path('app_participer_defis', {'id': defi.idD}) }}" class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;" >Participer</a>
+                        <a href="{{ path('app_participant_par_defis', {'defis_id': defi.idD}) }}" class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;" >Voir les Participations</a>
                     </div>
                 </div>
             </div>

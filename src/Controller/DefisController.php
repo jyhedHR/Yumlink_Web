@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Form\FormError;
 
 #[Route('/defis')]
 class DefisController extends AbstractController
@@ -32,6 +33,21 @@ class DefisController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+         // Check if the challenge date is expired
+         $now = new \DateTime();
+          // Check if the challenge date is expired
+          $now = new \DateTime();
+          $defiDate = $defi->getDelai();
+          $defiTime = $defi->getHeure();
+  
+          if ($defiDate < $now || ($defiDate == $now && $defiTime < $now->format('H:i'))) {
+              $form->get('delai')->addError(new FormError('La date  du défi sont déjà passées.'));
+              $form->get('heure')->addError(new FormError('Lheure  du défi sont déjà passées.'));
+              return $this->renderForm('defis/new.html.twig', [
+                  'defi' => $defi,
+                  'form' => $form,
+              ]);
+          }
             $photoD = $form->get('photoD')->getData();
             if ($photoD) {
                 // Generate a unique filename
