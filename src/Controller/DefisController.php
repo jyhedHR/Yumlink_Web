@@ -18,13 +18,23 @@ use Symfony\Component\Form\FormError;
 class DefisController extends AbstractController
 {
     #[Route('/', name: 'app_defis_index', methods: ['GET'])]
-    public function index(DefisRepository $defisRepository): Response
+    public function index(Request $request, DefisRepository $defisRepository): Response
     {
+        $searchTerm = $request->query->get('search');
+        $defis = [];
+    
+        if ($searchTerm) {
+            $defis = $defisRepository->findByNom($searchTerm);
+        } else {
+            // Retrieve defis sorted by delai (deadline) date and heure (time)
+            $defis = $defisRepository->findActiveDefis();
+        }
+    
         return $this->render('defis/index.html.twig', [
-            'defis' => $defisRepository->findAll(),
+            'defis' => $defis,
         ]);
     }
-
+    
     #[Route('/new', name: 'app_defis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -97,6 +107,20 @@ class DefisController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            // Check if the challenge date is expired
+            $now = new \DateTime();
+            $defiDate = $defi->getDelai();
+            $defiTime = $defi->getHeure();
+    
+            if ($defiDate < $now || ($defiDate == $now && $defiTime < $now->format('H:i'))) {
+                $form->get('delai')->addError(new FormError('La date du défi est déjà passée.'));
+                $form->get('heure')->addError(new FormError('Lheure du défi est déjà passée.'));
+                return $this->renderForm('defis/edit.html.twig', [
+                    'defi' => $defi,
+                    'form' => $form,
+                ]);
+            }
+    
             $photoD = $form->get('photoD')->getData();
     
             // Check if a new image was uploaded
@@ -127,9 +151,9 @@ class DefisController extends AbstractController
             return $this->redirectToRoute('app_defis_index', [], Response::HTTP_SEE_OTHER);
         }
     
-        return $this->renderForm('defis/edit.html.twig', [
+        return $this->render('defis/edit.html.twig', [
             'defi' => $defi,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
     
@@ -144,4 +168,14 @@ class DefisController extends AbstractController
 
         return $this->redirectToRoute('app_defis_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/historique', name: 'app_defis_historique', methods: ['GET'])]
+public function historique(DefisRepository $defisRepository): Response
+{
+    $expiredDefis = $defisRepository->findExpiredDefis();
+    
+    return $this->render('defis/historique.html.twig', [
+        'defis' => $expiredDefis,
+    ]);
+}
+    
 }

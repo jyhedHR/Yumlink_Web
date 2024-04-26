@@ -56,4 +56,33 @@ public function saveOrUpdate(Defis $defis)
     $this->_em->persist($defis);
     $this->_em->flush();
 }
+public function findByNom(string $nom): array
+{
+    return $this->createQueryBuilder('d')
+        ->andWhere('d.nomD LIKE :nom')
+        ->setParameter('nom', '%'.$nom.'%')
+        ->getQuery()
+        ->getResult();
+}
+public function findActiveDefis(): array
+{
+    return $this->createQueryBuilder('d')
+        ->andWhere('d.delai >= :now')
+        ->setParameter('now', new \DateTime())
+        ->orderBy('d.delai', 'ASC')
+        ->addOrderBy('d.heure', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+public function findExpiredDefis(): array
+{
+    return $this->createQueryBuilder('d')
+        ->andWhere('d.delai < :now OR (d.delai = :now AND d.heure < :heure)')
+        ->setParameter('now', new \DateTime())
+        ->setParameter('heure', new \DateTime())
+        ->orderBy('d.delai', 'DESC')
+        ->addOrderBy('d.heure', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
 }

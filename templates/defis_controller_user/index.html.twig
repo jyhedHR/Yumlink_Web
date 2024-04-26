@@ -3,11 +3,30 @@
 {% block title %}Defis index{% endblock %}
 
 {% block body %}
+
 <div class="text-center">
     <img src="{{ asset('assets/images/background.jpg') }}" data-aos="fade-in" class="aos-init aos-animate" alt="" width="1488" height="350">
     <h1>Défis</h1>
 </div>
 
+<form action="{{ path('app_defis_controller_user_index') }}" method="get" class="form-inline mt-2 mt-md-0">
+    <div class="row align-items-center" style="margin-left: 1100px;">
+    
+        <div class="col-auto">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search" style="border-radius: 30px; width: 200px;">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color: #0e1125; color: white; border-color: #0e1125;">Search</button>
+        </div>
+       
+    </div>
+</form>
+
+<div class="row align-items-center"style="margin-left: 1300px;">
+    <div class="col-auto">
+        <a href="{{ path('app_defis_historique_user') }}" class="btn btn-outline-success my-2 my-sm-4" style="background-color: #0e1125; color: white; border-color: #0e1125; width: 100px;">Historique</a>
+    </div>
+</div>
     <div class="row">
         {% for defi in defis %}
             <div class="col-md-4 mb-4">
