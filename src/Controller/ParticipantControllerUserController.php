@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Defis;
 use App\Entity\Participant;
 use App\Form\Participant1Type;
+use App\Repository\DefisRepository;
 use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +24,20 @@ class ParticipantControllerUserController extends AbstractController
             'participants' => $participantRepository->findAll(),
         ]);
     }
+
+    #[Route('/defis_participant/{defis_id}', name: 'app_participant_par_defis', methods: ['GET'])]
+    public function listeParDefis(int $defis_id, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager): Response
+    {
+        $defis = $entityManager->getReference(Defis::class, $defis_id);
+
+        $participants = $participantRepository->findByDefis($defis_id);
+        return $this->render('participant_controller_user/defis_participants.html.twig', [
+            'participants' => $participants,
+            'defisname' => $defis->getNomD(),
+            'defiId'=> $defis->getIdD(),
+        ]);
+    }
+
     #[Route('/{idpart}/edit', name: 'app_participation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Participant $participant, EntityManagerInterface $entityManager): Response
     {

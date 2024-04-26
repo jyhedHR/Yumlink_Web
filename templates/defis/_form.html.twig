@@ -11,35 +11,55 @@
                 <div class="card-body">
                     
 
-                    {{ form_start(form) }}
+                    {{ form_start(form , {'attr': {'novalidate':'novalidate', 'autocomplete': 'off'}}) }}
                     <div class="mb-3">
-                        {{ form_label(form.nomD) }}
+                        {{ form_label(form.nomD ,"Nom de défi")}}
                         {{ form_widget(form.nomD, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.nomD) }}
+                         {% if form_errors(form.nomD) is not empty %}
+                            <div class="alert alert-danger" role="alert">
+                             {{ form_errors(form.nomD) }}
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form_label(form.photoD) }}
+                        {{ form_label(form.photoD,"Photo de défi") }}
                         {{ form_widget(form.photoD, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.photoD) }}
+                         {% if form_errors(form.photoD) is not empty %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.photoD) }}
+        </div>
+    {% endif %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form_label(form.disD) }}
+                        {{ form_label(form.disD,"Discription") }}
                         {{ form_widget(form.disD, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.disD) }}
+                        {% if form_errors(form.disD) is not empty %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.disD) }}
+        </div>
+    {% endif %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form_label(form.delai) }}
+                        {{ form_label(form.delai,"Date de défi") }}
                         {{ form_widget(form.delai, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.delai) }}
+                       {% if form_errors(form.delai) is not empty %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.delai) }}
+        </div>
+    {% endif %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form_label(form.heure) }}
+                        {{ form_label(form.heure,"Heure") }}
                         {{ form_widget(form.heure, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.heure) }}
+                        {% if form_errors(form.heure) is not empty %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(form.heure) }}
+        </div>
+    {% endif %}
                     </div>
                     <div class="text-center">
                         <button class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">{{ button_label|default('Save') }}</button>

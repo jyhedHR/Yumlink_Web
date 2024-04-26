@@ -72,7 +72,7 @@ class DefisControllerUserController extends AbstractController
             $entityManager->flush();
     
             // Redirect back to the Defis index
-            return $this->redirectToRoute('app_defis_controller_user_index');
+            return $this->redirectToRoute('app_participant_controller_user_index');
         }
     
         return $this->render('defis_controller_user/participer.html.twig', [
