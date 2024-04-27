@@ -3,7 +3,6 @@
 
 
 namespace App\Form;
-// use blackknight467\StarRatingBundle\Form\RatingType;
 use App\Entity\Recettes;
 use App\Entity\Ingredient;
 use App\Entity\FileTransformer;
@@ -13,14 +12,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class RecettesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('nom')
-        ->add('chef')
+        ->add('nom' , TextType::class , [
+            'required' => false , 
+        ])
+        ->add('chef', TextType::class , [
+            'required' => false , 
+
+        ])
         ->add('ingredients', EntityType::class, [
             'class' => Ingredient::class,
             'choice_label' => 'nom', 
@@ -33,11 +38,13 @@ class RecettesType extends AbstractType
                 'Lunch' => 'Lunch',
                 'Dessert' => 'Dessert',
                 'Breakfast' => 'Breakfast',
+                'required' => false,
             ],
             'placeholder' => 'Choose a category', 
-            'required' => true,
+            'required' => false,
         ])
-        ->add('description')
+        ->add('description' , TextType::class , [
+            'required' => false , ])
         ->add('imgsrc' , FileType::class,[
             'label' => 'Image',
             'required' => false, 
@@ -45,8 +52,10 @@ class RecettesType extends AbstractType
         // ->add('rating', RatingType::class, [ 
         //     'label' => 'Rating'
         // ])
-        ->add('calorie')
-        ->add('protein');
+        ->add('calorie' , TextType::class , [
+            'required' => false , ])
+        ->add('protein' , TextType::class , [
+            'required' => false , ]);
 }
 
     public function configureOptions(OptionsResolver $resolver): void

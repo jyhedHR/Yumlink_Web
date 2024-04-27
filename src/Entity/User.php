@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\UserRepository;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,9 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="unique_email", columns={"email"})}, indexes={@ORM\Index(name="fk_idA", columns={"idA"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-
 class User
 {
     /**
@@ -73,12 +72,38 @@ class User
      */
     private $image;
 
-   /**
-    
-     * @ORM\OneToOne(targetEntity="Adresse")
-     * @ORM\JoinColumn(name="idA", referencedColumnName="idA")
+    /**
+     * @var \Adresse
+     *
+     * @ORM\ManyToOne(targetEntity="Adresse")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idA", referencedColumnName="idA")
+     * })
      */
-    private ?Adresse $adresse;
+    private $ida;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Recettes", inversedBy="user")
+     * @ORM\JoinTable(name="favorite_recipes",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="user_id", referencedColumnName="idU")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="recipe_id", referencedColumnName="id_r")
+     *   }
+     * )
+     */
+    private $recipe = array();
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipe = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getIdu(): ?int
     {
@@ -169,24 +194,40 @@ class User
         return $this;
     }
 
-    public function getAdresse(): ?Adresse
+    public function getIda(): ?Adresse
     {
-        return $this->adresse;
+        return $this->ida;
     }
 
-    public function setIda(?Adresse $adresse): static
+    public function setIda(?Adresse $ida): static
     {
-        $this->adresse = $adresse;
+        $this->ida = $ida;
 
         return $this;
     }
 
-    public function setAdresse(?Adresse $adresse): static
+    /**
+     * @return Collection<int, Recettes>
+     */
+    public function getRecipe(): Collection
     {
-        $this->adresse = $adresse;
+        return $this->recipe;
+    }
+
+    public function addRecipe(Recettes $recipe): static
+    {
+        if (!$this->recipe->contains($recipe)) {
+            $this->recipe->add($recipe);
+        }
 
         return $this;
     }
 
+    public function removeRecipe(Recettes $recipe): static
+    {
+        $this->recipe->removeElement($recipe);
+
+        return $this;
+    }
 
 }

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\UserNutritionRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="user_nutrition")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\UserNutritionRepository")
  */
 class UserNutrition
 {
@@ -78,12 +76,17 @@ class UserNutrition
     private $fat;
 
     /**
+     * @var \User
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id", referencedColumnName="idU")
+     * })
      */
-    private ?User $user;
+    private $id;
+
     public function getAge(): ?int
     {
         return $this->age;
@@ -192,16 +195,17 @@ class UserNutrition
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getId(): ?User
     {
-        return $this->user;
+        return $this->id;
     }
 
-    public function setUser(?User $user): static
+    public function setId(?User $id): static
     {
-        $this->user =$user;
+        $this->id = $id;
 
         return $this;
     }
+
 
 }

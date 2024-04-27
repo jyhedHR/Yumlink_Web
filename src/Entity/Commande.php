@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\CommandeRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="commande")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\CommandeRepository")
  */
 class Commande
 {

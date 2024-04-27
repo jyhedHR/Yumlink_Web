@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\CommentaireRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="fk_com_user_id", columns={"idU"}), @ORM\Index(name="fk_article_id", columns={"id_article"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
  */
 class Commentaire
 {

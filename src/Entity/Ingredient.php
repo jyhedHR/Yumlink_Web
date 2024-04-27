@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\IngredientRepository;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Ingredient
  *
  * @ORM\Table(name="ingredient")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\IngredientRepository")
  */
 class Ingredient
 {
@@ -24,11 +25,25 @@ class Ingredient
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Veuillez remplir ce champ")
+     *
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
      */
     private $nom;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Recettes", mappedBy="ingredient")
+     */
+    private $recette = array();
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recette = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getIdIng(): ?int
     {
@@ -47,6 +62,31 @@ class Ingredient
         return $this;
     }
 
+    /**
+     * @return Collection<int, Recettes>
+     */
+    public function getRecette(): Collection
+    {
+        return $this->recette;
+    }
 
+    public function addRecette(Recettes $recette): static
+    {
+        if (!$this->recette->contains($recette)) {
+            $this->recette->add($recette);
+            $recette->addIngredient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecette(Recettes $recette): static
+    {
+        if ($this->recette->removeElement($recette)) {
+            $recette->removeIngredient($this);
+        }
+
+        return $this;
+    }
 
 }
