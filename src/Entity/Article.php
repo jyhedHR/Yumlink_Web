@@ -37,7 +37,6 @@ class Article
      * @var string
      *
      * @ORM\Column(name="img_article", type="string", length=255, nullable=false)
-     * @Assert\NotBlank(message="Image URL is required")
      */
     private $imgArticle;
 
@@ -85,7 +84,7 @@ class Article
         return $this->titleArticle;
     }
 
-    public function setTitleArticle(string $titleArticle): static
+    public function setTitleArticle(?string $titleArticle): self
     {
         $this->titleArticle = $titleArticle;
 
@@ -97,7 +96,7 @@ class Article
         return $this->imgArticle;
     }
 
-    public function setImgArticle(string $imgArticle): static
+    public function setImgArticle(string $imgArticle): self
     {
         $this->imgArticle = $imgArticle;
 
@@ -109,7 +108,7 @@ class Article
         return $this->descriptionArticle;
     }
 
-    public function setDescriptionArticle(string $descriptionArticle): static
+    public function setDescriptionArticle(?string $descriptionArticle): self
     {
         $this->descriptionArticle = $descriptionArticle;
 
@@ -121,7 +120,7 @@ class Article
         return $this->nbLikesArticle;
     }
 
-    public function setNbLikesArticle(int $nbLikesArticle): static
+    public function setNbLikesArticle(int $nbLikesArticle): self
     {
         $this->nbLikesArticle = $nbLikesArticle;
 
@@ -133,7 +132,7 @@ class Article
         return $this->datePublished;
     }
 
-    public function setDatePublished(\DateTimeInterface $datePublished): static
+    public function setDatePublished(\DateTimeInterface $datePublished): self
     {
         $this->datePublished = $datePublished;
 
@@ -145,7 +144,7 @@ class Article
         return $this->tags;
     }
 
-    public function setTags(array $tags): static
+    public function setTags(array $tags): self
     {
         $this->tags = $tags;
 

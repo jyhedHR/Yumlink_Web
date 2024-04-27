@@ -29,19 +29,29 @@
 		<div class="container">
 			<div class="appointment-form">
 				<h2>Post new article</h2>
-				{{ form_start(form, {'attr': {'id': 'new_article_form'}}) }}
+				{{ form_start(form, {'attr': {'id': 'new_article_form', 'autocomplete': 'off', 'novalidate': 'novalidate'}}) }}
 				<div class="row">
 					<div class="col-lg-12">
-						<label for="title_article">Title*</label>
-						{{ form_widget(form.title_article, {'attr': {'class': 'form-control', 'placeholder': 'Title', 'id': 'title_article'}}) }}
+						<label for="titleArticle">Title*</label>
+						{{ form_widget(form.titleArticle, {'attr': {'class': 'form-control', 'placeholder': 'Title', 'id': 'titleArticle'}}) }}
+						{% if form_errors(form.titleArticle) is not empty %}
+                            <div class="alert alert-danger" role="alert">
+                             {{ form_errors(form.titleArticle) }}
+                            </div>
+                        {% endif %}
 					</div>
 					<div class="col-lg-12">
-						<label for="img_article">Upload Image*</label>
-						{{ form_widget(form.img_article, {'attr': {'class': 'form-control', 'id': 'img_article'}}) }}
+						<label for="imgArticle">Upload Image*</label>
+						{{ form_widget(form.imgArticle, {'attr': {'class': 'form-control', 'id': 'imgArticle'}}) }}
 					</div>
 					<div class="col-lg-12 col-md-6">
-						<label for="description_article">Description*</label>
-						{{ form_widget(form.description_article, {'attr': {'id': 'description_article','class': 'form-control'}}) }}
+						<label for="descriptionArticle">Description*</label>
+						{{ form_widget(form.descriptionArticle, {'attr': {'id': 'descriptionArticle','class': 'form-control'}}) }}
+						{% if form_errors(form.descriptionArticle) is not empty %}
+                            <div class="alert alert-danger" role="alert">
+                             {{ form_errors(form.descriptionArticle) }}
+                            </div>
+                        {% endif %}
 					</div>
 					<div class="col-lg-12">
 						{{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
@@ -73,7 +83,8 @@
 			}
 
 			const form = document.getElementById('new_article_form');
-			const textarea = form.querySelector('#article_description_article');
+
+			const textarea = form.querySelector('#article_descriptionArticle');
             const tagsInput = form.querySelector('#article_tags');
 			const selectedTagsContainer = document.getElementById('selectedTagsContainer');
 			const tagSuggestionsContainer = document.getElementById('tagSuggestionsContainer');
