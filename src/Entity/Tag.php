@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\TagRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="tag", uniqueConstraints={@ORM\UniqueConstraint(name="tag_value_uniq", columns={"tag_value"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
 class Tag
 {

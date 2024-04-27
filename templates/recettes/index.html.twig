@@ -57,8 +57,10 @@
                         <div class="content">
                         <form method="post" action="{{ path('favorite_recipe', {'idR': recette.idR}) }}" >
                         <input type="hidden" name="_token" value="{{ csrf_token('fav' ~ recette.idR) }}">
-                           <button >Add to Favorites</button>
+                          
+                            <button >Add to Favorites</button>
                        </form>
+                      
                         </div>
 
                     </div>
@@ -148,8 +150,6 @@
     });
     
 </script>
-<!-- Make sure that jQuery is included -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>
+
 
 {% endblock %}

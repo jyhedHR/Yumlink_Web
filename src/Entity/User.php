@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields={"email"}, message="Cet e-mail est déjà utilisé.")
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="unique_email", columns={"email"})}, indexes={@ORM\Index(name="fk_idA", columns={"idA"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -202,16 +201,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdresse(): ?Adresse
+    public function getIda(): ?Adresse
     {
-        return $this->adresse;
+        return $this->ida;
     }
 
    
 
-    public function setAdresse(?Adresse $adresse): static
+    /**
+     * @return Collection<int, Recettes>
+     */
+    public function getRecipe(): Collection
     {
-        $this->adresse = $adresse;
+        return $this->recipe;
+    }
+
+    public function addRecipe(Recettes $recipe): static
+    {
+        if (!$this->recipe->contains($recipe)) {
+            $this->recipe->add($recipe);
+        }
 
         return $this;
     }

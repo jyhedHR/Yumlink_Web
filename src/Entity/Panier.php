@@ -1,95 +1,109 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\PanierRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Panier
+ *
  * @ORM\Table(name="panier", indexes={@ORM\Index(name="fk_idproduit", columns={"id_produit"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\PanierRepository")
  */
 class Panier
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="idp", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(name="idp", type="integer")
      */
-    private int $idp;
+    private $idp;
 
     /**
-     * @ORM\Column(name="quantite", type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="quantite", type="integer", nullable=false)
      */
-    private int $quantite;
+    private $quantite;
 
     /**
-     * @ORM\Column(name="prixtotal", type="float")
+     * @var float
+     *
+     * @ORM\Column(name="prixtotal", type="float", precision=10, scale=0, nullable=false)
      */
-    private float $prixtotal;
+    private $prixtotal;
 
     /**
-     * @ORM\Column(name="id_client", type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id_client", type="integer", nullable=false)
      */
-    private int $idClient;
+    private $idClient;
 
     /**
+     * @var \Produit
+     *
      * @ORM\ManyToOne(targetEntity="Produit")
-     * @ORM\JoinColumn(name="id_produit", referencedColumnName="id")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_produit", referencedColumnName="id")
+     * })
      */
-    private ?Produit $produit;
+    private $idProduit;
 
-    public function getIdp(): int
+    public function getIdp(): ?int
     {
         return $this->idp;
     }
 
-    public function getQuantite(): int
+    public function getQuantite(): ?int
     {
         return $this->quantite;
     }
 
-    public function setQuantite(int $quantite): self
+    public function setQuantite(int $quantite): static
     {
         $this->quantite = $quantite;
 
         return $this;
     }
 
-    public function getPrixtotal(): float
+    public function getPrixtotal(): ?float
     {
         return $this->prixtotal;
     }
 
-    public function setPrixtotal(float $prixtotal): self
+    public function setPrixtotal(float $prixtotal): static
     {
         $this->prixtotal = $prixtotal;
 
         return $this;
     }
 
-    public function getIdClient(): int
+    public function getIdClient(): ?int
     {
         return $this->idClient;
     }
 
-    public function setIdClient(int $idClient): self
+    public function setIdClient(int $idClient): static
     {
         $this->idClient = $idClient;
 
         return $this;
     }
 
-    public function getProduit(): ?Produit
+    public function getIdProduit(): ?Produit
     {
-        return $this->produit;
+        return $this->idProduit;
     }
 
-    public function setProduit(?Produit $produit): self
+    public function setIdProduit(?Produit $idProduit): static
     {
-        $this->produit = $produit;
+        $this->idProduit = $idProduit;
 
         return $this;
     }
+
+
 }

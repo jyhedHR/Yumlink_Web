@@ -13,7 +13,7 @@
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<div class="pull-left">
-							<h1 class="text-blue h4">Ajouter un nouveau admin</h1>
+							<h1 class="text-blue h4">Ajouter une recettes </h1>
 						</div>
 					</div>
 					{{ form_start(form) }}
@@ -25,7 +25,7 @@
 								{{ form_widget(form.nom, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Nom de la recette'}}) }}
 								{% if form_errors(form.nom) is not empty %}
 									<div class="alert alert-danger">
-										{{ form_errors(form.nom) }}
+										{{ form_errors(form.nom , {'attr' :{'class' : 'text-danger'}} )}}
 									</div>
 								{% endif %}
 							</div>
@@ -33,14 +33,14 @@
 						<div class="col-lg-12">
 							<div class="form-group">
 								{{ form_label(form.chef, 'Chef') }}
-								{{ form_widget(form.chef, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Nom chef', 'required': 'required'}}) }}
-								{{ form_errors(form.chef) }}
+								{{ form_widget(form.chef, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Nom chef'}}) }}
+								{{ form_errors(form.chef, {'attr' :{'class' : 'text-danger'}} ) }}
 							</div>
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
 								{{ form_label(form.ingredients, 'Ingredients') }}
-								{{ form_widget(form.ingredients, {'attr': {'class': 'form-select form-control', 'required': 'required'}}) }}
+								{{ form_widget(form.ingredients, {'attr': {'class': 'form-select form-control'}}) }}
 							</div>
 						</div>
 						<div class="col-lg-12">
@@ -51,40 +51,40 @@
 						<div class="col-lg-12">
 							<div class="form-group">
 								{{ form_label(form.description, 'Description') }}
-								{{ form_widget(form.description, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Description', 'required': 'required' ,'rows': '5'}}) }}
+								{{ form_widget(form.description, {'attr': {'class': 'form-control','nonvalidate ':'nonvalidate' , 'placeholder': 'Description' ,'rows': '5'}}) }}
 								{{ form_errors(form.description) }}
 							</div>
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
 								{{ form_label(form.imgsrc, 'image') }}
-								{{ form_widget(form.imgsrc, {'attr': {'class': 'form-control ', 'placeholder': 'Ajouter une image', 'required': 'required'}}) }}
+								{{ form_widget(form.imgsrc, {'attr': {'class': 'form-control ', 'placeholder': 'Ajouter une image'}}) }}
 								{{ form_errors(form.imgsrc) }}
 							</div>
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
 								{{ form_label(form.categorie, 'Categorie') }}
-								{{ form_widget(form.categorie, {'attr': {'class': 'form-select form-control','nonvalidate ':'nonvalidate' , 'required': 'required'}}) }}
+								{{ form_widget(form.categorie, {'attr': {'class': 'form-select form-control','nonvalidate ':'nonvalidate' }}) }}
 								{{ form_errors(form.categorie) }}
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
 								{{ form_label(form.calorie, 'Calorie') }}
-								{{ form_widget(form.calorie, {'attr': {'class': 'form-control ','nonvalidate ':'nonvalidate' , 'placeholder': 'Calorie', 'required': 'required'}}) }}
+								{{ form_widget(form.calorie, {'attr': {'class': 'form-control ','nonvalidate ':'nonvalidate' , 'placeholder': 'Calorie'}}) }}
 								{{ form_errors(form.calorie) }}
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
 								{{ form_label(form.protein, 'Protein') }}
-								{{ form_widget(form.protein, {'attr': {'class': 'form-control ','nonvalidate ':'nonvalidate' , 'placeholder': 'Protein', 'required': 'required'}}) }}
+								{{ form_widget(form.protein, {'attr': {'class': 'form-control ','nonvalidate ':'nonvalidate' , 'placeholder': 'Protein'}}) }}
 								{{ form_errors(form.protein) }}
 							</div>
 
 							<div class="col-lg-12 col-md-12">
-								<button type="submit" class="default-btn">Submit Now</button>
+								<button type="submit" class="btn btn-primary">Submit Now</button>
 							</div>
 						</div>
 					</div>

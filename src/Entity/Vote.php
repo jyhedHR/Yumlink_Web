@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\VoteRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Vote
  *
- * @ORM\Table(name="vote", indexes={@ORM\Index(name="fk_part", columns={"idpart"}), @ORM\Index(name="fk_userr", columns={"idU"})})
+ * @ORM\Table(name="vote", indexes={@ORM\Index(name="fk_userr", columns={"idU"}), @ORM\Index(name="fk_part", columns={"idpart"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\VoteRepository")
  */
 class Vote
 {
@@ -23,44 +21,51 @@ class Vote
      */
     private $idVote;
 
-    
-
-     /**
+    /**
+     * @var \Participant
+     *
      * @ORM\ManyToOne(targetEntity="Participant")
-     * @ORM\JoinColumn(name="idpart", referencedColumnName="idpart")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idpart", referencedColumnName="idpart")
+     * })
      */
-    private ?Participant $participant;
-     /**
+    private $idpart;
+
+    /**
+     * @var \User
+     *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idU", referencedColumnName="idU")
+     * })
      */
-    private ?User $user;
+    private $idu;
 
     public function getIdVote(): ?int
     {
         return $this->idVote;
     }
 
-    public function getParticipant(): ?Participant
+    public function getIdpart(): ?Participant
     {
-        return $this->participant;
+        return $this->idpart;
     }
 
-    public function setParticipant(?Participant $participant): static
+    public function setIdpart(?Participant $idpart): static
     {
-        $this->participant = $participant;
+        $this->idpart = $idpart;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getIdu(): ?User
     {
-        return $this->user;
+        return $this->idu;
     }
 
-    public function setUser(?User $user): self
+    public function setIdu(?User $idu): static
     {
-        $this->user = $user;
+        $this->idu = $idu;
 
         return $this;
     }

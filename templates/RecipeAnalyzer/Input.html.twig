@@ -1,0 +1,13 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Analyze Recipe{% endblock %}
+
+{% block body %}
+    <h1>Analyze Recipe</h1>
+    <form action="{{ path('app_analyzer') }}" method="post">
+        <label for="input">Recipe:</label>
+        <input type="text" id="input" name="input" required>
+        <button type="submit">Analyze</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,37 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe Analysis{% endblock %}
+
+{% block body %}
+    <h1>Recipe Analysis</h1>
+
+    <h2>General Information</h2>
+    <p>Yield: {{ response.yield }}</p>
+    <p>Calories: {{ response.calories }}</p>
+    <p>Diet Labels: {{ response.dietLabels|join(', ') }}</p>
+    <p>Health Labels: {{ response.healthLabels|join(', ') }}</p>
+
+    <h2>Total Nutrients</h2>
+    <ul>
+        {% for label, nutrient in response.totalNutrients %}
+            <li>{{ label }}: {{ nutrient.quantity }} {{ nutrient.unit }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Ingredients</h2>
+    <ul>
+        {% for ingredient in response.ingredients %}
+            <li>{{ ingredient.text }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Cuisine Type</h2>
+    <p>{{ response.cuisineType|join(', ') }}</p>
+
+    <h2>Meal Type</h2>
+    <p>{{ response.mealType|join(', ') }}</p>
+
+    <h2>Dish Type</h2>
+    <p>{{ response.dishType|join(', ') }}</p>
+{% endblock %}
