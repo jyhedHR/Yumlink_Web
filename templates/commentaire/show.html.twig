@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commentaire{% endblock %}
+
+{% block body %}
+    <h1>Commentaire</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>CommentId</th>
+                <td>{{ commentaire.commentId }}</td>
+            </tr>
+            <tr>
+                <th>IdArticle</th>
+                <td>{{ commentaire.idArticle }}</td>
+            </tr>
+            <tr>
+                <th>CommentText</th>
+                <td>{{ commentaire.commentText }}</td>
+            </tr>
+            <tr>
+                <th>CommentDate</th>
+                <td>{{ commentaire.commentDate ? commentaire.commentDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commentaire_index') }}">back to list</a>
+
+    <a href="{{ path('app_commentaire_edit', {'commentId': commentaire.commentId}) }}">edit</a>
+
+    {{ include('commentaire/_delete_form.html.twig') }}
+{% endblock %}
