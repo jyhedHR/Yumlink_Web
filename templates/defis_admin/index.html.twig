@@ -1,0 +1,49 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %} Les Defis {% endblock %}
+
+{% block body %}
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <h1>Les Defis</h1>
+            <div class="table-responsive rounded">
+                <table class="table table-striped table-bordered">
+                    <thead class=" text-white" style=" background-color: #72ae44;">
+                        <tr>
+                            <th>IdD</th>
+                            <th>NomD</th>
+                            <th>PhotoD</th>
+                            <th>DisD</th>
+                            <th>Delai</th>
+                            <th>Heure</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for defi in defis %}
+                        <tr>
+                            <td>{{ defi.idD }}</td>
+                            <td>{{ defi.nomD }}</td>
+                            <td>{{ defi.photoD }}</td>
+                            <td>{{ defi.disD }}</td>
+                            <td>{{ defi.delai ? defi.delai|date('Y-m-d') : '' }}</td>
+                            <td>{{ defi.heure ? defi.heure|date('H:i:s') : '' }}</td>
+                            <td>
+                                <a href="{{ path('app_defis_admin_edit', {'idD': defi.idD}) }}" class="btn btn-primary" style="background-color: #0e1125; color: white; border-color: #72ae44; border-radius: 30px; width: 110px;">Modifier</a>
+                                </br> </br>
+                                {{ include('defis_admin/_delete_form.html.twig' ) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7">No records found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
