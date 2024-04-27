@@ -82,7 +82,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET'])]
+    #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET', 'POST'])]
     public function show(Article $article, EntityManagerInterface $entityManager, CommentaireRepository $commentaireRepository,  Request $request): Response
     {
         $isLikedByCurrentUser = false;
@@ -99,24 +99,22 @@ class ArticleController extends AbstractController
         } else {
             $isLikedByCurrentUser = false;
         }
+
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
-            $commentaire->setCommentText($formData['commentText']);
-            $commentaire->setCommentDate(new DateTime());
             //temporary
             $userId = 39;
             $user = $entityManager->getReference(User::class, $userId);
             //
             $commentaire->setUser($user);
+            $commentaire->setCommentDate(new DateTime());
             $commentaire->setIdArticle($article->getIdArticle());
             $entityManager->persist($commentaire);
             $entityManager->flush();
-            dump($commentaire);
-            return $this->redirectToRoute('app_article_show', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_article_show', ['idArticle' => $article->getIdArticle()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('article/post_details.html.twig', [
             'article' => $article,
@@ -124,7 +122,6 @@ class ArticleController extends AbstractController
             'comments' => $comments,
             'commentsCount' => count($comments),
             'isLikedByCurrentUser' => $isLikedByCurrentUser,
-            //
             'commentaire' => $commentaire,
             'form' => $form->createView(),
         ]);

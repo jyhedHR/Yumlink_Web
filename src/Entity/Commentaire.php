@@ -5,6 +5,7 @@ use App\Repository\CommentaireRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Commentaire
@@ -20,7 +21,7 @@ class Commentaire
      *
      * @ORM\Column(name="comment_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $commentId;
 
@@ -35,6 +36,7 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="comment_text", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Comment cannot be empty")     
      */
     private $commentText;
 
