@@ -23,19 +23,62 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/articles')]
 class ArticleController extends AbstractController
 {
-    #[Route('/listAdmin', name: 'article_test_list', methods: ['GET'])]
-    public function listArticlesAdmin(ArticleRepository $articleRepository): Response
-    {
-        return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
-        ]);
-    }
     #[Route('/', name: 'app_article_blog', methods: ['GET'])]
     public function index(ArticleRepository $articleRepository): Response
     {
         return $this->render('article/blog_grid.html.twig', [
             'articles' => $articleRepository->findAll(),
             'articlesSide' => $articleRepository->findTopArticles(5),
+        ]);
+    }
+
+    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imgArticle')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'An error occurred while uploading the image.');
+                    return $this->redirectToRoute('app_produit_new');
+                }
+                $article->setImgArticle('assets/images/' . $newFilename);
+            }
+            $tagsFormData = $form->get('tags')->getData();
+            $tagsArray = json_decode($tagsFormData, true);
+            if (!empty($tagsArray)) {
+                $this->handleTags($tagsArray, $entityManager);
+                $article->setTags($tagsArray);
+            }
+
+            $article->setDatePublished(new DateTime());
+            //temporary
+            $userId = 39;
+            $user = $entityManager->getReference(User::class, $userId);
+            $article->setUser($user);
+            //
+            $article->setNbLikesArticle(0);
+
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_article_blog', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('article/create_post.html.twig', [
+            'article' => $article,
+            'form' => $form,
         ]);
     }
 
@@ -122,59 +165,7 @@ class ArticleController extends AbstractController
         }
         return $this->redirectToRoute('app_article_blog', [], Response::HTTP_SEE_OTHER);
     }
-
-    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $article = new Article();
-        $form = $this->createForm(ArticleType::class);
-        $form->handleRequest($request);
-        //temporary
-        $userId = 39;
-        $user = $entityManager->getReference(User::class, $userId);
-        //
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('img_article')->getData();
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    $this->addFlash('error', 'An error occurred while uploading the image.');
-                    return $this->redirectToRoute('app_produit_new');
-                }
-                $article->setImgArticle('assets/images/' . $newFilename);
-            }
-            $formData = $form->getData();
-            $article->setTitleArticle($formData['title_article']);
-            $article->setDescriptionArticle($formData['description_article']);
-            $tagsArray = json_decode($formData['tags'], true);
-            if ($tagsArray != null) { 
-                $this->handleTags($tagsArray, $entityManager);    
-                $article->setTags(json_decode($formData['tags'], true));
-            }
-            $article->setDatePublished(new DateTime());
-            //temporary
-            $article->setUser($user);
-            //
-            $article->setNbLikesArticle(0);
-
-            $entityManager->persist($article);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_article_blog', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('article/create_post.html.twig', [
-            'article' => $article,
-            'form' => $form,
-        ]);
-    }
-
+    
     public function handleTags(array $tagsArray, EntityManagerInterface $entityManager)
     {
         $existingTags = $entityManager->getRepository(Tag::class)->findBy(['tagValue' => $tagsArray['tags']]);

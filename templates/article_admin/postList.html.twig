@@ -1,0 +1,67 @@
+{% extends 'adminBase.html.twig' %}
+{% block body %}
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">
+								<div class="btn-group">
+									<button type="button" class="btn btn-danger">Action</button>
+									<button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+										<span class="visually-hidden">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="dropdown-item" href="#">Action</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#">Another action</a>
+										</li>
+										<li>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</li>
+										<li><hr class="dropdown-divider"></li>
+										<li>
+											<a class="dropdown-item" href="#">Separated link</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col">description Article</th>
+							<th scope="col">date Article</th>
+							<th scope="col">image Article</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for article in articles %}
+							<tr>
+								<th scope="row">{{article.idArticle}}</th>
+								<td>{{ article.titleArticle }}</td>
+								<td>{{ article.descriptionArticle  |slice(0, 15) ~ '...' }}</td>
+								<td>{{ article.datePublished ? article.datePublished|date('Y-m-d H:i:s') : '' }}</td>
+								<td>{{ article.imgArticle |slice(0, 15) ~ '...' }}</td>
+								<td>
+									<div class="btn-group-admin" role="group">
+										<button type="button" class="btn btn-info">Update</button>
+										<form id="deleteForm{{ article.idArticle }}" method="post" action="{{ path('article_delete_admin', {'idArticle': article.idArticle}) }}">
+											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.idArticle) }}">
+											<button type="button" onclick="confirmDelete('{{ article.idArticle }}')" class="btn btn-danger">Delete</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+	<script src={{asset("https://cdn.jsdelivr.net/npm/sweetalert2@11")}}></script>
+	<script src={{asset("backend/vendors/scripts/blog_js.js")}}></script>
+{% endblock %}

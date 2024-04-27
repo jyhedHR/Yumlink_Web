@@ -17,20 +17,17 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title_article', TextType::class, [
-                'label' => 'Title*',
-            ])
-            ->add('img_article', FileType::class, [
+            ->add('titleArticle')
+            ->add('imgArticle', FileType::class, [
                 'label' => 'Upload Image*',
+                'required' => false,
                 'mapped' => false,
                 'attr' => [
                     'accept' => 'image/*',],
             ])
-            ->add('description_article', TextareaType::class, [
-                'label' => 'Content*',
-            ])
+            ->add('descriptionArticle')
             ->add('tags', HiddenType::class, [
-                'data' => '',
+                'mapped' => false,
             ])
             ->add('submit', SubmitType::class,[
                 'label' => 'Submit Now',
@@ -40,7 +37,7 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => null,
+            'data_class' => Article::class,
         ]);
     }
 }

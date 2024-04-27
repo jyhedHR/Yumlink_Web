@@ -14,6 +14,11 @@
 
 		{% block css %}
 
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+		{% block css %}
+			<link rel="stylesheet" href={{asset("backend/src/styles/blog_css.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/core.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/icon-font.min.css")}}>
 			<link rel="stylesheet" href={{asset("backend/src/plugins/datatables/css/dataTables.bootstrap4.min.css")}}>
