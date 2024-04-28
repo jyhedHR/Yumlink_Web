@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
+{% set subtotal = app.request.query.get('subtotal') %}
+								{% set shipping = app.request.query.get('shipping') %}
+								{% set coupon = app.request.query.get('coupon') %}
 
 	<section class="checkout-area pt-100 pb-70">
 		<div class="container">
@@ -132,13 +134,16 @@
 												{{ message }}
 											</div>
 										{% endfor %}
+										{% set total = subtotal + shipping + coupon %}
+
 
 										<form id='checkout-form' method='post' action="{{ path('app_stripe_charge') }}">
 											<input type='hidden' name='stripeToken' id='stripe-token-id'>
+											 <input type="hidden" name="total_cost" id="total_cost" value="{{ total }}">
 											<label for="card-element" class="mb-5">Checkout Forms</label>
 											<br>
 											<div id="card-element" class="form-control"></div>
-											<button id='pay-btn' class="btn btn-success mt-3" type="button" style="margin-top: 20px; width: 100%;padding: 7px;" onclick="createToken()">PAY $5
+											<button id='pay-btn' class="btn btn-success mt-3" type="button" style="margin-top: 20px; width: 100%;padding: 7px;" onclick="createToken()">{{ (subtotal + shipping + coupon) ~ "DT" }}
 											</button>
 											<form></div>
 										</div>
@@ -150,9 +155,7 @@
 						</div>
 						<div class="col-lg-4">
 							<div class="billing-sildbar pl-20">
-								{% set subtotal = app.request.query.get('subtotal') %}
-								{% set shipping = app.request.query.get('shipping') %}
-								{% set coupon = app.request.query.get('coupon') %}
+								
 								<div class="billing-totals">
 
 									<h3>Checkout Summary</h3>

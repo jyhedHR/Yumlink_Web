@@ -1,3 +1,4 @@
 framework:
     mailer:
-        dsn: '%env(MAILER_DSN)%'
+        dsn: 'smtp://yumlink12@gmail.com:your_app_password@smtp.gmail.com:587'
+

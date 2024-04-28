@@ -1,0 +1,10 @@
+knp_snappy:
+
+    pdf:
+        enabled:    true
+        binary:     'C:\Users\horch\Desktop\YumLink_web\src\PDF\wkhtmltopdf'
+        options:    []
+    image:
+        enabled:    true
+        binary:     '%env(WKHTMLTOIMAGE_PATH)%'
+        options:    []

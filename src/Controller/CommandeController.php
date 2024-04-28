@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
 use Stripe\Exception\ApiErrorException;
+use Knp\Snappy\Pdf;
+
 
 
 #[Route('/commande')]
@@ -27,28 +29,36 @@ class CommandeController extends AbstractController
     }
 
    
-    #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, NotifierInterface $notifier): Response
+    #[Route('/new1', name: 'app_commande_new1', methods: ['GET', 'POST'])]
+    public function new1(Request $request, EntityManagerInterface $entityManager, NotifierInterface $notifier): Response
     {
         // Create a new instance of Commande
         $commande = new Commande();
         $commande->setDate(new \DateTime());
-        $commande->setIdClient(3); // Set client ID as needed
+        $commande->setIdClient(15); // Set client ID as needed
     
         // Persist the Commande entity to the database
         $entityManager->persist($commande);
         $entityManager->flush();
       
+        // Create an instance of KnpSnappyBundle Pdf
       
    
     
+      
+        return $this->render('panier/index.html.twig', [
+          
+        ]);
+    }
+    
+    #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, NotifierInterface $notifier): Response
+    {
       
         return $this->render('commande/new.html.twig', [
             'stripe_key' => $_ENV["STRIPE_KEY"],
         ]);
     }
-    
-    
 
 
 

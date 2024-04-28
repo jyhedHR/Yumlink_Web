@@ -30,8 +30,7 @@
 		{% endblock %}
 		{% block js %}
 
-		
-	
+
 			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
 			<script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
 			<script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
@@ -371,11 +370,24 @@
 	</div>
 	<div class="col-lg-4 col-sm-6">
 		<div class="footer-widget ps-5">
-			<h3>Newsletter</h3>
+			<h3>Reclamation</h3>
 			<p>Any reclamation ?</p>
+			{% for message in app.flashes('success') %}
+											<div style="color: green;
+													                                    border: 2px green solid;
+													                                    text-align: center;
+													                                    padding: 5px;margin-bottom: 10px;">
+												{{ message }}
+											</div>
+										{% endfor %}
+
 			<div class="newsletter-area">
-				<form class="newsletter-form" data-toggle="validator" method="POST">
-					<textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order rclamation " class="form-control"></textarea>
+				<form class="newsletter-form" action="{{ path('app_reclamation_index') }}" method="POST" onsubmit="return confirm('Are you sure you want to send this reclamation?');">
+					<input
+					type="hidden" name="_token" value="{{ csrf_token('app_reclamation_index') }}">
+
+					<!-- Change the textarea to an input field -->
+					<input type="text" name="reclamation" id="notes" placeholder="Reclamation" class="form-control" required>
 
 					<button class="subscribe-btn" type="submit">
 						Send

@@ -23,7 +23,8 @@ services:
 
     # Define StripeService
     
-
+    Knp\Snappy\GeneratorInterface:
+        alias: knp_snappy.pdf
     # Define other services and configurations as needed
 
     # Define the ToastrFactory service
