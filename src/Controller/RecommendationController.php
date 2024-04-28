@@ -15,8 +15,10 @@ class RecommendationController extends AbstractController
     #[Route('/recommendations', name: 'recommendations')]
     public function recommendations(UserNutritionRepository $userNutritionRepository, RecettesRepository $recettesRepository): Response // Corrected argument name
     {
-        // Fetch user's nutrition data based on the logged-in user or any identifier you use
-        $userNutrition = $userNutritionRepository->findOneBy(['user' => 39]);
+        $user = $this->getUser(); // Assuming Symfony's built-in security is used to retrieve the current user
+
+        $userNutrition = $userNutritionRepository->findOneBy(['user' => $user->getIdu()]);
+    
 
         // Check if user nutrition data exists
         if (!$userNutrition) {
@@ -31,7 +33,7 @@ class RecommendationController extends AbstractController
         // Check if there are recommendations
         if ($recommendations) {
             // Insert recommendations into the nutrition_recommandation table
-            $recettesRepository->insertRecommendations($recommendations, 39);
+            $recettesRepository->insertRecommendations($recommendations, $user->getIdu()); // Use current user's ID
         }
 
         // Render the view with the recommendations
