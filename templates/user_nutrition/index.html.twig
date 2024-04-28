@@ -94,7 +94,7 @@
                     <a href="{{ path('app_user_nutrition_show', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Show</a>
                     <a href="{{ path('app_user_nutrition_edit', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Edit</a>
                     <a href="{{ path('app_generate_pdf', {'userId': user_nutrition.user.getIdu()}) }}" class="btn btn-secondary">Generate your bilan</a>
-                    <a href="{{ path('meal_plan') }}" class="btn btn-secondary">Meal Plan</a>
+                      <a href="{{ path('meal_plan') }}?calorie={{ user_nutrition.calorie }}" class="btn btn-secondary">Meal Plan</a>
 
 
                 </td>

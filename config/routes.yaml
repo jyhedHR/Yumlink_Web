@@ -16,3 +16,13 @@ user_nutrition_index:
 recipe_analyzer:
     path: /get-regime
     controller: App\Controller\RecipeAnalyzerController::index    
+
+
+# ai bot 
+botman:
+    path: /botman
+    controller: App\Controller\BotManController::index
+
+botman_handle:
+    path: /botman/chat
+    controller: App\Controller\BotManController::handle

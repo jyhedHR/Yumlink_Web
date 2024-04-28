@@ -12,7 +12,7 @@ class MealPlanController extends AbstractController
     #[Route('/meal-plan', name: 'meal_plan')]
     public function mealPlan(Request $request): Response
     {
-        $targetCalories = 2500;
+        $targetCalories = $request->query->get('calorie');
 
         $apiKey = 'ad7fd16c15b847aaab49f39ab9d159dd';
         $timeFrame = 'day';

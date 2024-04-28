@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,39 +15,110 @@
 		{% endblock %}
 		{% block css %}
 
-			<link rel="stylesheet" href={{asset("assets/css/bootstrap.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/animate.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/fonts/flaticon.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/boxicons.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/owl.carousel.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/owl.theme.default.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/jquery-ui.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/magnific-popup.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/odometer.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/meanmenu.min.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/style.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/responsive.css")}}>
-			<link rel="stylesheet" href={{asset("assets/css/theme-dark.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/bootstrap.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/animate.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/fonts/flaticon.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/boxicons.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/owl.carousel.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/owl.theme.default.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/jquery-ui.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/magnific-popup.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/odometer.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/meanmenu.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/style.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/responsive.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/theme-dark.css")}}>
+			 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 		{% endblock %}
 		{% block js %}
-			<script src="assets/js/jquery.min.js"></script>
+		 <!-- Inclure Leaflet.js -->
+   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="frontend/assets/js/jquery.min.js"></script> <!-- Inclure jQuery en premier -->
 
-			<script src={{asset("assets/js/bootstrap.bundle.min.js")}}></script>
-			<script src={{asset("assets/js/magnific-popup.min.js")}}></script>
-			<script src={{asset("assets/js/odometer.min.js")}}></script>
-			<script src={{asset("assets/js/appear.min.js")}}></script>
-			<script src={{asset("assets/js/meanmenu.min.js")}}></script>
-			<script src={{asset("assets/js/owl.carousel.min.js")}}></script>
-			<script src={{asset("assets/js/wow.min.js")}}></script>
-			<script src={{asset("assets/js/jquery-ui.min.js")}}></script>
-			<script src={{asset("assets/js/ajaxchimp.min.js")}}></script>
-			<script src={{asset("assets/js/form-validator.min.js")}}></script>
-			<script src={{asset("assets/js/contact-form-script.js")}}></script>
-			<script src={{asset("assets/js/custom.js")}}></script>
+    <!-- Ensuite, inclure les autres scripts -->
+    <script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/appear.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/meanmenu.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/owl.carousel.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/wow.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/jquery-ui.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/ajaxchimp.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/form-validator.min.js")}}></script>
+    <script src={{asset("frontend/assets/js/contact-form-script.js")}}></script>
+    <script src={{asset("frontend/assets/js/custom.js")}}></script>
 		</head>
 	</html>
 </body>{% endblock %}</head><body>{% block header %}
-
+<header class="top-header top-header-bg-two">
+	<div class="container-fluid">
+		<div class="row align-items-center">
+			<div class="col-lg-3 col-md-4">
+				<div class="header-left">
+					<p>Welcome To Yumlink!</p>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-8">
+				<div class="header-right d-flex align-items-center">
+					<div class="header-item">
+						<ul>
+							<li class="title">Follow us :</li>
+							<li>
+								<a href="https://www.facebook.com/" target="_blank">
+									<i class="bx bxl-facebook"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.instagram.com/" target="_blank">
+									<i class="bx bxl-instagram"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://twitter.com/" target="_blank">
+									<i class="bx bxl-twitter"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.youtube.com/" target="_blank">
+									<i class="bx bxl-youtube"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="header-item">
+						<a  class="cart-top-btn">
+							<i class="bx bx-shopping-bag"></i>
+							<span>0</span>
+						</a>
+					</div>
+					<div class="header-item">
+						<div class="header-language dropdown language-option">
+							<button class="dropdown-toggle" type="button" id="language1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="bx bx-world"></i>
+								<span class="lang-name"></span>
+							</button>
+							<div class="dropdown-menu language-dropdown-menu" aria-labelledby="language1">
+								<a class="dropdown-item" href="#">
+									<img src={{ asset("assets/images/uk.png") }} alt="flag">
+									English
+								</a>
+								<a class="dropdown-item" href="#">
+									<img src={{ asset("assets/images/china.png") }} alt="flag">
+									简体中文
+								</a>
+								<a class="dropdown-item" href="#">
+									<img src={{ asset("assets/images/uae.png") }} alt="flag">
+									العربيّة
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
 <div class="navbar-area">
 	<div class="mobile-responsive-nav">
 		<div class="container-fluid">
@@ -90,7 +162,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="coming-soon.html" class="nav-link">
+									<a href="{{ path('app_chef') }}"  class="nav-link">
 										Nos Chefs
 									</a>
 								</li>
@@ -171,8 +243,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                              <a href="{{ path('user_nutrition_edit', {'id':39 }) }}" class="nav-link">
-  								  Modifier
+								<a href="{{ path('user_nutrition_edit', {'id': app.user.getIdu() }) }}" class="nav-link">
+  									  Modifier
 								</a>
                                 </a>
                             </li> <li class="nav-item">
@@ -183,12 +255,7 @@
                             </li>
                         </ul>
                     </li>
-
-						<li class="nav-item">
-							<a href="contact.html" class="nav-link">
-								Contact Us
-							</a>
-						</li>
+						
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">
@@ -199,7 +266,7 @@
 							</div>
 						</div>
 						<div class="optional-item">
-							<a href="login.html" class="default-btn two">Log in</a>
+							<a href="{{ path('app_logout') }}" class="default-btn two">Log out </a>
 						</div>
 					</div>
 					<div class="mobile-nav">
@@ -302,6 +369,7 @@
 					Email:
 					<span>
                     
+						<a href="">yumlink2@gmail.com</a><br>
 					</span>
 				</li>
 				<li>
@@ -318,7 +386,7 @@
 		<div class="footer-widget ps-5">
 			<h3>Newsletter</h3>
 			<p>Hello</p>
-			<div class="newsletter-area">
+			<!--<div class="newsletter-area">
 				<form class="newsletter-form" data-toggle="validator" method="POST">
 					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
 					<button class="subscribe-btn" type="submit">
@@ -326,12 +394,13 @@
 					</button>
 					<div id="validator-newsletter" class="form-result"></div>
 				</form>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div></div></div><div class="copyright-area"><div class="container">
 <div class="copy-right-text text-center">
 	<p>
+		Copyright @<script data-cfasync="false" src={{asset("../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js")}}></script>
 		<script>
 			document.write(new Date().getFullYear())
 		</script>

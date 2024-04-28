@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BotMan Chatbot</title>
+    <script src="//cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js"></script>
+    <style>
+        /* Add any custom styles here */
+        #botmanWidget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        #botmanInput {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ccc;
+            outline: none;
+            resize: none;
+        }
+
+        #botmanInput:focus {
+            border-color: #3F51B5;
+        }
+
+        #botmanMessages {
+            padding: 10px;
+        }
+
+        .botman-message-container {
+            margin-bottom: 10px;
+        }
+
+        .botman-message {
+            background-color: #3F51B5;
+            color: white;
+            padding: 8px 10px;
+            border-radius: 5px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #ddd;
+            color: #333;
+            padding: 8px 10px;
+            border-radius: 5px;
+            max-width: 70%;
+            word-wrap: break-word;
+            align-self: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <div id="botmanWidget">
+        <div id="botmanMessages"></div>
+        <input type="text" id="botmanInput" placeholder="Type your message...">
+    </div>
+
+    {# <script>
+    var botmanWidget = {
+        frameTitle: 'BotMan Chatbot',
+        introMessage: 'Hi! How can I help you with your nutrition and weight loss goals?',
+        mainColor: '#3F51B5',
+        bubbleBackground: '#3F51B5',
+        aboutText: 'This chatbot can help you with your nutrition and weight loss goals. Ask it what you should eat to lose weight or gain weight, and it will provide you with sample meal plans.',
+        bubbleAvatarUrl: '', // Add an avatar URL if needed
+        chatServer: '/botman/handle', // Update to the correct route
+        title: 'Nutrition and Weight Loss Chatbot'
+    };
+
+    BotmanWidget.init(botmanWidget);
+    </script> #}
+</body>
+</html>
