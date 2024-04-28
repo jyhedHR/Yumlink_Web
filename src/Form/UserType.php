@@ -19,42 +19,48 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('email')
-            ->add('mdp', TextType::class, [
-                'label' => 'Mot de passe',
-                'required' => true,
-            ])
-            ->add('tel')
-            ->add('role', ChoiceType::class, [
-                'label' => 'Role',
-                'choices' => [
-                    'Client' => 'Client',
-                    'Chef' => 'Chef',
-                ],
-                'expanded' => true, // Défini à true pour des boutons radios, false pour un menu déroulant
-                'multiple' => false,
-                'choice_attr' => [
-                    'Client' => ['class' => 'radio-custom'],
-                    'Chef' => ['class' => 'radio-custom'],
-                ],
-                'attr' => [
-                    'class' => 'role-field',
-                ],
-            ])
+        ->add('nom', TextType::class, [
+            'required' => false,
+        ])
+        ->add('prenom', TextType::class, [
+            'required' => false,
+        ])
+        ->add('email', TextType::class, [
+            'required' => false,
+        ])
+        ->add('mdp', TextType::class, [
+            'label' => 'Mot de passe',
+            'required' => false,
+        ])
+        ->add('tel', TextType::class, [
+            'required' => false,
+        ])
+        ->add('role', ChoiceType::class, [
+            'label' => 'Role',
             
-            ->add('image', FileType::class, [
-                'label' => 'Ajouter une photo de profil',
-                'required' =>false, // Change to false if the image is not always required
-                'mapped' => false,
-                'attr' => [
-                    'accept' => 'image/*',
-                ],
-            ])
+            'choices' => [
+                'Client' => 'Client',
+                'Chef' => 'Chef',
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            'choice_attr' => [
+                'Client' => ['class' => 'radio-custom'],
+                'Chef' => ['class' => 'radio-custom'],
+            ],
+            'attr' => [
+                'class' => 'role-field',
+            ],
            
-            //->add('adresse')
-        ;
+        ])
+        ->add('image', FileType::class, [
+            'label' => 'Ajouter une photo de profil',
+            'required' => false,
+            'mapped' => false,
+            'attr' => [
+                'accept' => 'image/*',
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

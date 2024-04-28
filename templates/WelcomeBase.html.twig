@@ -249,11 +249,25 @@
 								</li>
 							</ul>
 						</li>
-						<li class="nav-item">
-							<a href="contact.html" class="nav-link">
-								Contact Us
-							</a>
-						</li>
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">
@@ -286,7 +300,68 @@
 		</nav>
 	</div>
 </body></body></div></div>{% endblock %}
-{% block body %}{% endblock %}
+{% block body %}
+<div class="banner-area-three">
+<div class="container-fluid">
+<div class="banner-content-two">
+<span class="wow animate__animated animate__fadeInDown" data-wow-delay="50ms" data-wow-duration="1000ms">Savourez l'art de la cuisine où que vous soyez !</span>
+<h1 class="wow animate__animated animate__fadeInUp" data-wow-delay="100ms" data-wow-duration="1000ms">Bienvenue  !</h1>
+<p class="wow animate__animated animate__fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms">Decouvres des nouvelles recettes avec les chefs les plus connues et partager avec nous vos créations  </p>
+<div class="banner-btn wow animate__animated animate__fadeInUp" data-wow-delay="300ms" data-wow-duration="1000ms">
+<a href="{{ path('app_login') }}" class="default-btn">login</a>
+<a href="{{ path('app_user_new') }}" class="default-btn two">S'inscrire</a>
+</div>
+<div class="banner-content-shape">
+<img src="assets/images/shape/shape2.png" alt="Images">
+<img src="assets/images/shape/shape1.png" alt="Images">
+<img src="assets/images/shape/shape7.png" alt="Images">
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="choose-slider-area pt-100">
+<div class="container">
+<div class="section-title text-center">
+<span>Choose Category</span>
+<h2>Recipe Categories</h2>
+</div>
+<div class="choose-slider owl-carousel owl-theme pt-45">
+<div class="choose-item">
+<a href="recipe-details.html">
+<img src="assets/images/choose/choose-img1.png" alt="Images">
+</a>
+<h3><a href="recipe-details.html">Appetizers</a></h3>
+</div>
+<div class="choose-item">
+<a href="recipe-details.html">
+<img src="assets/images/choose/choose-img2.png" alt="Images">
+</a>
+<h3><a href="recipe-details.html">Fish</a></h3>
+</div>
+<div class="choose-item">
+<a href="recipe-details.html">
+<img src="assets/images/choose/choose-img3.png" alt="Images">
+</a>
+<h3><a href="recipe-details.html">Chicken</a></h3>
+</div>
+<div class="choose-item">
+<a href="recipe-details.html">
+<img src="assets/images/choose/choose-img4.png" alt="Images">
+</a>
+<h3><a href="recipe-details.html">Vegetable</a></h3>
+</div>
+<div class="choose-item">
+<a href="recipe-details.html">
+<img src="assets/images/choose/choose-img1.png" alt="Images">
+</a>
+<h3><a href="recipe-details.html">Appetizers</a></h3>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
 
 
 {% block footer %}<footer class="footer-area footer-area-bg"><div class="container"><div class="footer-top pt-100 pb-70">

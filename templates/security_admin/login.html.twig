@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+			<link rel="stylesheet" href="{{ asset('backend/vendors/styles/core.css') }}">
+			<link rel="stylesheet" href="{{ asset('backend/vendors/styles/icon-font.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('backend/src/plugins/datatables/css/dataTables.bootstrap4.min.css') }}">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+			<link rel="stylesheet" href="{{ asset('backend/src/plugins/datatables/css/responsive.bootstrap4.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('backend/vendors/styles/style.css') }}">
+			<link rel="stylesheet" href="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85">
+			<link rel="stylesheet" href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258">
+			<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+		{% endblock %}
+	</head>
+	<body>
+		{% block header %}
+			<div
+				class="header"><!-- Contenu du header -->
+			</div>
+		{% endblock %}
+		{% block body %}
+		<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_admin_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" >
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" >
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button>
+</form>
+		{% endblock %}
+
+
+		{% block js %}
+			<script src="{{ asset('backend/vendors/scripts/core.js') }}"></script>
+			<script src="{{ asset('backend/vendors/scripts/script.min.js') }}"></script>
+			<script src="{{ asset('backend/vendors/scripts/process.js') }}"></script>
+			<script src="{{ asset('backend/vendors/scripts/layout-settings.js') }}"></script>
+			<script src="{{ asset('backend/src/plugins/apexcharts/apexcharts.min.js') }}"></script>
+			<script src="{{ asset('backend/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+			<script src="{{ asset('backend/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+			<script src="{{ asset('backend/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
+			<script src="{{ asset('backend/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
+			<script src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"></script>
+			<script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258"></script>
+			<script src="{{ asset('backend/vendors/scripts/dashboard.js') }}"></script>
+		{% endblock %}
+	</body>
+</html>

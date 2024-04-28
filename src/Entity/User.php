@@ -26,65 +26,72 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idu;
-    /**
+     /**
      * @var string
-     * @Assert\NotBlank
-     * @Assert\Length(max=20)
+     * @Assert\NotBlank(message="Le nom est requis.")
+     * @Assert\Length(max=20, maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères.")
      * @ORM\Column(name="nom", type="string", length=20, nullable=false)
      */
     private $nom;
 
-    /**
+     /**
      * @var string
-     * @Assert\NotBlank
-     * @Assert\Length(max=20)
+     * @Assert\NotBlank(message="Le prénom est requis.")
+     * @Assert\Length(max=20, maxMessage="Le prénom ne peut pas dépasser {{ limit }} caractères.")
      * @ORM\Column(name="prenom", type="string", length=20, nullable=false)
      */
     private $prenom;
 
  /**
      * @var string
-     * @Assert\NotBlank
-     * @Assert\Email
+     * @Assert\NotBlank(message="L'e-mail est requis.")
+     * @Assert\Email(message="L'adresse e-mail n'est pas valide.")
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
      */
     private $email;
 
     /**
      * @var string The hashed password
-     * @Assert\NotBlank
-     * @Assert\Length(min=8)
+     * @Assert\NotBlank(message="Le mot de passe est requis.")
+     * @Assert\Length(min=8, minMessage="Le mot de passe doit contenir au moins {{ limit }} caractères.")
      * @Assert\Regex(
-     *      pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/"
+     *      pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/",
+     *      message="Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial."
      * )
-     *
      * @ORM\Column(name="mdp", type="string", length=150, nullable=false)
      */
     private $mdp;
 
-    /**
+     /**
      * @var int
-     * @Assert\NotBlank
-      * @Assert\Length(min=8, max=8)
+     * @Assert\NotBlank(message="Le numéro de téléphone est requis.")
+     * @Assert\Length(min=8, max=8, exactMessage="Le numéro de téléphone doit contenir exactement {{ limit }} chiffres.")
      * @Assert\Regex(
      *      pattern="/^[2-5|9]\d{7}$/",
+     *      message="Le numéro de téléphone n'est pas valide."
      * )
      * @ORM\Column(name="tel", type="integer", nullable=false)
      */
-    private $tel;
+    private $tel;       
 
     /**
      * @var string
-      * @Assert\NotBlank
+     
      * @ORM\Column(name="role", type="string", length=20, nullable=false)
      */
     private $role;
 
     /**
      * @var string
-     * @ORM\Column(name="Image", type="string", length=100, nullable=false)
+     * @ORM\Column(name="Image", type="string", length=100, nullable=true)
      */
     private $image;
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="blocked", type="boolean", nullable=true)
+     */
+    private $blocked;
      /**
     
      * @ORM\OneToOne(targetEntity="Adresse")
@@ -133,7 +140,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function isBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
 
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
+
+        return $this;
+    }
     public function getMdp(): ?string
     {
         return $this->mdp;

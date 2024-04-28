@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Adresse;
 use App\Entity\User;
+use App\Form\AdminType;
 use App\Form\UserType;
 use App\Form\AdresseType;
 use App\Repository\UserRepository;
@@ -86,7 +87,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $request->getSession()->remove('user_form_data');
-            return $this->redirectToRoute('app_user_index');
+            return $this->redirectToRoute('app_login');
         }
   
         if ($request->isMethod('POST')) {
@@ -108,7 +109,7 @@ class UserController extends AbstractController
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('Welcome', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
@@ -157,4 +158,15 @@ class UserController extends AbstractController
         // Renvoyer les résultats de la recherche au format JSON
         return new JsonResponse($usersArray);
     }
+    #[Route('/{idu}/block', name: 'app_user_block', methods: ['POST'])]
+    public function adminblockuser(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $id = $request->request->get('id');
+        $data = $userRepository->find($id);
+        $data->setBlocked(!$data->isBlocked());
+        $entityManager->persist($data);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_user_index');
+    }
+    
 }

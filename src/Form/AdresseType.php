@@ -18,12 +18,14 @@ class AdresseType extends AbstractType
                 'id' => 'gouv',
                 'name' => 'gouvernorat',
                 'readonly' => false ,
+                'required' => false,
             ]])
             ->add('ville', TextType::class, [
                 'attr' => [
                     'id' => 'ville',
                     'name' => 'ville',
                     'readonly' => false,
+                    'required' => false,
                 ],
             ])
             ->add('rue', TextType::class, [
@@ -31,6 +33,7 @@ class AdresseType extends AbstractType
                     'id' => 'rue',
                     'name' => 'rue',
                     'readonly' => false,
+                    'required' => false,
                 ],
             ])
             ->add('codepostal', TextType::class, [
@@ -39,6 +42,7 @@ class AdresseType extends AbstractType
                     'id' => 'code_postal',
                     'name' => 'code_postal',
                     'readonly' => false,
+                    'required' => false,
                 ],
             ])
         ;

@@ -1,2 +1,81 @@
 {% extends 'adminBase.html.twig' %}
 
+{% block title %}
+    User index
+{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <!-- horizontal Basic Forms Start -->
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h1 class="text-blue h4">Ajouter un nouveau admin</h1>
+                        </div>
+                    </div>
+                    <form method="post">
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                        {{ form_widget(form._token) }}
+
+                        <div class="form-group">
+                            {{ form_row(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                            {% if form_errors(form.nom) is not empty %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form.nom) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prenom'}}) }}
+                            {% if form_errors(form.prenom) is not empty %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form.prenom) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                            {% if form_errors(form.email) is not empty %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form.email) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                            {% if form_errors(form.mdp) is not empty %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form.mdp) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.tel, {'attr': {'class': 'form-control', 'placeholder': 'Telephone'}}) }}
+                            {% if form_errors(form.tel) is not empty %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form.tel) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
+                            {% if form_errors(form.image) is not empty %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form.image) }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="primary btn">
+                           ajouter admin
+                        </button>
+                        {{ form_end(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

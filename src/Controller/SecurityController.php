@@ -60,6 +60,8 @@ class SecurityController extends AbstractController
                 return $this->render('user/ClientHome.html.twig');
             case 'Chef':
                 return $this->render('user/ChefHome.html.twig');
+            case 'Admin':
+                return $this->redirectToRoute('app_user_index'); 
             
             default:
             return $this->redirectToRoute('app_user_new'); 
@@ -69,6 +71,20 @@ class SecurityController extends AbstractController
     }
     #[Route('/Welcome', name: 'Welcome')]
     public function Welcome(): Response
-    {  return $this->render('Home.html.twig');}
+    {  return $this->render('WelcomeBase.html.twig');}
     
+    #[Route(path: '/loginadmin', name: 'app_adminLogin')]
+    public function loginAdmin(AuthenticationUtils $authenticationUtils): Response
+    {
+        // if ($this->getUser()) {
+        //     return $this->redirectToRoute('target_path');
+        // }
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security_admin/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
 }

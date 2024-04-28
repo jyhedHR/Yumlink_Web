@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Recette
  *
- * @ORM\Table(name="recette", indexes={@ORM\Index(name="fk_recette_users", columns={"iduser"}), @ORM\Index(name="fk_recette_user", columns={"idu"})})
+ * @ORM\Table(name="recette", indexes={@ORM\Index(name="fk_recette_user", columns={"idu"}), @ORM\Index(name="fk_recette_users", columns={"iduser"})})
  * @ORM\Entity
  */
 class Recette
@@ -75,95 +75,6 @@ class Recette
      * })
      */
     private $idu;
-
-    public function getIdR(): ?int
-    {
-        return $this->idR;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getImgsrc(): ?string
-    {
-        return $this->imgsrc;
-    }
-
-    public function setImgsrc(string $imgsrc): static
-    {
-        $this->imgsrc = $imgsrc;
-
-        return $this;
-    }
-
-    public function getCalorie(): ?int
-    {
-        return $this->calorie;
-    }
-
-    public function setCalorie(int $calorie): static
-    {
-        $this->calorie = $calorie;
-
-        return $this;
-    }
-
-    public function getProtein(): ?int
-    {
-        return $this->protein;
-    }
-
-    public function setProtein(int $protein): static
-    {
-        $this->protein = $protein;
-
-        return $this;
-    }
-
-    public function getIduser(): ?User
-    {
-        return $this->iduser;
-    }
-
-    public function setIduser(?User $iduser): static
-    {
-        $this->iduser = $iduser;
-
-        return $this;
-    }
-
-    public function getIdu(): ?User
-    {
-        return $this->idu;
-    }
-
-    public function setIdu(?User $idu): static
-    {
-        $this->idu = $idu;
-
-        return $this;
-    }
 
 
 }
