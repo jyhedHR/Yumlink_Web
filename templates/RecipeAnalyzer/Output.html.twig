@@ -4,34 +4,78 @@
 {% block title %}Recipe Analysis{% endblock %}
 
 {% block body %}
-    <h1>Recipe Analysis</h1>
 
-    <h2>General Information</h2>
+
+
+
+<div class="work-area pt-100 pb-70">
+<div class="container">
+<div class="section-title text-center">
+<span>How IT Works: add your recipe and get your Analysis</span>
+<h2>Recipe Analysis</h2>
+</div>
+<div class="row pt-45 justify-content-center">
+<div class="col-lg-3 col-sm-6">
+<div class="work-card work-bg1">
+<div class="content">
+<i class="flaticon-contact-book"></i>
+
+
+<h3>General Information</h3>
     <p>Yield: {{ response.yield }}</p>
     <p>Calories: {{ response.calories }}</p>
     <p>Diet Labels: {{ response.dietLabels|join(', ') }}</p>
     <p>Health Labels: {{ response.healthLabels|join(', ') }}</p>
 
-    <h2>Total Nutrients</h2>
+
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+<div class="work-card work-bg2">
+<div class="content">
+<i class="flaticon-research"></i>
+
+
+<h3>Total Nutrients</h3>
     <ul>
         {% for label, nutrient in response.totalNutrients %}
             <li>{{ label }}: {{ nutrient.quantity }} {{ nutrient.unit }}</li>
         {% endfor %}
     </ul>
-
-    <h2>Ingredients</h2>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+<div class="work-card work-bg3">
+<div class="content">
+<i class="flaticon-diet"></i>
+ <h3>Ingredients</h3>
     <ul>
         {% for ingredient in response.ingredients %}
             <li>{{ ingredient.text }}</li>
         {% endfor %}
     </ul>
-
-    <h2>Cuisine Type</h2>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+<div class="work-card work-bg4">
+<div class="content">
+<i class="flaticon-happiness"></i>
+<h3>Cuisine Type</h3>
     <p>{{ response.cuisineType|join(', ') }}</p>
 
-    <h2>Meal Type</h2>
+    <h3>Meal Type</h3>
     <p>{{ response.mealType|join(', ') }}</p>
 
-    <h2>Dish Type</h2>
+    <h3>Dish Type</h3>
     <p>{{ response.dishType|join(', ') }}</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 {% endblock %}

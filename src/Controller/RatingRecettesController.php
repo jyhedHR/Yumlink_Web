@@ -44,25 +44,13 @@ class RatingRecettesController extends AbstractController
     {
         $recetteId = $request->request->get('recette_id');
         dump($recetteId) ; 
-        // Get the EntityManager
         $entityManager = $this->getDoctrine()->getManager();
     
-        // Retrieve all ratings for the given Recette ID
-        //$ratings = $entityManager->getRepository(RatingRecettes::class)->findBy(['recette' => $recetteId]);
-       /* $ratings = [
-            ['rating' => 5],
-            ['rating' => 4],
-            ['rating' => 3],
-            ['rating' => 2],
-            ['rating' => 1],
-        ];*/
         $qb = $entityManager->createQueryBuilder();
         $qb->select('r')
            ->from('App\Entity\RatingRecettes', 'r')
            ->where('r.recette = :recetteId')
            ->setParameter('recetteId', $recetteId);
-    
-        // Execute the query
         $ratings = $qb->getQuery()->getResult();
         dump($ratings);
         
@@ -89,11 +77,18 @@ class RatingRecettesController extends AbstractController
             }
         }
     
-        // Calculate average rating
+        
         $totalStars = ($totalFiveStarRatings * 5) + ($totalFourStarRatings * 4) + ($totalThreeStarRatings * 3) + ($totalTwoStarRatings * 2) + $totalOneStarRatings;
         $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
     
-        // Prepare response data
+        $totalStarsPercentage = $totalRatings > 0 ? ($totalStars / ($totalRatings * 5)) * 100 : 0;
+        $fiveStarProgress = $totalRatings > 0 ? ($totalFiveStarRatings / $totalRatings) * 100 : 0;
+        $fourStarProgress = $totalRatings > 0 ? ($totalFourStarRatings / $totalRatings) * 100 : 0;
+        $threeStarProgress = $totalRatings > 0 ? ($totalThreeStarRatings / $totalRatings) * 100 : 0;
+        $twoStarProgress = $totalRatings > 0 ? ($totalTwoStarRatings / $totalRatings) * 100 : 0;
+        $oneStarProgress = $totalRatings > 0 ? ($totalOneStarRatings / $totalRatings) * 100 : 0;
+    
+    
         $responseData = [
             'average_rating' => number_format($averageRating, 1),
             'total_review' => $totalRatings,
@@ -102,10 +97,15 @@ class RatingRecettesController extends AbstractController
             'total_three_star_review' => $totalThreeStarRatings,
             'total_two_star_review' => $totalTwoStarRatings,
             'total_one_star_review' => $totalOneStarRatings,
+            'five_star_progress' => $fiveStarProgress,
+            'four_star_progress' => $fourStarProgress,
+            'three_star_progress' => $threeStarProgress,
+            'two_star_progress' => $twoStarProgress,
+            'one_star_progress' => $oneStarProgress,
         ];
        dump($totalStars);
        dump($averageRating) ;
-        // Return the response as JSON
+       
         return new JsonResponse($responseData);
 }
 }

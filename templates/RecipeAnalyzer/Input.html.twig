@@ -4,10 +4,41 @@
 {% block title %}Analyze Recipe{% endblock %}
 
 {% block body %}
-    <h1>Analyze Recipe</h1>
-    <form action="{{ path('app_analyzer') }}" method="post">
-        <label for="input">Recipe:</label>
-        <input type="text" id="input" name="input" required>
-        <button type="submit">Analyze</button>
-    </form>
+
+
+
+<div class="calculate-area pt-100 pb-70">
+<div class="container">
+<div class="row align-items-center justify-content-center">
+<div class="col-lg-6">
+<div class="calculate-form">
+<h2>Analyser votre recette </h2>
+<form action="{{ path('app_analyzer') }}" method="post">
+<div class="row">
+
+<div class="col-lg-12">
+<div class="form-group">
+
+<textarea id="input" name="input" placeholder="Ajouter les ingredients ici"></textarea>
+</div>
+</div>
+
+
+
+<div class="col-lg-12 col-md-12">
+<button type="submit" class="default-btn">
+Analyser
+</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+   
+</div>
+</div>
+</div>
+
+
+
 {% endblock %}

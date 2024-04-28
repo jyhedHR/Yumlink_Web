@@ -280,7 +280,6 @@ function load_rating_data(recipeId) {
         success: function(data) {
             console.log("Received data:", data);
 
-            // Update the DOM elements with rating data
             $('#average_rating').text(data.average_rating);
             $('#total_review').text(data.total_review);
             $('#total_five_star_review').text(data.total_five_star_review);
@@ -289,7 +288,7 @@ function load_rating_data(recipeId) {
             $('#total_two_star_review').text(data.total_two_star_review);
             $('#total_one_star_review').text(data.total_one_star_review);
 
-            // Update progress bars
+            
             $('#five_star_progress').css('width', data.five_star_progress + '%');
             $('#four_star_progress').css('width', data.four_star_progress + '%');
             $('#three_star_progress').css('width', data.three_star_progress + '%');
