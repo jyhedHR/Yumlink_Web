@@ -53,4 +53,28 @@ class DefisAdminController extends AbstractController
 
         return $this->redirectToRoute('app_defis_admin_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/Calender_admin', name: 'app_defis_calender_admin', methods: ['GET'])]
+    public function calender(DefisRepository $defisRepository): Response
+    {
+        $defis = $defisRepository->findAll();
+    
+        $events = [];
+        foreach ($defis as $defi) {
+            // Format the Defis data into an event
+            $event = [
+                'title' => $defi->getNomD(),
+                
+                'Date' => $defi->getDelai(),
+                'start' => $defi->getDelai()->format('Y-m-d'), 
+                
+                'discription' => $defi->getDisD(), 
+            ];
+            $events[] = $event;
+        }
+    
+        return $this->render('defis_admin/calendar.html.twig', [
+            'events' => json_encode($events), // Pass events as JSON to the template
+        ]);
+    }
+    
 }
