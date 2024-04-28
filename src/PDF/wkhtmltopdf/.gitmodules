@@ -1,0 +1,4 @@
+[submodule "qt"]
+  path   = qt
+  url    = ../qt.git
+  branch = wk_4.8.7

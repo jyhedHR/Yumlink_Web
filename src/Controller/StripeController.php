@@ -7,15 +7,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Stripe;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Commande;
+use App\Form\CommandeType;
  
 class StripeController extends AbstractController
 {
     #[Route('/stripe', name: 'app_stripe')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager , Request $request): Response
     {
-        return $this->render('commande/new.html.twig', [
-            'stripe_key' => $_ENV["STRIPE_KEY"],
-        ]);
+        $commande = new Commande();
+        $commande->setDate(new \DateTime());
+        $commande->setIdClient(15); // Set client ID as needed
+    
+        // Persist the Commande entity to the database
+        $entityManager->persist($commande);
+        $entityManager->flush();
+        $totalCost = $request->query->get('totalCost');
+         return $this->redirectToRoute('app_pdf_generator', ['totalCost' => $totalCost], Response::HTTP_SEE_OTHER);
+        
     }
  
  
@@ -33,6 +43,11 @@ class StripeController extends AbstractController
             'success',
             'Payment Successful!'
         );
-        return $this->redirectToRoute('app_stripe', [], Response::HTTP_SEE_OTHER);
+        $totalCost = $request->request->get('total_cost');
+        if ($totalCost === null) {
+            // Handle the case where totalL is missing or invalid
+            return new Response('MHREZ', Response::HTTP_BAD_REQUEST);
+        }
+        return $this->redirectToRoute('app_stripe', ['totalCost' => $totalCost], Response::HTTP_SEE_OTHER);
     }
 }

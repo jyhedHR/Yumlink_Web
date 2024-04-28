@@ -81,6 +81,14 @@
 												Continue Shopping
 											</a>
 										</div>
+										<div class="continue-shopping-box">
+											<form method="post" action="{{ path('panier_delete_all') }}" onsubmit="return confirm('Are you sure you want to delete all items in the panier?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('panier_delete_all') }}">
+    <button type="submit" class="default-btn">
+        Delete all panier
+    </button>
+</form>
+										</div>
 									</div>
 								</div>
 

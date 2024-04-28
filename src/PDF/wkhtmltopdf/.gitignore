@@ -1,0 +1,24 @@
+# ignore mac build files
+build/
+*.plist
+*~
+\#*\#
+bin
+wkhtmltopdf.app/
+wkhtmltopdf.xcodeproj/
+release*/
+test/
+static-build/
+.obj/
+doc/
+docs/_site/
+docs/Gemfile.lock
+libdoc/
+man1/
+Makefile
+qrc_wkhtmltopdf.cpp
+Makefile.*
+*_resource.rc
+*.o
+moc_*.*
+.qmake*

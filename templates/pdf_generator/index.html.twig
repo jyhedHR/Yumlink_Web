@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Resume</title>
+</head>
+<body>
+    <div style="margin: 0 auto;display: block;width: 500px;">
+        <table width="100%" border="1">
+            <tr>
+                <td colspan="2">
+                 
+                </td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td>{{name}}</td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td>{{address}}</td>
+            </tr>
+            <tr>
+                <td>Prix Total:</td>
+                <td>{{Prix}}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>{{email}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
+
+<script>
+
+function downloadAndRedirect(pdfUrl, redirectUrl) {
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'FACTURE.pdf';
+    
+    // Append the link to the body and trigger a click to download the PDF
+    document.body.appendChild(link);
+    link.click();
+    
+    // Remove the link from the DOM
+    document.body.removeChild(link);
+    
+    // Redirect the user after a short delay
+   
+        window.location.href = {{ path("app_panier_index") }}';
+    // Adjust delay as needed
+}
+
+// Example usage
+document.getElementById('deleteAllPanierButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // URL of the PDF generator endpoint
+    const pdfUrl = '/pdf/generator';
+    
+    // URL of the panier index page
+    const redirectUrl = '{{ path("app_panier_index") }}';
+    
+    // Call the function to download the PDF and redirect
+    downloadAndRedirect(pdfUrl, redirectUrl);
+});
+</script>
