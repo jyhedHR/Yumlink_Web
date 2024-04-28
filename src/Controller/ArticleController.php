@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/articles')]
 class ArticleController extends AbstractController
@@ -162,7 +163,7 @@ class ArticleController extends AbstractController
         }
         return $this->redirectToRoute('app_article_blog', [], Response::HTTP_SEE_OTHER);
     }
-    
+
     public function handleTags(array $tagsArray, EntityManagerInterface $entityManager)
     {
         $existingTags = $entityManager->getRepository(Tag::class)->findBy(['tagValue' => $tagsArray['tags']]);
@@ -228,5 +229,32 @@ class ArticleController extends AbstractController
         $entityManager->persist($article);
         $entityManager->flush();
         return new JsonResponse(['message' => 'Article disliked', 'likes' => $article->getNbLikesArticle()]);
+    }
+
+
+    #[Route('/sort-articles', name: "sort_articles", methods: ["POST"])]
+    public function sortArticles(Request $request, SerializerInterface $serializer, ArticleRepository $articleRepository): Response
+    {
+        $sortType = $request->request->get('sortType');
+        $articles = $articleRepository->findAll();
+
+        switch ($sortType) {
+            case 'asc':
+                usort($articles, function ($a, $b) {
+                    return strcmp($a->getTitleArticle(), $b->getTitleArticle());
+                });
+                break;
+            case 'desc':
+                usort($articles, function ($a, $b) {
+                    return strcmp($b->getTitleArticle(), $a->getTitleArticle());
+                });
+                break;
+            default:
+                // Handle default case or error
+                break;
+        }
+
+        $sortedArticlesJson = $serializer->serialize($articles, 'json');
+        return new Response($sortedArticlesJson, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 }
