@@ -211,6 +211,21 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
 
         return $this->redirectToRoute('app_recettes_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/admin/{idR}', name: 'app_recettes_delete_admin', methods: ['POST'])]
+    public function deleteA(Request $request, Recettes $recette, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$recette->getIdR(), $request->request->get('_token'))) {
+            $entityManager->remove($recette);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('indexAdmin', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
     #[Route('/search_recipes', name: 'search_recipes', methods: ['GET'])]
     public function searchRecipes(Request $request)
 {
@@ -239,34 +254,43 @@ public function addToFavorites(Recettes $recette, EntityManagerInterface $entity
     return $this->redirectToRoute('app_recettes_index');
 }
 
+#[Route('/show_favorite', name: 'app_favorite_show' , methods: ['GET'])]
+public function favoriteRecipes(EntityManagerInterface $entityManager): Response
+{
 
-     private const API_KEY = 'e3478e9f73b116663d0d8782874b2f56';
-    #[Route('/analyze', name: 'app_analyzer', methods: ['GET', 'POST'])]
-    public function analyze(Request $request): Response
-    {
-        $inputRecipe = $request->get('input');
+     $user = $entityManager->getRepository(User::class)->find(29);
+     $favoriteRecipes = $entityManager->getRepository(FavoriteRecipes::class)->findBy(['user' => $user]);
+  dump($favoriteRecipes) ; 
+     $recipeIds = [];
+     foreach ($favoriteRecipes as $favoriteRecipe) {
+         $recipeIds[] = $favoriteRecipe->getRecipe()->getIdR();
+     }
+ 
+    
+     $favoriteRecipesDetails = $entityManager->getRepository(Recettes::class)->findBy(['idR' => $recipeIds]);
+ 
+     return $this->render('recettes/mes_fav.html.twig', [
+         'favoriteRecipes' => $favoriteRecipesDetails,
+     ]);
+}
 
-        if (!empty($inputRecipe)) {
-            $client = new Client([
-                'base_uri' => 'https://api.edamam.com/api/nutrition-details',
-            ]);
+#[Route('/{idR}/remove_favorite', name: 'remove_favorite_recipe', methods: ['POST'])]
+public function removeFromFavorites(Recettes $recette, EntityManagerInterface $entityManager, Request $request): Response
+{
+    if ($this->isCsrfTokenValid('remove' . $recette->getIdr(), $request->request->get('_token'))) {
+        $user = $entityManager->getRepository(User::class)->find(29);
+        $favoriteRecipe = $entityManager->getRepository(FavoriteRecipes::class)->findOneBy([
+            'user' => $user,
+            'recipe' => $recette,
+        ]);
 
-            $response = $client->post('', [
-                'json' => [
-                    'title' => 'Recipe Title',
-                    'ingr' => [$inputRecipe],
-                    'app_id' => '58aea65e', // This should be your Edamam API app ID
-                    'app_key' => self::API_KEY,
-                ],
-            ]);
-
-            $jsonResponse = json_decode($response->getBody()->getContents(), true);
-
-            return $this->render('recettes/output.html.twig', [
-                'response' => $jsonResponse,
-            ]);
+        if ($favoriteRecipe) {
+            $entityManager->remove($favoriteRecipe);
+            $entityManager->flush();
         }
-
-        return $this->render('recettes/input.html.twig');
     }
+
+    return $this->redirectToRoute('app_recettes_index');
+}
+   
 }

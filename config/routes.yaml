@@ -35,3 +35,17 @@ botman_handle:
 #    path: /
 #    controller: App\Controller\DefaultController::index4
 
+app_recipe_analyzer:
+    path: /recipe/analyzer
+    controller: App\Controller\RecipeAnalyzerController::index
+    methods: ['GET']
+
+app_analyzer:
+    path: /recipe/analyze
+    controller: App\Controller\RecipeAnalyzerController::analyze
+    methods: ['GET', 'POST']
+
+app_favorite_show:
+    path: /show_favorite
+    controller: App\Controller\RecettesController::favoriteRecipes
+    methods: ['GET']

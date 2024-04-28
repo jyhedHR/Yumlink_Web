@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
+use GuzzleHttp\Client;
 
 class RecipeAnalyzerController extends AbstractController
 {
@@ -90,23 +91,23 @@ class RecipeAnalyzerController extends AbstractController
         ]);
     }
 
-    private const API_KEY = 'e3478e9f73b116663d0d8782874b2f56';
-    #[Route('/analyze', name: 'app_analyzer', methods: ['GET', 'POST'])]
+    
+    #[Route('/recipe/analyze', name: 'app_analyzer', methods: ['GET', 'POST'])]
     public function analyze(Request $request): Response
     {
         $inputRecipe = $request->get('input');
 
         if (!empty($inputRecipe)) {
             $client = new Client([
-                'base_uri' => 'https://api.edamam.com/api/nutrition-details',
+                'base_uri' => 'https://api.edamam.com/api/nutrition-details?app_id=58aea65e&app_key=5a68e455d5051fbf5a1995c24d06e5c9',
+                
             ]);
 
             $response = $client->post('', [
                 'json' => [
                     'title' => 'Recipe Title',
                     'ingr' => [$inputRecipe],
-                    'app_id' => '58aea65e', // This should be your Edamam API app ID
-                    'app_key' => self::API_KEY,
+                   
                 ],
             ]);
 
