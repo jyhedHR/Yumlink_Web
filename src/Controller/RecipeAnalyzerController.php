@@ -15,8 +15,8 @@ class RecipeAnalyzerController extends AbstractController
 {
     private $httpClient;
     private $apiEndpoint = 'https://api.edamam.com/api/nutrition-data';
-    private $appId = '58aea65e';
-    private $appKey = '8857ecdc438404779d04b57881f1a456';
+    private $appId = '392aa5ca';
+    private $appKey = '09805aee9b2412db87de2907891136ed';
 
     public function __construct(HttpClientInterface $httpClient)
     {

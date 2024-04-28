@@ -36,7 +36,7 @@ class UserNutritionController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/nutri', name: 'app_user_nutrition_index', methods: ['GET'])]
+    #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
     public function index(UserNutritionRepository $userNutritionRepository, TokenStorageInterface $tokenStorage): Response
     {
         $user = $tokenStorage->getToken()->getUser();
@@ -210,50 +210,50 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
 
 
     #[Route('/generate-pdf/{userId}', name: 'app_generate_pdf')]
-public function generatePdf(UserNutritionRepository $userNutritionRepository, $userId): Response
-{
-    // Retrieve the user with the given ID
-    $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        public function generatePdf(UserNutritionRepository $userNutritionRepository, $userId): Response
+        {
+                    // Retrieve the user with the given ID
+                    $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
-    // Retrieve the user's nutrition data from the repository
-    $userNutrition = $userNutritionRepository->findOneBy(['user' => $user]);
+                    // Retrieve the user's nutrition data from the repository
+                    $userNutrition = $userNutritionRepository->findOneBy(['user' => $user]);
 
-    // Make sure userNutrition exists before generating PDF
-    if (!$userNutrition) {
-        throw $this->createNotFoundException('User nutrition data not found.');
-    }
+                    // Make sure userNutrition exists before generating PDF
+                    if (!$userNutrition) {
+                        throw $this->createNotFoundException('User nutrition data not found.');
+                    }
 
-    // Configure Dompdf options
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
+                    // Configure Dompdf options
+                    $options = new Options();
+                    $options->set('isHtml5ParserEnabled', true);
 
-    // Instantiate Dompdf with options
-    $dompdf = new Dompdf($options);
+                    // Instantiate Dompdf with options
+                    $dompdf = new Dompdf($options);
 
-    // Render the Twig template to HTML
-    $html = $this->renderView('user_nutrition/body_bilan.html.twig', [
-        'userNutrition' => $userNutrition,
-    ]);
+                    // Render the Twig template to HTML
+                    $html = $this->renderView('user_nutrition/body_bilan.html.twig', [
+                        'userNutrition' => $userNutrition,
+                    ]);
 
-    // Load HTML content into Dompdf
-    $dompdf->loadHtml($html);
+                    // Load HTML content into Dompdf
+                    $dompdf->loadHtml($html);
 
-    // Set paper size and orientation
-    $dompdf->setPaper('A4', 'portrait');
+                    // Set paper size and orientation
+                    $dompdf->setPaper('A4', 'portrait');
 
-    // Render PDF (optional: you can directly output the PDF, or save it to a file)
-    $dompdf->render();
+                    // Render PDF (optional: you can directly output the PDF, or save it to a file)
+                    $dompdf->render();
 
-    // Output PDF to the browser
-    return new Response(
-        $dompdf->output(),
-        Response::HTTP_OK,
-        [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="personalized_nutritional_body_bilan.pdf"',
-        ]
-    );
-}
+                    // Output PDF to the browser
+                    return new Response(
+                        $dompdf->output(),
+                        Response::HTTP_OK,
+                        [
+                            'Content-Type' => 'application/pdf',
+                            'Content-Disposition' => 'attachment; filename="personalized_nutritional_body_bilan.pdf"',
+                        ]
+                    );
+        }
 
     #[Route('/{id}/history', name: 'user_nutrition_history')]
     public function history(int $id, UserNutritionRepository $repository): Response
