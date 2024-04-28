@@ -91,7 +91,7 @@ class Recettes
    
     private Ingredient $ingredient ; 
 
-    public function getIngredient() : ?ingredient 
+    public function getIngredient() : ?Ingredient 
     {
         return $this->ingredient ; 
     }
