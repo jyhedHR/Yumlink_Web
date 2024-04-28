@@ -14,12 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Security;
+
+
 //pdf 
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
-//log history
-use Psr\Log\LoggerInterface;
 
 
 #[Route('/nutrition')]
@@ -34,35 +36,40 @@ class UserNutritionController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
-    public function index(UserNutritionRepository $userNutritionRepository): Response
+    #[Route('/nutri', name: 'app_user_nutrition_index', methods: ['GET'])]
+    public function index(UserNutritionRepository $userNutritionRepository, TokenStorageInterface $tokenStorage): Response
     {
-        $UNbyId = [];
-        $userNutritions = $userNutritionRepository->findAll();
-        foreach ($userNutritions as $usernutrition) {
-            if ($usernutrition->getUser()->getIdu() == 39) {
-                $UNbyId[] = $usernutrition;
-            }
+        $user = $tokenStorage->getToken()->getUser();
+
+           // Check if the user is authenticated and is an instance of UserInterface
+    if ($user instanceof UserInterface) {
+        // Retrieve the user's ID
+        $userId = $user->getIdu();
+
+        // Fetch user nutrition records based on the user's ID
+        $userNutritions = $userNutritionRepository->findBy(['user' => $userId]);
+    }
             return $this->render('user_nutrition/index.html.twig', [
-                'user_nutritions' => $UNbyId,
+                'user_nutritions' =>  $userNutritions,
             ]);
         }
-    }
+    
     
 
 
     #[Route('/new', name: 'app_user_nutrition_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager): Response
+public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
 {
-    // Get the user with ID 39
-    $user = $entityManager->getRepository(User::class)->find(39);
+     // Get the currently authenticated user
+     $user = $security->getUser();
 
-
-    $userNutrition = new UserNutrition();
-    $userNutrition->setUser($user);
-
-    $form = $this->createForm(UserNutritionType::class, $userNutrition);
-    $form->handleRequest($request);
+     // Check if the user is authenticated
+     if ($user) {
+         $userNutrition = new UserNutrition();
+         $userNutrition->setUser($user);
+ 
+         $form = $this->createForm(UserNutritionType::class, $userNutrition);
+         $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
         // Get user input
@@ -88,9 +95,9 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         $proteinCalories = $calorie * $proteinRatio;
         $carbCalories = $calorie * $carbRatio;
         $fatCalories = $calorie * $fatRatio;
-        $protein = $proteinCalories / 4;
-        $carbs = $carbCalories / 4;
-        $fat = $fatCalories / 9;
+        $protein = $proteinCalories / 4 - 100;
+        $carbs = $carbCalories / 4 -100;
+        $fat = $fatCalories / 9 - 30 ;
 
         // Update entity with calculated values
         $userNutrition->setCalorie($calorie);
@@ -112,19 +119,20 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         'form' => $form,
     ]);
 }
+}
 
 
 
 
     
     #[Route('/{user}/edit', name: 'app_user_nutrition_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserNutrition $userNutrition, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
+    public function edit(Request $request, UserNutrition $userNutrition, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserNutritionType::class, $userNutrition);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            //log 
+            
             // Get user input
             $age = $form->get('age')->getData();
             $weight = $form->get('weight')->getData();
@@ -140,7 +148,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
                 'Active' => 1.9
             ];
             $activityFactor = $activityFactors[$activityLevel];
-            $calorie = $bmr * $activityFactor;
+            $calorie = $bmr * $activityFactor - 300;
     
             // Distribute macronutrients
             $proteinRatio = 0.3; // 30%
@@ -149,9 +157,9 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
             $proteinCalories = $calorie * $proteinRatio;
             $carbCalories = $calorie * $carbRatio;
             $fatCalories = $calorie * $fatRatio;
-            $protein = $proteinCalories / 4;
-            $carbs = $carbCalories / 4;
-            $fat = $fatCalories / 9;
+            $protein = $proteinCalories / 4 - 100;
+            $carbs = $carbCalories / 4 - 100;
+            $fat = $fatCalories / 9 - 30;
     
             // Update entity with calculated values
             $userNutrition->setCalorie($calorie);

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <div id="app">
+        <div id="messages">
+            <div v-for="message in messages" :key="message.id">
+                 {# {{ message.content }}  #}
+            </div> 
+        </div>
+        <input type="text" v-model="newMessage" @keyup.enter="sendMessage">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                messages: [],
+                newMessage: ''
+            },
+            methods: {
+                sendMessage() {
+                    axios.post('/chat', { message: this.newMessage })
+                        .then(response => {
+                            this.messages.push({ id: this.messages.length + 1, content: response.data.content });
+                            this.newMessage = ''; // Clear input after sending message
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

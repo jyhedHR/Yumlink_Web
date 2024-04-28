@@ -146,9 +146,6 @@
             "./config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "simplethings/entity-audit-bundle": {
-        "version": "1.17.1"
-    },
     "symfony/console": {
         "version": "5.4",
         "recipe": {

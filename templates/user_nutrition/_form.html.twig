@@ -9,16 +9,36 @@
                         <label for="{{ form.age.vars.id }}" class="form-label">Age:</label>
                         {{ form_widget(form.age, {'attr': {'class': 'form-input'}}) }}
                     </div>
+                 
+                      {% if form_errors(form.age) %}
+                    <div class="mb-3" style="color: red">
+                        {{ form_errors(form.age) }}
+                    </div>
+                {% endif %}
 
                     <div class="form-field">
                         <label for="{{ form.weight.vars.id }}" class="form-label">Weight:</label>
                         {{ form_widget(form.weight, {'attr': {'class': 'form-input'}}) }}
                     </div>
 
+                    {% if form_errors(form.weight) %}
+                    <div class="mb-3" style="color: red">
+                        {{ form_errors(form.weight) }}
+                    </div>
+                {% endif %}
+
+
                     <div class="form-field">
                         <label for="{{ form.height.vars.id }}" class="form-label">Height:</label>
                         {{ form_widget(form.height, {'attr': {'class': 'form-input'}}) }}
                     </div>
+
+                    {% if form_errors(form.height) %}
+                    <div class="mb-3" style="color: red">
+                        {{ form_errors(form.height) }}
+                    </div>
+                {% endif %}
+
 
                     <div class="form-field">
                         <label for="{{ form.activityLevel.vars.id }}" class="form-label">Activity Level:</label>

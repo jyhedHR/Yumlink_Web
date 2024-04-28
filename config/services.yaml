@@ -13,6 +13,11 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false       # By default, services are private unless explicitly made public.
+    
+    App\Controller\BotManController:
+        autowire: true
+        autoconfigure: true
+        public: false
 
     # Autowire classes in the App\ namespace as services
     App\:
@@ -48,3 +53,4 @@ services:
     # Define your controller as a service
     App\Controller\AdminUserNutritionController:
         tags: ['controller.service_arguments']
+
