@@ -11,6 +11,8 @@ use App\Repository\AdresseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -168,5 +170,17 @@ class UserController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('app_user_index');
     }
-    
+    #[Route('/sendEmail', name: 'sendEmail', methods: ['GET'])]
+    public function sendEmail(MailerInterface $mailer): Response
+{
+    $email = (new Email())
+        ->from('yumlink12@gmail.com') // Utilisez l'adresse e-mail définie dans votre .env comme expéditeur
+        ->to('ammoun2011@gmail.com') // Remplacez 'destination@example.com' par l'adresse e-mail de destination
+        ->subject('Test d\'envoi d\'e-mail')
+        ->text('Ceci est un test d\'envoi d\'e-mail.');
+
+    $mailer->send($email);
+
+    return new Response('E-mail sent successfully', Response::HTTP_OK);
+}
 }

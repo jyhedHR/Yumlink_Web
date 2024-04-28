@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Twilio\Rest\Client;
 use App\Entity\Admin;
 use App\Entity\User;
 
 use App\Form\AdminType;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,6 +69,20 @@ class AdminController extends AbstractController
             $entityManager->persist($admin);
             $entityManager->flush();
     
+            $sid    = "AC55c30b554896dcd89fcb1e1123518694";
+            $token  = "6c939dbc50fc916ef7c5285982939ae5";
+            $twilio = new Client($sid, $token);
+            
+        
+            $message = $twilio->messages
+            
+            ->create(
+                "+21693588870",        [
+            "from" => "+16812011941", // Votre numéro Twilio
+            "body" => "Super Admin vous a ajouté comme admin à yumlink connectez vous via cet email: ".$admin->getEmail()." Mot de passe:Admin123? changez le  "
+        ]
+              
+            );
             // Redirigez vers la page d'index des utilisateurs
             return $this->redirectToRoute('app_user_index');
         }
