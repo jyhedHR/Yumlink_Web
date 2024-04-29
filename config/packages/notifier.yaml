@@ -1,6 +1,7 @@
 framework:
     notifier:
         texter_transports:
+            sendgrid: '%env(MAILER_DSN)%'
             win_toast: 'App\Notifier\Notification'
         channel_policy:
             # Specify the priority levels and the corresponding channels for each level

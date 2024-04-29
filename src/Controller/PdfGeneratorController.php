@@ -7,11 +7,13 @@
  use Symfony\Component\Routing\Annotation\Route;
  use Symfony\Component\HttpFoundation\Request;
  use Dompdf\Dompdf;
- 
+ use App\Repository\PanierRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
  class PdfGeneratorController extends AbstractController
  {
      #[Route('/pdf/generator', name: 'app_pdf_generator')]
-     public function index( Request $request): Response
+     public function index( Request $request,PanierRepository $panierRepository, EntityManagerInterface $entityManager): Response
      {
 
 
@@ -20,6 +22,8 @@
             // Handle the case where totalL is missing or invalid
             return new Response('Missing or invalid totalL parameter', Response::HTTP_BAD_REQUEST);
         }
+
+        
          // Data to pass to the view
          $data = [
              'name'         => 'mohsen Doe',
@@ -27,9 +31,17 @@
              'Prix' => $totalCost,
              'email'        => 'jyhed.doe@email.com'
          ];
+         $query = $entityManager->createQuery(
+            'SELECT p, produit FROM App\Entity\Panier p
+            LEFT JOIN p.produit produit'
+        );
+        $paniers = $query->getResult();
          
          // Generate HTML from Twig template
-         $html = $this->renderView('pdf_generator/index.html.twig', $data);
+         $html = $this->renderView('pdf_generator/index.html.twig', [
+            'data' => $data,
+            'paniers' => $paniers,
+        ]);
          
          // Initialize Dompdf
          $dompdf = new Dompdf();

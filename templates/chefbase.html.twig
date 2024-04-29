@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Welcome Chef !
 			{% endblock %}
 		</title>
 		<link
@@ -14,35 +14,35 @@
 		{% endblock %}
 		{% block css %}
 
-			<link rel="stylesheet" href={{asset("frontend/assets/css/bootstrap.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/animate.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/fonts/flaticon.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/boxicons.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/owl.carousel.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/owl.theme.default.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/jquery-ui.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/magnific-popup.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/odometer.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/meanmenu.min.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/style.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/responsive.css")}}>
-			<link rel="stylesheet" href={{asset("frontend/assets/css/theme-dark.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/bootstrap.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/animate.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/fonts/flaticon.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/boxicons.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/owl.carousel.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/owl.theme.default.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/jquery-ui.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/magnific-popup.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/odometer.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/meanmenu.min.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/style.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/responsive.css")}}>
+			<link rel="stylesheet" href={{asset("assets/css/theme-dark.css")}}>
 		{% endblock %}
 		{% block js %}
-			<script src="frontend/assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
 
-			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/appear.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/meanmenu.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/owl.carousel.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/wow.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/jquery-ui.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/ajaxchimp.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/form-validator.min.js")}}></script>
-			<script src={{asset("frontend/assets/js/contact-form-script.js")}}></script>
-			<script src={{asset("frontend/assets/js/custom.js")}}></script>
+			<script src={{asset("assets/js/bootstrap.bundle.min.js")}}></script>
+			<script src={{asset("assets/js/magnific-popup.min.js")}}></script>
+			<script src={{asset("assets/js/odometer.min.js")}}></script>
+			<script src={{asset("assets/js/appear.min.js")}}></script>
+			<script src={{asset("assets/js/meanmenu.min.js")}}></script>
+			<script src={{asset("assets/js/owl.carousel.min.js")}}></script>
+			<script src={{asset("assets/js/wow.min.js")}}></script>
+			<script src={{asset("assets/js/jquery-ui.min.js")}}></script>
+			<script src={{asset("assets/js/ajaxchimp.min.js")}}></script>
+			<script src={{asset("assets/js/form-validator.min.js")}}></script>
+			<script src={{asset("assets/js/contact-form-script.js")}}></script>
+			<script src={{asset("assets/js/custom.js")}}></script>
 		</head>
 	</html>
 </body>{% endblock %}</head><body>{% block header %}
@@ -51,7 +51,7 @@
 		<div class="row align-items-center">
 			<div class="col-lg-3 col-md-4">
 				<div class="header-left">
-					<p>Welcome To Arrola Health!</p>
+					<p>Welcome {{ app.user.username }}</p>
 				</div>
 			</div>
 			<div class="col-lg-9 col-md-8">
@@ -233,11 +233,7 @@
 							</a>
 							
 						</li>
-						<li class="nav-item">
-							<a href="contact.html" class="nav-link">
-								Contact Us
-							</a>
-						</li>
+						
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">
@@ -248,7 +244,7 @@
 							</div>
 						</div>
 						<div class="optional-item">
-							<a href="appointment.html" class="default-btn two">Book An Appointment</a>
+							<a href="{{ path('app_logout') }}" class="default-btn two">Log out </a>
 						</div>
 					</div>
 					<div class="mobile-nav">

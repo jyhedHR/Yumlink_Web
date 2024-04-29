@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+{% block body %}
+    <h1> Reclamation</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Reclamation</th>
+                <th>reprandre</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in reclamations %}
+        {% if reclamation.iduser ==  app.user.getIdu()  %}
+            <tr>
+                
+                <td>{{ reclamation.comentair }}</td>
+                {% for reprander in reprandres %}
+                {% if reprander.idclient ==  reclamation.idr   %}
+                <td>
+                    {{ reprander.description }}
+                </td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+       {% endif %}
+          
+        {% endfor %}
+        </tbody>
+    </table>
+    
+
+   
+{% endblock %}

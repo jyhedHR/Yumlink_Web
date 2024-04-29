@@ -28,10 +28,11 @@
 					<div class="row">
 						<div class="header-left">
 							<div class="header-search">
-								<form id="searchForm">
+								<form action="{{ path('app_oeuvre_index_ss') }}" method="get">
 									<div class="form-group mb-0">
 										<i class="dw dw-search2 search-icon"></i>
-										<input type="text" class="form-control search-input" id="searchInput" placeholder="Search Here"/>
+										<input type="text" class="form-control search-input"  name="q" value="{{ searchTerm ?? '' }}" placeholder="Search Here"/>
+										<input type="submit" style="display: none;">
 									</div>
 								</form>
 							</div>
@@ -90,62 +91,15 @@
 			</div>
 		</div>
 	</div>
+<script>
+const searchInput = document.querySelector('input[name="q"]');
+        
+        searchInput.addEventListener('input', function() {
+            this.form.submit();
+        });
 
-	<script>
-		$(document).ready(function () {
-$('#searchInput').on('input', function () {
-var query = $(this).val().trim();
-if (query.length > 0) {
-$.ajax({
-url: '{{ path('search_product') }}',
-method: 'GET',
-data: {
-query: query
-},
-success: function (response) { // Update product list with search results
-$('#productList').empty();
-response.forEach(function (product) {
-var html = `
-                                <li class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="product-box">
-                                        <div class="producct-img">
-                                            <img src="${
-product.image
-}" alt="Product Image">
-                                        </div>
-                                        <div class="product-caption">
-                                            <h4><a href="#">id: ${
-product.id
-}</a></h4>
-                                            <h4><a href="#">Nom: ${
-product.nom
-}</a></h4>
-                                            <h10><a href="#">${
-product.diescription
-}</a></h10>
-                                            <div class="price">
-                                                <del>$75.5</del>
-                                                <ins>${
-product.prix
-} DT</ins>
-                                            </div>
-                                            <!-- Add edit and delete buttons as necessary -->
-                                        </div>
-                                    </div>
-                                </li>`;
-$('#productList').append(html);
-});
-},
-error: function (xhr, status, error) {
-console.error('Error:', error);
-}
-});
-} else { // Clear search results and show all products
-location.reload();
-}
-});
-});
-	</script>
+</script>
+	
 
 
 	<script>

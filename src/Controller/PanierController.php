@@ -43,15 +43,14 @@ public function index(PanierRepository $panierRepository, EntityManagerInterface
 
 
 #[Route('/panier/delete-all', name: 'panier_delete_all', methods: ['POST'])]
-public function deleteAll(EntityManagerInterface $entityManager): Response
+public function deleteAll(Request $request,EntityManagerInterface $entityManager): Response
 {
-    $idClient = 3; // Assuming you retrieve the idClient from somewhere, e.g., the request/session
-
-    // Check if the idClient is equal to 3
-    if ($idClient === 3) {
+        
+    $id_client = $request->request->get('id_client');
+    
         // Query to find all items in the "panier" for idClient 3
         $repository = $entityManager->getRepository(Panier::class);
-        $items = $repository->findBy(['idClient' => $idClient]);
+        $items = $repository->findBy(['idClient' => $id_client]);
 
         // Remove each item from the database
         foreach ($items as $item) {
@@ -60,7 +59,7 @@ public function deleteAll(EntityManagerInterface $entityManager): Response
 
         // Flush changes to the database
         $entityManager->flush();
-    }
+   
 
     // Redirect the user to the panier index or any other desired page
     return $this->redirectToRoute('app_panier_index');
@@ -116,6 +115,7 @@ public function deleteAll(EntityManagerInterface $entityManager): Response
 #[Route('/new', name: 'app_panier_new', methods: ['POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
+   
     // Extract data from the form submission
     $id_client = $request->request->get('id_client');
     $id_produit = $request->request->get('id_produit');
