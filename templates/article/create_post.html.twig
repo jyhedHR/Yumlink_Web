@@ -35,10 +35,10 @@
 						<label for="titleArticle">Title*</label>
 						{{ form_widget(form.titleArticle, {'attr': {'class': 'form-control', 'placeholder': 'Title', 'id': 'titleArticle'}}) }}
 						{% if form_errors(form.titleArticle) is not empty %}
-                            <div class="alert alert-danger" role="alert">
-                             {{ form_errors(form.titleArticle) }}
-                            </div>
-                        {% endif %}
+							<div class="alert alert-danger" role="alert">
+								{{ form_errors(form.titleArticle) }}
+							</div>
+						{% endif %}
 					</div>
 					<div class="col-lg-12">
 						<label for="imgArticle">Upload Image*</label>
@@ -48,13 +48,17 @@
 						<label for="descriptionArticle">Description*</label>
 						{{ form_widget(form.descriptionArticle, {'attr': {'id': 'descriptionArticle','class': 'form-control'}}) }}
 						{% if form_errors(form.descriptionArticle) is not empty %}
-                            <div class="alert alert-danger" role="alert">
-                             {{ form_errors(form.descriptionArticle) }}
-                            </div>
-                        {% endif %}
+							<div class="alert alert-danger" role="alert">
+								{{ form_errors(form.descriptionArticle) }}
+							</div>
+						{% endif %}
 					</div>
 					<div class="col-lg-12">
 						{{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					<div class="col-lg-12">
+						{% set userId = app.user.getIdU() %}
+						{{ form_widget(form.user, {'attr': {'class': 'form-control'}, 'value': userId }) }}
 					</div>
 				</div>
 				<div>
@@ -73,87 +77,87 @@
 {% endblock %}
 {% block js %}
 	<script>
-        document.addEventListener("DOMContentLoaded", async function() {
-			let suggestedTags = []; 
-			
-    		try{
-				suggestedTags = await fetchSuggestedTags();					
-            } catch (error) {
-				console.error(error);
-			}
+		document.addEventListener("DOMContentLoaded", async function () {
+let suggestedTags = [];
 
-			const form = document.getElementById('new_article_form');
+try {
+suggestedTags = await fetchSuggestedTags();
+} catch (error) {
+console.error(error);
+}
 
-			const textarea = form.querySelector('#article_descriptionArticle');
-            const tagsInput = form.querySelector('#article_tags');
-			const selectedTagsContainer = document.getElementById('selectedTagsContainer');
-			const tagSuggestionsContainer = document.getElementById('tagSuggestionsContainer');
-			const selectedTagsSet = new Set();
-            const suggestTags = () => {
-    			const text = textarea.value;
-    			const matches = text.match(/#\w+/g);
-    			tagSuggestionsContainer.innerHTML = '';	
-    			const presentTagsSet = new Set();
+const form = document.getElementById('new_article_form');
 
-    			if (matches) {
-        			matches.forEach(match => {
-            			const tag = match.substring(1);
-            			presentTagsSet.add(tag.toLowerCase());
-						if(!selectedTagsSet.has(tag.toLowerCase())) {
-							const temporaryAdd = document.createElement('button');
-							temporaryAdd.classList.add('selected-tag');
-            				temporaryAdd.textContent = '#' + tag.toLowerCase() + ' ';
-            				selectedTagsContainer.appendChild(temporaryAdd);
-							selectedTagsSet.add(tag.toLowerCase());
-						}
-            			const filteredTags = suggestedTags.filter(suggestedTag => {
-            			    const suggestedTagLowerCase = suggestedTag.toLowerCase();
-            			    return !selectedTagsSet.has(suggestedTagLowerCase) && suggestedTagLowerCase.includes(tag.toLowerCase());
-            			});
+const textarea = form.querySelector('#article_descriptionArticle');
+const tagsInput = form.querySelector('#article_tags');
+const selectedTagsContainer = document.getElementById('selectedTagsContainer');
+const tagSuggestionsContainer = document.getElementById('tagSuggestionsContainer');
+const selectedTagsSet = new Set();
+const suggestTags = () => {
+const text = textarea.value;
+const matches = text.match(/#\w+/g);
+tagSuggestionsContainer.innerHTML = '';
+const presentTagsSet = new Set();
 
-            			filteredTags.forEach(filteredTag => {
-            			    const tagElement = document.createElement('button');
-							tagElement.classList.add('suggested-tag');
-            			    tagElement.textContent = '#' + filteredTag + ' ';
-            			    tagSuggestionsContainer.appendChild(tagElement);
-							tagElement.addEventListener('click', () => {
-                    			textarea.value = text.replace(/#\w*$/, '#' + filteredTag + ' ');
-            	        		textarea.dispatchEvent(new Event('input'));
-			                });
-            			});
-        			});
-    			}
-    			selectedTagsContainer.childNodes.forEach(node => {
-    			    const tagText = node.textContent.trim().toLowerCase().replace('#', '');
-    			    if (!presentTagsSet.has(tagText)) {
-    			        selectedTagsContainer.removeChild(node);
-    			        selectedTagsSet.delete(tagText);
-    			    }
-    			});
-				const tagsArray = Array.from(selectedTagsSet);
-        		tagsInput.value = JSON.stringify({ tags: tagsArray });
-			};
-            if (textarea) {
-            	textarea.addEventListener('input', suggestTags);
-        	} else {
-            	console.error("Textarea element not found");
-				console.log('Textarea element:', textarea);
-        	}
-        });
-		async function fetchSuggestedTags() {
-    		try {
-        		console.log("running fetch tags");
-        		const response = await fetch('{{ path('fetch_tag_suggestions') }}');
-        		if (!response.ok) {
-        		    throw new Error('Failed to fetch suggested tags');
-        		}
-        		const suggestedTags = await response.json();
-        		return suggestedTags;
-    		} catch (error) {
-        		console.log("error fetch");
-        		console.error(error);
-        		return [];
-    		}
-		};
-    </script>
+if (matches) {
+matches.forEach(match => {
+const tag = match.substring(1);
+presentTagsSet.add(tag.toLowerCase());
+if (! selectedTagsSet.has(tag.toLowerCase())) {
+const temporaryAdd = document.createElement('button');
+temporaryAdd.classList.add('selected-tag');
+temporaryAdd.textContent = '#' + tag.toLowerCase() + ' ';
+selectedTagsContainer.appendChild(temporaryAdd);
+selectedTagsSet.add(tag.toLowerCase());
+}
+const filteredTags = suggestedTags.filter(suggestedTag => {
+const suggestedTagLowerCase = suggestedTag.toLowerCase();
+return ! selectedTagsSet.has(suggestedTagLowerCase) && suggestedTagLowerCase.includes(tag.toLowerCase());
+});
+
+filteredTags.forEach(filteredTag => {
+const tagElement = document.createElement('button');
+tagElement.classList.add('suggested-tag');
+tagElement.textContent = '#' + filteredTag + ' ';
+tagSuggestionsContainer.appendChild(tagElement);
+tagElement.addEventListener('click', () => {
+textarea.value = text.replace(/#\w*$/, '#' + filteredTag + ' ');
+textarea.dispatchEvent(new Event('input'));
+});
+});
+});
+}
+selectedTagsContainer.childNodes.forEach(node => {
+const tagText = node.textContent.trim().toLowerCase().replace('#', '');
+if (! presentTagsSet.has(tagText)) {
+selectedTagsContainer.removeChild(node);
+selectedTagsSet.delete(tagText);
+}
+});
+const tagsArray = Array.from(selectedTagsSet);
+tagsInput.value = JSON.stringify({tags: tagsArray});
+};
+if (textarea) {
+textarea.addEventListener('input', suggestTags);
+} else {
+console.error("Textarea element not found");
+console.log('Textarea element:', textarea);
+}
+});
+async function fetchSuggestedTags() {
+try {
+console.log("running fetch tags");
+const response = await fetch('{{ path('fetch_tag_suggestions') }}');
+if (! response.ok) {
+throw new Error('Failed to fetch suggested tags');
+}
+const suggestedTags = await response.json();
+return suggestedTags;
+} catch (error) {
+console.log("error fetch");
+console.error(error);
+return [];
+}
+};
+	</script>
 {% endblock %}

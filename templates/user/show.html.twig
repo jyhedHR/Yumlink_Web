@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Chefs
+{% endblock %}
+
+{% block body %}
+	<div class="inner-banner inner-bg1">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Nos chefs</h3>
+				<ul>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>Nos chefs</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<div class="team-area pt-100 pb-70">
+    <div class="container">
+        <div class="section-title text-center">
+            
+            <h2>Decouvrez les meilleures chefs avec nous </h2>
+        </div>
+        <div class="row pt-45 justify-content-center">
+            {% for user in users %}
+            <div class="col-lg-3 col-sm-6">
+                <div class="team-card active">
+                    <div class="team-img">
+                        <a href="#">
+                            <img src="{{ user.image }}" alt="Team Images">
+                        </a>
+                    </div>
+                    <div class="content">
+                        <h3><a href="#">{{ user.nom }} {{ user.prenom }}</a></h3>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -4,8 +4,6 @@ namespace App\Form;
 
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,6 +25,9 @@ class ArticleType extends AbstractType
             ])
             ->add('descriptionArticle')
             ->add('tags', HiddenType::class, [
+                'mapped' => false,
+            ])
+            ->add('user', HiddenType::class, [
                 'mapped' => false,
             ])
             ->add('submit', SubmitType::class,[

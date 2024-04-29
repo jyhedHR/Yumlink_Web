@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Search</title>
+</head>
+<body>
+    <h1>Dynamic Search</h1>
+    
+    <input type="text" id="searchInput" placeholder="Search users...">
+    
+    <div id="searchResults"></div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', function(event) {
+            const searchText = event.target.value;
+
+            // Envoyer une requête AJAX pour obtenir les résultats de la recherche
+            fetch('/search?criteria=' + searchText)
+                .then(response => response.json())
+                .then(data => {
+                    // Effacer les résultats précédents
+                    searchResults.innerHTML = '';
+
+                    // Afficher les nouveaux résultats
+                    data.forEach(user => {
+                        const resultItem = document.createElement('div');
+                        resultItem.textContent = user.name;
+                        searchResults.appendChild(resultItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Une erreur s\'est produite lors de la recherche :', error);
+                });
+        });
+    </script>
+</body>
+</html>
