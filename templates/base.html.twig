@@ -14,7 +14,7 @@
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 		{% block css %}
-
+			<link rel="stylesheet" href={{asset("frontend/assets/css/blogStylesheet.min.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/bootstrap.min.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/animate.min.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/fonts/flaticon.css")}}>
@@ -87,7 +87,7 @@
 						</ul>
 					</div>
 					<div class="header-item">
-						<a href="cart.html" class="cart-top-btn">
+						<a  class="cart-top-btn">
 							<i class="bx bx-shopping-bag"></i>
 							<span>0</span>
 						</a>
