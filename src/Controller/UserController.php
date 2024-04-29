@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Adresse;
 use App\Entity\User;
 use App\Form\AdminType;
@@ -30,12 +29,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     private UserPasswordHasherInterface $hasher;
-
     public function __construct(UserPasswordHasherInterface $hasher)
     {
         $this->hasher = $hasher;
     }
-
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -95,7 +92,6 @@ class UserController extends AbstractController
             $request->getSession()->remove('user_form_data');
             return $this->redirectToRoute('app_login');
         }
-
         if ($request->isMethod('POST')) {
             $request->getSession()->set('user_form_data', $request->request->get('user_form', []));
         }
@@ -104,7 +100,6 @@ class UserController extends AbstractController
             'userForm' => $userForm->createView(),
         ]);
     }
-
 
     #[Route('/{idu}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response

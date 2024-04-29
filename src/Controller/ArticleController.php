@@ -57,6 +57,7 @@ class ArticleController extends AbstractController
                 $article->setImgArticle('assets/images/' . $newFilename);
             }
             $tagsFormData = $form->get('tags')->getData();
+            
             $tagsArray = json_decode($tagsFormData, true);
             if (!empty($tagsArray)) {
                 $this->handleTags($tagsArray, $entityManager);
@@ -64,11 +65,11 @@ class ArticleController extends AbstractController
             }
 
             $article->setDatePublished(new DateTime());
-            //temporary
-            $userId = 39;
-            $user = $entityManager->getReference(User::class, $userId);
+
+            $id_user = $form->get('user')->getData();
+            $user = $entityManager->getReference(User::class, $id_user);
             $article->setUser($user);
-            //
+
             $article->setNbLikesArticle(0);
 
             $entityManager->persist($article);

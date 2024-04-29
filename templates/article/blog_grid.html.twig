@@ -35,7 +35,11 @@
 							</div>
 						</div>
 						<div class="side-bar-widget">
-							<h3 class="title-tag">Popular Tags</h3>
+							{% if app.user %}
+								<h3 class="title-tag">Connected</h3>
+							{% else %}
+								<h3 class="title-tag">Popular Tags</h3>
+							{% endif %}	
 							<ul class="side-bar-widget-tag">
 								<li>
 									<a href="tags.html" target="_blank">Health</a>
