@@ -1,0 +1,8 @@
+.btn-group-admin {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-group-admin button {
+    margin-right: 5px; /* Adjust margin as needed */
+}
