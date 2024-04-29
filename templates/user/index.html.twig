@@ -4,6 +4,39 @@
 {% endblock %}
 
 {% block body %}
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', function() {
+        const value = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('#dataTable tbody tr');
+
+        tableRows.forEach(function(row) {
+            const isVisible = row.textContent.toLowerCase().includes(value);
+            row.style.display = isVisible ? '' : 'none';
+        });
+    });
+});
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    console.log("Handler for .keyup() called."); // This should appear in the console when you type
+    let value = this.value.toLowerCase();
+    let tableRows = document.querySelectorAll('#dataTable tbody tr');
+
+    tableRows.forEach(row => {
+        let visible = row.textContent.toLowerCase().includes(value);
+        row.style.display = visible ? '' : 'none';
+    });
+});
+</script>
+{% endblock %}
+	{% block js %}
+		{{ parent() }}
+		<script src="{{ asset('backend/src/scripts/qr.js') }}" defer></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	{% endblock %}
+
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
@@ -31,8 +64,7 @@
 								<form id="searchForm">
 									<div class="form-group mb-0">
 										<i class="dw dw-search2 search-icon"></i>
-										<input type="text" class="form-control search-input" id="searchInput" placeholder="Search Here"/>
-									</div>
+<input type="text" class="form-control search-input" id="searchInput" placeholder="Search Here"/>									</div>
 								</form>
 							</div>
 						</div>
@@ -46,7 +78,7 @@
 
 					</div>
 
-					<table class="table table-striped">
+					<table class="table table-striped" id="dataTable">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
@@ -55,10 +87,12 @@
 								<th scope="col">Email</th>
 								<th scope="col">Telephone</th>
 								<th scope="col">Role</th>
+								<th scope="col">Qr code</th>
+
 								<th scope="col">Actions</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody >
 							{% for user in users %}
 								<tr>
 									<th scope="row">{{ user.idu }}</th>
@@ -68,6 +102,17 @@
 									<td>{{ user.email }}</td>
 									<td>{{ user.tel }}</td>
 									<td>{{ user.role }}</td>
+									<td>
+                                <div id="qr-code-{{ user.idu }}"></div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var qr = qrcode(0, 'L');
+                                        qr.addData('mailto:' + '{{ user.email|e('js') }}');
+                                        qr.make();
+                                        document.getElementById('qr-code-{{ user.idu }}').innerHTML = qr.createImgTag();
+                                    });
+                                </script>
+                            </td>
 
 									<td>
 										<form method="post" action="{{ path('app_user_block', {'idu': user.idu}) }}" onsubmit="return confirm('Are you sure you want to {% if user.isBlocked %}unblock{% else %}block{% endif %} this user?');">
@@ -101,4 +146,6 @@
 		</div>
 	</div>
 </div>
+
 <!-- Striped table End --></div></div></div>{% endblock %}
+
