@@ -45,7 +45,14 @@ class RecettesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
+    public function getRecipesPerCategory()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.categorie as category, COUNT(r) as recipe_count')
+            ->groupBy('r.categorie')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Recettes[] Returns an array of Recettes objects
