@@ -1,0 +1,21 @@
+{# templates/user/roles.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Roles</title>
+</head>
+<body>
+    <h1>User Roles</h1>
+    
+    <p>Les rôles de l'utilisateur sont :</p>
+    <ul>
+        {% for role in roles %}
+            <li>{{ role }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+    

@@ -76,5 +76,5 @@ class DefisAdminController extends AbstractController
             'events' => json_encode($events), // Pass events as JSON to the template
         ]);
     }
-    
+   
 }

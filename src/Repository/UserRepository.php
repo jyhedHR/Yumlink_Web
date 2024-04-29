@@ -45,4 +45,26 @@ class UserRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+/**
+     * Retourne tous les utilisateurs ayant le rôle spécifié.
+     *
+     * @param string $role Le rôle à rechercher
+     * @return User[] Un tableau d'utilisateurs
+     */
+    public function findByRole(string $role): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.role = :role')
+            ->setParameter('role', $role)
+            ->getQuery()
+            ->getResult();
+    }
+    public function findBySearchCriteria($criteria)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.nom LIKE :criteria')
+            ->setParameter('criteria', '%'.$criteria.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

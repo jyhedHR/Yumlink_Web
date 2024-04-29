@@ -28,13 +28,35 @@
                 end: 'dayGridMonth,timeGridWeek'
             },
             events: {{ events | raw }}, 
+            editable: true,
+            eventResizableFromStart: true,
             eventClick: function(info) { 
                 console.log(info.event.extendedProps); 
                 alert('Description: ' + info.event.extendedProps.description);
             }
         })
+      calendar.on('eventChange', (e) => {
+    // Extract the ID of the Defis entity from the event ID
+    let eventId = e.event.id;
+    let url = `/api/${eventId}/edit`; // Construct the URL with the correct ID
+    let donnees = {
+        "nomD": e.event.title,
+        "disD": e.event.extendedProps.description,
+        "delai": e.event.start,
+        "heure": e.event.end, // Assuming end is the time property
+        // Add other properties if needed
+    }
+    
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("PUT", url);
+    xhr.setRequestHeader("Content-Type", "application/json"); // Set the request header
+    xhr.send(JSON.stringify(donnees));
+});
+
 
         calendar.render()
+
     }
 </script>
 {% endblock %}
