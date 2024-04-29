@@ -16,3 +16,8 @@ app_favorite_show:
     path: /show_favorite
     controller: App\Controller\RecettesController::favoriteRecipes
     methods: ['GET']
+
+admin_chart:
+    path: /recettes/recipes-per-category-chart
+    controller: App\Controller\RecettesController::recipesPerCategoryChart
+    methods: ['GET']

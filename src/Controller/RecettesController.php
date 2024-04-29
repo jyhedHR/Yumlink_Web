@@ -292,5 +292,26 @@ public function removeFromFavorites(Recettes $recette, EntityManagerInterface $e
 
     return $this->redirectToRoute('app_recettes_index');
 }
-   
+#[Route('/recettes/recipes-per-category-chart', name: 'admin_recipes_per_category_chart' ,methods: ['GET'] )]
+public function recipesPerCategoryChart(EntityManagerInterface $entityManager)
+{
+    $recipesPerCategory = $entityManager->getRepository(Recettes::class)->getRecipesPerCategory();
+    $labels = [];
+    $data = [];
+    foreach ($recipesPerCategory as $row) {
+        $labels[] = $row['category'];
+        $data[] = $row['recipe_count'];
+    }
+dump($labels);
+
+return $this->render('recettes/recipes_per_category_chart.html.twig', [
+    'labels' => json_encode($labels),
+    'data' => json_encode($data),
+]);
+}
+
+
+
+
+
 }

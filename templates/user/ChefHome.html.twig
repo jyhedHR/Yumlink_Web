@@ -1,0 +1,8 @@
+{% extends 'chefbase.html.twig' %}
+
+{% block body %}
+   <h3>bienvenue chef</h3>
+   <a href="{{ path('app_user_edit', {'idu': app.user.getIdu()}) }}">Edit Profile</a>
+  <a href="{{ path('sendEmail') }}">Envoyer un e-mail de test</a>
+
+{% endblock %}
