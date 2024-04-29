@@ -226,7 +226,7 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
 
 
 
-    #[Route('/search_recipes', name: 'search_recipes', methods: ['GET'])]
+    #[Route('/search', name: 'search_recipes', methods: ['GET'])]
     public function searchRecipes(Request $request)
 {
     $query = $request->query->get('query');
@@ -234,11 +234,9 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
     $recipes = $this->getDoctrine()
         ->getRepository(Recettes::class)
         ->searchByNameOrChef($query); 
-
-    return $this->render('recettes/_search_results.html.twig', [
-        'recipes' => $recipes,
-        'query' => $query,
-    ]);
+        return $this->render('recettes/search_results.html.twig', [
+            'searchResults' =>  $recipes,
+        ]);
 }
 #[Route('/{idR}/favorite', name: 'favorite_recipe', methods: ['POST'])]
 public function addToFavorites(Recettes $recette, EntityManagerInterface $entityManager, Request $request): Response
@@ -292,26 +290,63 @@ public function removeFromFavorites(Recettes $recette, EntityManagerInterface $e
 
     return $this->redirectToRoute('app_recettes_index');
 }
-#[Route('/recettes/recipes-per-category-chart', name: 'admin_recipes_per_category_chart' ,methods: ['GET'] )]
-public function recipesPerCategoryChart(EntityManagerInterface $entityManager)
+#[Route('/recettes/charts', name: 'admin_recipes_and_activity_charts', methods: ['GET'])]
+public function displayCharts(EntityManagerInterface $entityManager, RecettesRepository $recettesRepository): Response
 {
-    $recipesPerCategory = $entityManager->getRepository(Recettes::class)->getRecipesPerCategory();
-    $labels = [];
-    $data = [];
-    foreach ($recipesPerCategory as $row) {
-        $labels[] = $row['category'];
-        $data[] = $row['recipe_count'];
-    }
-dump($labels);
+     // Retrieve data for Recipes Per Category chart
+     $recipesPerCategory = $entityManager->getRepository(Recettes::class)->getRecipesPerCategory();
+     $labelsPerCategory = [];
+     $dataPerCategory = [];
+     foreach ($recipesPerCategory as $row) {
+         $labelsPerCategory[] = $row['category'];
+         $dataPerCategory[] = $row['recipe_count'];
+     }
 
-return $this->render('recettes/recipes_per_category_chart.html.twig', [
-    'labels' => json_encode($labels),
-    'data' => json_encode($data),
-]);
+     // Retrieve data for Activity Line chart
+     $activityData = $recettesRepository->countRecipesByMonth();
+     $monthsActivity = [];
+     $recipeCountsActivity = [];
+     for ($i = 1; $i <= 12; $i++) { // Loop through months 1 to 12
+         $monthsActivity[] = $i;
+         $recipeCountsActivity[] = $activityData[$i] ?? 0; // Use 0 if month data is not available
+     }
+
+     // Retrieve data for Most Popular Chef chart
+     $popularChefsData = $recettesRepository->getMostPopularChefs();
+     $labelsPopularChefs = [];
+     $dataPopularChefs = [];
+     foreach ($popularChefsData as $row) {
+         $labelsPopularChefs[] = $row['chef_name'];
+         $dataPopularChefs[] = $row['recipe_count'];
+     }
+
+     // Render the chart template with the data
+     return $this->render('recettes/chart.html.twig', [
+         'labelsPerCategory' => json_encode($labelsPerCategory),
+         'dataPerCategory' => json_encode($dataPerCategory),
+         'monthsActivity' => json_encode($monthsActivity),
+         'recipeCountsActivity' => json_encode($recipeCountsActivity),
+         'labelsPopularChefs' => json_encode($labelsPopularChefs),
+         'dataPopularChefs' => json_encode($dataPopularChefs),
+     ]);
 }
 
 
+ 
+    #[Route('/filter', name: 'filtrer_recettes', methods: ['GET'])]
+    public function filterRecipes(Request $request): Response
+    {
+        // Retrieve filtering criteria from query parameters
+        $calories = $request->query->get('calorie');
+        $protein = $request->query->get('protein');
 
+        // Fetch filtered recipes based on the provided criteria
+        $filteredRecipes = $this->getDoctrine()->getRepository(Recettes::class)
+            ->findByCaloriesAndProtein($calories, $protein);
 
-
+        // Render the filtered recipes template with the fetched recipes
+        return $this->render('recettes/filtered_recipes.html.twig', [
+            'recipes' => $filteredRecipes,
+        ]);
+    }
 }

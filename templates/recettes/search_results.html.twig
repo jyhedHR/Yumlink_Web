@@ -1,0 +1,23 @@
+{# templates/recipe/search_results.html.twig #}
+<div class="container">
+        <div class="row pt-45 justify-content-center" id="recipeContainer">
+           {% for result in searchResults %}
+            <div class="col-lg-4 col-md-6 recipe-item">
+                <div class="recent-recipe-item">
+                    <a href="{{ path('app_recettes_show', {'idR': result.idR}) }}">
+                        <img src="{{ result.imgsrc }}" alt="Images">
+                    </a>
+                    <div class="content">
+                        <h3><a href="{{ path('app_recettes_show', {'idR': result.idR}) }}">{{ result.nom }}</a></h3>
+                        <p>{{ result.description }}</p>
+                        <ul>
+                            <li><img src="/assets/images/recipe-img/recipe-user1.jpg" alt="Images"></li>
+                            <li><a href="author.html">By {{ result.chef }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+ </div>
+  

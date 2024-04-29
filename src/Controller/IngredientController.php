@@ -17,7 +17,7 @@ class IngredientController extends AbstractController
     #[Route('/', name: 'app_ingredient_index', methods: ['GET'])]
     public function index(IngredientRepository $ingredientRepository): Response
     {
-        return $this->render('ingredient/index.html.twig', [
+        return $this->render('ingredient/listeAdmin.html.twig', [
             'ingredients' => $ingredientRepository->findAll(),
         ]);
     }

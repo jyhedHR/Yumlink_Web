@@ -24,14 +24,15 @@
             <h2>Our Latest Recipe</h2>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="side-bar-area pl-20">
-            <div class="search-widget">
-                <input type="search" id="searchInput" class="form-control" placeholder="Search..." data-search-url="{{ path('search_recipes') }}">
-                <div id="searchResults"></div> 
-            </div>
-        </div>
+    
+</div>
+
+    <div class="side-bar-area pl-20">
+    <div class="search-widget">
+        <input type="search" id="searchInput" class="form-control" placeholder="Search..." data-search-url="{{ path('search_recipes') }}">
+        <div id="searchResults" class="search-results"></div> 
     </div>
+    
     <div class="container">
         <div class="row pt-45 justify-content-center" id="recipeContainer">
             {% for recette in recettes %}
@@ -43,16 +44,12 @@
                     <div class="content">
                         <h3><a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">{{ recette.nom }}</a></h3>
                         <p>{{ recette.description }}</p>
-                        
-                           
-
-                        
                         <ul>
                             <li><img src="/assets/images/recipe-img/recipe-user1.jpg" alt="Images"></li>
                             <li><a href="author.html">By {{ recette.chef }}</a></li>
                         </ul>
-
-                        
+                    </div>
+                    
                         <div class="content">
                                     <form method="post" action="{{ path('favorite_recipe', {'idR': recette.idR}) }}">
                                            <input type="hidden" name="_token" value="{{ csrf_token('fav' ~ recette.idR) }}">
@@ -68,18 +65,7 @@
 
                         </div>
 
-
-                        <form method="post" action="{{ path('remove_favorite_recipe', {'idR': recette.idR}) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ recette.idR) }}">
-    <button type="submit" class="btn btn-link p-0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5M8.16 4.1a.178.178 0 0 0-.32 0l-.634 1.285a.18.18 0 0 1-.134.098l-1.42.206a.178.178 0 0 0-.098.303L6.58 6.993c.042.041.061.1.051.158L6.39 8.565a.178.178 0 0 0 .258.187l1.27-.668a.18.18 0 0 1 .165 0l1.27.668a.178.178 0 0 0 .257-.187L9.368 7.15a.18.18 0 0 1 .05-.158l1.028-1.001a.178.178 0 0 0-.098-.303l-1.42-.206a.18.18 0 0 1-.134-.098z"/>
-</svg>
-    </button>
-</form>
-
-
-                    </div>
+                    
                 </div>
             </div>
             {% endfor %}
@@ -91,6 +77,28 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+        
+        document.getElementById('filterButton').addEventListener('click', function() {
+         
+            fetchFilteredRecipes();
+        });
+    });
+
+    function fetchFilteredRecipes() {
+       
+        const calories = document.getElementById('caloriesInput').value;
+        const protein = document.getElementById('proteinInput').value;  
+        const url = `/filter?calories=${calories}&protein=${protein}`;    
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('recipeContainer').innerHTML = html;
+            })
+            .catch(error => console.error('Error fetching filtered recipes:', error));
+    }
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const itemsPerPage = 6; 
         const recipes = document.querySelectorAll('.recipe-item');
@@ -142,11 +150,10 @@
             .then(response => response.text())
             .then(html => {
                 searchResults.innerHTML = html;
+                // Add pagination for search results if needed
             })
             .catch(error => console.error('Error fetching search results:', error));
     });
-    
 </script>
-
 
 {% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Ingredients index{% endblock %}
+
+{% block body %}
+<div class="main-container">
+	<div class="pd-ltr-20 xs-pd-20-10">
+		<div class="min-height-200px">
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4>Ingredients</h4>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ingredient in ingredients %}
+            <tr>
+                <th scope="row">{{ ingredient.idIng }}</th>
+                <td>{{ ingredient.nom }}</td>
+                <td>
+                    <a href="{{ path('app_ingredient_edit', {'idIng': ingredient.idIng}) }}" class="btn btn-primary">Edit</a>
+                    <form method="post" action="{{ path('app_ingredient_delete', {'idIng': ingredient.idIng}) }}" style="display: inline-block;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this ingredient?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

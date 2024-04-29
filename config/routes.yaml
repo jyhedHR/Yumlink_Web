@@ -50,7 +50,12 @@ app_favorite_show:
     controller: App\Controller\RecettesController::favoriteRecipes
     methods: ['GET']
 
-admin_chart:
-    path: /recettes/recipes-per-category-chart
-    controller: App\Controller\RecettesController::recipesPerCategoryChart
+search_recipes:
+    path: /search
+    controller: App\Controller\RecettesController::searchRecipes
+    methods: ['GET']
+
+filtrer_recettes:
+    path: /filter
+    controller: App\Controller\RecettesController::filterRecipes
     methods: ['GET']
