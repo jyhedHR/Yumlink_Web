@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormError;
 #[Route('/defis')]
 class DefisController extends AbstractController
 {
+    
     #[Route('/', name: 'app_defis_index', methods: ['GET'])]
     public function index(Request $request, DefisRepository $defisRepository): Response
     {
@@ -41,8 +42,10 @@ class DefisController extends AbstractController
         $defi = new Defis();
         $form = $this->createForm(DefisType::class, $defi);
         $form->handleRequest($request);
+      
     
         if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $request->request->get('id_client');
          // Check if the challenge date is expired
          $now = new \DateTime();
           // Check if the challenge date is expired
@@ -79,11 +82,16 @@ class DefisController extends AbstractController
                 // Set the image property in the entity to the relative path of the uploaded file
                 $defi->setPhotoD('assets/images/'.$newFilename);
             }
-            $userId = 39;
-            $user = $entityManager->getReference(User::class, $userId); // Debugging statement to check if the user is fetched correctly
+            
             
             // Set the user to the Defis entity
+            $id_user = $form->get('user')->getData();
+            $user = $entityManager->getReference(User::class, $id_user);
             $defi->setUser($user);
+
+            // Set the user to the Defis entity
+            // Note: Make sure to update your setter method in Defis entity to accept integer instead of User object
+            
             // Persist and flush the entity
             $entityManager->persist($defi);
             $entityManager->flush();

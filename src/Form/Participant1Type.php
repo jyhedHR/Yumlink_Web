@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class Participant1Type extends AbstractType
 {
@@ -23,6 +24,9 @@ class Participant1Type extends AbstractType
                 'onchange' => 'document.getElementById("image-file-name").textContent = this.files[0].name;',
             ],])
             ->add('vote')
+            ->add('user', HiddenType::class, [
+                'mapped' => false,
+            ])
             
             
         ;

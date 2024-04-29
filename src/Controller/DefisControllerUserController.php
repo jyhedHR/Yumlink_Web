@@ -41,9 +41,11 @@ class DefisControllerUserController extends AbstractController
         $participant = new Participant(); // Create a new Participant entity
         $form = $this->createForm(Participant1Type::class, $participant); // Create the form
     
-        $form->handleRequest($request); // Handle form submission
+        $form->handleRequest($request);
+        // Handle form submission
     
         if ($form->isSubmitted() && $form->isValid()) {
+           
             // Handle image saving logic
             $photoP = $form->get('photoP')->getData();
             
@@ -70,11 +72,10 @@ class DefisControllerUserController extends AbstractController
     
             // Set the relationship between Participant and Defis
             $participant->setDefis($defis);
-            $userId = 39;
-            $user = $entityManager->getReference(User::class, $userId); // Debugging statement to check if the user is fetched correctly
-            
-            // Set the user to the Defis entity
+            $id_user = $form->get('user')->getData();
+            $user = $entityManager->getReference(User::class, $id_user);
             $participant->setUser($user);
+
     
             // Save the Participant entity
             $entityManager->persist($participant);

@@ -18,7 +18,11 @@
                         {{ form_errors(form.vote) }}
                     </div>
 
-                    
+                     
+                  <div class="col-lg-12">
+						{% set userId = app.user.getIdU() %}
+						{{ form_widget(form.user, {'attr': {'class': 'form-control'}, 'value': userId }) }}
+					</div>
 
                     <div class="text-center">
                         <button class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">{{ button_label|default('Save') }}</button>

@@ -100,6 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * })
      */
     private ?Adresse $adresse;
+ 
 
 
     public function getIdu(): ?int
