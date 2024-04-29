@@ -4,6 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Resume</title>
 </head>
+{% set subtotal = 0 %}
+										{% for panier in paniers %}
+											{% if panier.idClient == 3 %}
+                                            {% set subtotal = subtotal + (panier.prixtotal * panier.quantite) %}
+                                            {% endif %}
+										{% endfor %}
 <body>
     <div style="margin: 0 auto;display: block;width: 500px;">
         <table width="100%" border="1">
@@ -13,23 +19,41 @@
                 </td>
             </tr>
             <tr>
-                <td>Name:</td>
-                <td>{{name}}</td>
+                <td>prix produit total :</td>
+                <td>{{ subtotal ~ "DT" }}</td>
             </tr>
             <tr>
-                <td>Address:</td>
-                <td>{{address}}</td>
+                <td>Shipping:</td>
+                <td>7DT</td>
             </tr>
             <tr>
-                <td>Prix Total:</td>
-                <td>{{Prix}}</td>
+                <td>Coupon:</td>
+                <td>2DT</td>
             </tr>
             <tr>
-                <td>Email:</td>
-                <td>{{email}}</td>
+                <td>Total:</td>
+                <td>{{ (subtotal + 7 + 2) ~ "DT" }}</td>
             </tr>
         </table>
+        <ul>
+        	
+							<li>Subtotal
+								<span>{{ subtotal ~ "DT" }}</span>
+							</li>
+							<li>Shipping
+								<span>7DT</span>
+							</li>
+							<li>Coupon
+								<span>2DT</span>
+							</li>
+							<li>Total
+								<span>
+									<b>{{ (subtotal + 7 + 2) ~ "DT" }}</b>
+								</span>
+							</li>
+						</ul>
     </div>
+    
 </body>
 </html>
 

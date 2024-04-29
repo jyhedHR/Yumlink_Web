@@ -10,6 +10,8 @@ use Stripe;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Commande;
 use App\Form\CommandeType;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
  
 class StripeController extends AbstractController
 {
@@ -30,7 +32,7 @@ class StripeController extends AbstractController
  
  
     #[Route('/stripe/create-charge', name: 'app_stripe_charge', methods: ['POST'])]
-    public function createCharge(Request $request)
+    public function createCharge(Request $request, MailerInterface $mailer)
     {
         Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
         Stripe\Charge::create ([
@@ -43,6 +45,21 @@ class StripeController extends AbstractController
             'success',
             'Payment Successful!'
         );
+        $email = (new Email())
+        ->from('yumlink12@gmail.com') 
+        ->to('jihedhorchani1234@gmail.com') 
+        //->cc('exemple@mail.com') 
+        //->bcc('exemple@mail.com')
+        //->replyTo('test42@gmail.com')
+            ->priority(Email::PRIORITY_HIGH) 
+            ->subject('Payment')
+        // If you want use text mail only
+            ->text(' Payment Successful!
+            thak youu <3  ') 
+        ;
+         // Try to send the email
+         $mailer->send($email);
+
         $totalCost = $request->request->get('total_cost');
         if ($totalCost === null) {
             // Handle the case where totalL is missing or invalid

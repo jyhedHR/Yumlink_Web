@@ -86,6 +86,25 @@ class ProduitController extends AbstractController
             'searchTerm' => $searchTerm,
         ]);
     }
+    #[Route('/ss', name: 'app_oeuvre_index_ss', methods: ['GET'])]
+    public function indexss(Request $request,ProduitRepository $produitRepository): Response
+    {
+        $searchTerm = $request->query->get('q');
+    
+        // Debugging: Dump the search term
+        dump($searchTerm);
+        
+        $oeuvres = [];
+        
+        if ($searchTerm) {
+            $oeuvres = $produitRepository->searchByTerm($searchTerm);
+        }
+    
+        return $this->render('produit/indexadmin.html.twig', [
+            'produits' => $oeuvres,
+            'searchTerm' => $searchTerm,
+        ]);
+    }
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
 public function new(Request $request,EntityManagerInterface $em , ToastrFactory $toastr , LoggerInterface $logger): Response

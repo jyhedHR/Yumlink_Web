@@ -51,7 +51,8 @@
 					<!-- Product actions-->
 
 
-					<input type="hidden" name="id_client" value="3">
+					<input type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
+
 					<input type="hidden" name="id_produit" value="{{ produit.id }}">
 
 
@@ -65,4 +66,16 @@
 		</div>
 	{% endfor %}
 
-</div></div>{% endblock %}
+</div></div>
+
+<script>
+const searchInput = document.querySelector('input[name="q"]');
+        
+        searchInput.addEventListener('input', function() {
+            this.form.submit();
+        });
+
+</script>
+
+
+{% endblock %}

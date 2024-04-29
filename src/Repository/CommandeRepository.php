@@ -35,7 +35,15 @@ class CommandeRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+public function calculerMontantTotal()
+{
+    $entityManager = $this->getEntityManager();
+    $query = $entityManager->createQuery(
+        'SELECT SUM(c.idClient) FROM App\Entity\Commande c'
+    );
 
+    return $query->getSingleScalarResult();
+}
 //    public function findOneBySomeField($value): ?Commande
 //    {
 //        return $this->createQueryBuilder('c')

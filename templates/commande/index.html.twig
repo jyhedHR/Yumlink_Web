@@ -1,10 +1,11 @@
 {% extends 'Adminbase.html.twig' %}
 
-{% block title %}Commande index{% endblock %}
+{% block title %}Commande index
+{% endblock %}
 
 {% block body %}
 
-<div class="main-container">
+	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
 				<div class="page-header">
@@ -39,85 +40,75 @@
 					</div>
 				</div>
 
-<!-- Simple Datatable start -->
-					<div class="card-box mb-30">
-						<div class="pd-20">
-							<h4 class="text-blue h4">Data Table Simple</h4>
-							<p class="mb-0">
-								you can find more options
-								<a
-									class="text-primary"
-									href="https://datatables.net/"
-									target="_blank"
-									>Click Here</a
-								>
-							</p>
-						</div>
-						<div class="pb-20">
-							<table class="data-table table stripe hover nowrap">
-								<thead>
-									<tr>
-										<th class="table-plus datatable-nosort">IdCom</th>
-										<th>Date</th>
-										<th>IdClient</th>
-										<th class="datatable-nosort">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-                                 {% for commande in commandes %}
+				<!-- Simple Datatable start -->
+				<div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">Data Table Simple</h4>
+						<p class="mb-0">
+							you can find more options
+							<a class="text-primary" href="https://datatables.net/" target="_blank">Click Here</a>
+						</p>
+					</div>
+					<div class="pb-20">
+						<table class="data-table table stripe hover nowrap">
+							<thead>
+								<tr>
+									<th class="table-plus datatable-nosort">IdCom</th>
+									<th>Date</th>
+									<th>IdClient</th>
+									<th class="datatable-nosort">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for commande in commandes %}
 									<tr>
 										<td class="table-plus">{{ commande.idCom }}</td>
 										<td>{{ commande.date|date('Y-m-d H:i:s') }}</td>
 										<td>{{ commande.idClient }}</td>
 										<td></td>
-										
+
 										<td>
 											<div class="dropdown">
-												<a
-													class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-													href="#"
-													role="button"
-													data-toggle="dropdown"
-												>
+												<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 													<i class="dw dw-more"></i>
 												</a>
-												<div
-													class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-												>
-													<a class="dropdown-item" href="{{ path('app_commande_edit', {'idCom': commande.idCom}) }}"
-														><i class="dw dw-edit2"></i> Edit</a
-													>
+												<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+													<a class="dropdown-item" href="{{ path('app_commande_edit', {'idCom': commande.idCom}) }}">
+														<i class="dw dw-edit2"></i>
+														Edit</a>
 													<form id="deleteForm_{{ commande.idCom }}" method="post" action="{{ path('app_commande_delete', {'idCom': commande.idCom}) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.idCom) }}">
-    <a href="#" class="dropdown-item" onclick="confirmAndSubmit(event, '{{ commande.idCom }}')">
-        <i class="dw dw-delete-3"></i> Delete
-    </a>
-</form>
+														<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.idCom) }}">
+														<a href="#" class="dropdown-item" onclick="confirmAndSubmit(event, '{{ commande.idCom }}')">
+															<i class="dw dw-delete-3"></i>
+															Delete
+														</a>
+													</form>
 
-<script>
-    function confirmAndSubmit(event, id) {
-        event.preventDefault();
-        if (confirm('Are you sure you want to delete this item?')) {
-            document.getElementById('deleteForm_' + id).submit();
-        }
-    }
-</script>
+													<script>
+														function confirmAndSubmit(event, id) {
+event.preventDefault();
+if (confirm('Are you sure you want to delete this item?')) {
+document.getElementById('deleteForm_' + id).submit();
+}
+}
+													</script>
 
-											</div>
+												</div>
+											</td>
 										</td>
 									</tr>
-									
-								 {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<!-- Simple Datatable End -->
-	</div>
+
+								{% else %}
+									<tr>
+										<td colspan="4">no records found</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
 					</div>
 				</div>
+				<!-- Simple Datatable End -->
+			</div>
+		</div>
+	</div>
 {% endblock %}

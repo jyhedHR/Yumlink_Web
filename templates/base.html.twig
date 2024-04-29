@@ -31,11 +31,14 @@
 		{% endblock %}
 		{% block js %}
 			<!-- Inclure Leaflet.js -->
-			<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+			
 			<script src="frontend/assets/js/jquery.min.js"></script>
 			<!-- Inclure jQuery en premier -->
 
 			<!-- Ensuite, inclure les autres scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+			<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
 			<script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
 			<script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
@@ -65,23 +68,8 @@
 						<ul>
 							<li class="title">Follow us :</li>
 							<li>
-								<a href="https://www.facebook.com/" target="_blank">
-									<i class="bx bxl-facebook"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://www.instagram.com/" target="_blank">
-									<i class="bx bxl-instagram"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://twitter.com/" target="_blank">
-									<i class="bx bxl-twitter"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://www.youtube.com/" target="_blank">
-									<i class="bx bxl-youtube"></i>
+								<a href="{{ path('app_qr_codes') }}" target="_blank">
+									<i>QR</i>
 								</a>
 							</li>
 						</ul>
@@ -180,7 +168,10 @@
 								<li class="nav-item">
 									<a href="{{ path('app_panier_index') }}" class="nav-link">panier</a>
 								</li>
-
+								<li class="nav-item">
+									<a href="{{ path('app_reprandre_index') }}" class="nav-link">Reclamations</a>
+								</li>
+								
 
 							</ul>
 						</li>
@@ -413,18 +404,19 @@
 			<h3>Reclamation</h3>
 			<p>Any reclamation ?</p>
 			{% for message in app.flashes('success') %}
-											<div style="color: green;
-													                                    border: 2px green solid;
-													                                    text-align: center;
-													                                    padding: 5px;margin-bottom: 10px;">
-												{{ message }}
-											</div>
-										{% endfor %}
+				<div style="color: green;
+																			                                    border: 2px green solid;
+																			                                    text-align: center;
+																			                                    padding: 5px;margin-bottom: 10px;">
+					{{ message }}
+				</div>
+			{% endfor %}
 
 			<div class="newsletter-area">
 				<form class="newsletter-form" action="{{ path('app_reclamation_index') }}" method="POST" onsubmit="return confirm('Are you sure you want to send this reclamation?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('app_reclamation_index') }}">
 					<input
-					type="hidden" name="_token" value="{{ csrf_token('app_reclamation_index') }}">
+					type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
 
 					<!-- Change the textarea to an input field -->
 					<input type="text" name="reclamation" id="notes" placeholder="Reclamation" class="form-control" required>

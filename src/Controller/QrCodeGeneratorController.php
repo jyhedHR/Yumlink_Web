@@ -25,17 +25,17 @@ class QrCodeGeneratorController extends AbstractController
     #[Route('/qr-codes', name: 'app_qr_codes')]
     public function index(Request $request): Response
     {
-        $variableValue = $request->query->get('id');
+       
 
         $writer = new PngWriter();
-        $qrCode = QrCode::create($variableValue)
+        $qrCode = QrCode::create("https://linktr.ee/YumLink")
             ->setEncoding(new Encoding('UTF-8'))
            
             ->setSize(120)
             ->setMargin(0)
             ->setForegroundColor(new Color(0, 0, 0))
             ->setBackgroundColor(new Color(255, 255, 255));
-        $logo = Logo::create('LOGODASHA.png')
+        $logo = Logo::create('banana-6622557709b4d.jpg')
             ->setResizeToWidth(60);
         $label = Label::create('')->setFont(new NotoSans(8));
  

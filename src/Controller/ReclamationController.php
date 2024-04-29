@@ -10,15 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
     #[Route('/', name: 'app_reclamation_index', methods: ['GET', 'POST'])]
-    public function index(ReclamationRepository $reclamationRepository , EntityManagerInterface $entityManager  , Request $request): Response
+    public function index(ReclamationRepository $reclamationRepository , EntityManagerInterface $entityManager  , Request $request , MailerInterface $mailer): Response
     {
         $comm = $request->request->get('reclamation');
-
+        $id_client = $request->request->get('id_client');
         // Validate the retrieved value
         if ($comm === null || $comm === '') {
             // Handle the case where 'reclamation' is missing or empty
@@ -27,22 +29,43 @@ class ReclamationController extends AbstractController
         }else{
             $reclamation = new Reclamation();
             $reclamation->setComentair($comm);
-            $reclamation->setIduser(15); // Set client ID as needed
+            $reclamation->setIduser($id_client); // Set client ID as needed
             $reclamation->setNomuser("mohsen");
             // Persist the Commande entity to the database
             $entityManager->persist($reclamation);
             $entityManager->flush();
+
+
+            $email = (new Email())
+            ->from('yumlink12@gmail.com') 
+            ->to('jihedhorchani1234@gmail.com') 
+            //->cc('exemple@mail.com') 
+            //->bcc('exemple@mail.com')
+            //->replyTo('test42@gmail.com')
+                ->priority(Email::PRIORITY_HIGH) 
+                ->subject('Reclamation')
+            // If you want use text mail only
+                ->text(' Reclamation a envoyer avec succes ') 
+            ;
+    
+            // Try to send the email
+                $mailer->send($email);
             // Set a flash message to indicate success
             $this->addFlash('success', 'Your reclamation has been submitted successfully.');
 
-            
+           
 
         }
+        
+        return $this->redirectToRoute('app_reprandre_index', [], Response::HTTP_SEE_OTHER);
+    }
 
-        
-        
-        
-        return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+    #[Route('/t', name: 'app_reclamation_indexadmin', methods: ['GET'])]
+    public function indexadmin(ReclamationRepository $reclamationRepository): Response
+    {
+        return $this->render('reclamation/index.html.twig', [
+            'reclamations' => $reclamationRepository->findAll(),
+        ]);
     }
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
@@ -99,6 +122,9 @@ class ReclamationController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_reclamation_indexadmin', [], Response::HTTP_SEE_OTHER);
     }
+
+
+   
 }
