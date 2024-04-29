@@ -85,15 +85,17 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET', 'POST'])]
-    public function show(Article $article, EntityManagerInterface $entityManager, CommentaireRepository $commentaireRepository,  Request $request): Response
+    public function show(SecurityController $securityController, Article $article, EntityManagerInterface $entityManager, CommentaireRepository $commentaireRepository,  Request $request): Response
     {
         $isLikedByCurrentUser = false;
         $comments = $commentaireRepository->fetchComments($article->getIdArticle());
         $author = $article->getUser()->getNom();
-        //temporary
-        $userId = 39;
-        $user = $entityManager->getReference(User::class, $userId);
-        //
+        // //temporary
+        // $userId = 39;
+        // $user = $entityManager->getReference(User::class, $userId);
+        // //
+        $id = $securityController->getUser()->getIdU();
+        $user = $entityManager->getReference(User::class, $id);
         $liked = $entityManager->getRepository(PostLikes::class)->findOneBy(['article' => $article, 'user' => $user]);
         if ($liked !== null) {
             dump($liked);
@@ -186,12 +188,11 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles/{id}/like', name: "like_article", methods: ['POST'])]
-    public function likeArticle(EntityManagerInterface $entityManager, Article $article): JsonResponse
+    public function likeArticle(SecurityController $securityController, EntityManagerInterface $entityManager, Article $article): JsonResponse
     {
-        //temporary
-        $userId = 39;
-        $user = $entityManager->getReference(User::class, $userId);
-        //
+        $id = $securityController->getUser()->getIdU();
+        $user = $entityManager->getReference(User::class, $id);
+
         $liked = $entityManager->getRepository(PostLikes::class)->findOneBy(['article' => $article, 'user' => $user]);
 
         if ($liked) {
@@ -211,12 +212,11 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles/{id}/dislike', name: "dislike_article", methods: ['POST'])]
-    public function unlikeArticle(EntityManagerInterface $entityManager, Article $article): JsonResponse
+    public function unlikeArticle(SecurityController $securityController, EntityManagerInterface $entityManager, Article $article): JsonResponse
     {
-        //temporary
-        $userId = 39;
-        $user = $entityManager->getReference(User::class, $userId);
-        //
+        $id = $securityController->getUser()->getIdU();
+        $user = $entityManager->getReference(User::class, $id);
+        
         $liked = $entityManager->getRepository(PostLikes::class)->findOneBy(['article' => $article, 'user' => $user]);
 
         if (!$liked) {
@@ -232,30 +232,4 @@ class ArticleController extends AbstractController
         return new JsonResponse(['message' => 'Article disliked', 'likes' => $article->getNbLikesArticle()]);
     }
 
-
-    #[Route('/sort-articles', name: "sort_articles", methods: ["POST"])]
-    public function sortArticles(Request $request, SerializerInterface $serializer, ArticleRepository $articleRepository): Response
-    {
-        $sortType = $request->request->get('sortType');
-        $articles = $articleRepository->findAll();
-
-        switch ($sortType) {
-            case 'asc':
-                usort($articles, function ($a, $b) {
-                    return strcmp($a->getTitleArticle(), $b->getTitleArticle());
-                });
-                break;
-            case 'desc':
-                usort($articles, function ($a, $b) {
-                    return strcmp($b->getTitleArticle(), $a->getTitleArticle());
-                });
-                break;
-            default:
-                // Handle default case or error
-                break;
-        }
-
-        $sortedArticlesJson = $serializer->serialize($articles, 'json');
-        return new Response($sortedArticlesJson, Response::HTTP_OK, ['Content-Type' => 'application/json']);
-    }
 }

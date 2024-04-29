@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/admin')]
 class ArticleAdminController extends AbstractController
@@ -29,5 +30,18 @@ class ArticleAdminController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('article_admin_list', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/sortArticles/{sortType}/{columnName}', name: "sort_articles", methods: ["GET"])]
+    public function sortArticles($sortType, $columnName, SerializerInterface $serializer, ArticleRepository $articleRepository): Response
+    {
+        if ($sortType  == 'asc') {
+            $articles = $articleRepository->findByTitleOrder('ASC');
+        } else {
+            $articles = $articleRepository->findByTitleOrder('DESC');
+        }
+        
+        $sortedArticlesJson = $serializer->serialize($articles, 'json');
+        return new Response($sortedArticlesJson, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 }

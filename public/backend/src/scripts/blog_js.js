@@ -14,33 +14,69 @@ function confirmDelete(idArticle) {
     }
   });
 }
+function handleHrefClick(event, sortType) {
+  event.preventDefault();
+  let columnName = "title";
+  sortArticles(sortType, columnName);
+}
 
-$(document).ready(function () {
-  $(".sort-option").on("click", function (e) {
-    e.preventDefault(); // Prevent default link behavior
-
-    let sortType = $(this).data("sort-type");
-    sortArticles(sortType);
+function sortArticles(sortType, columnName) {
+  $.ajax({
+    url: `/admin/sortArticles/${sortType}/${columnName}`,
+    method: "GET",
+    dataType: "json",
+    success: function (response) {
+      updateTable(response);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error:", error);
+    },
   });
+}
 
-  function sortArticles(sortType) {
-    $.ajax({
-      url: "{{path('sort_articles')}}", // Symfony route for sorting
-      method: "POST",
-      data: { sortType: sortType },
-      dataType: "json", // Specify that we expect JSON response
-      success: function (response) {
-        // Handle the sorted articles JSON response
-        updateTable(response);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", error);
-      },
-    });
-  }
+function updateTable(response) {
+  let sortedArticles = response;
+  let tableBody = "";
+  sortedArticles.forEach((article, index) => {
+    tableBody += `
+      <tr>
+        <th scope="row">${index + 1}</th>
+        <td>${article.titleArticle}</td>
+        <td>${article.descriptionArticle}</td>
+        <td>${
+          article.datePublished
+            ? new Date(article.datePublished).toLocaleDateString()
+            : ""
+        }</td>
+        <td>${article.imgArticle}</td>
+        <td>
+          <div class="btn-group-admin" role="group">
+            <button type="button" class="btn btn-info">Update</button>
+            <form id="deleteForm${
+              article.idArticle
+            }" method="post" action="{{ path('article_delete_admin', {'idArticle': article.idArticle}) }}">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.idArticle) }}">
+              <button type="button" onclick="confirmDelete('${
+                article.idArticle
+              }')" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+  // Replace the table body with the sorted articles
+  $(".table tbody").html(tableBody);
+}
 
-  function updateTable(response) {
-    let sortedArticles = JSON.parse(response);
-    console.log(sortedArticles);
-  }
+$('.dropdown-item.hide-column').on('click', function(e) {
+  e.preventDefault();
+  $('.hideable-column').toggleClass('hidden');
 });
+
+function handleHide(event, columnName) {
+  event.preventDefault();
+  console.log(columnName);
+  $("th[data-column-name='" + columnName + "']").hide();
+  $("td[data-column-name='" + columnName + "']").hide();
+}

@@ -30,6 +30,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByTitleOrder($order = 'ASC')
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.titleArticle', $order)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Article[] Returns an array of Article objects
     //     */

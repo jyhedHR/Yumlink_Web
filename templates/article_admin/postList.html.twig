@@ -6,39 +6,72 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">#</th>
-							<th scope="col">
+							<th scope="col" class="hideable-column" data-column-name="id">#</th>
+							<th scope="col" class="hideable-column" data-column-name="title">
 								<div class="dropdown">
 									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 										Title Article
 									</button>
 									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 										<li>
-											<a class="dropdown-item sort-option" href="#" data-sort-type="asc">Sort Alphabetically ASC</a>
+											<a href="#" class="dropdown-item sort-option" onclick="handleHrefClick(event, 'asc')" data-sort-type="asc">Sort Alphabetically ASC</a>
 										</li>
 										<li>
-											<a class="dropdown-item sort-option" href="#" data-sort-type="desc">Sort Alphabetically DESC</a>
+											<a href="#" class="dropdown-item sort-option" onclick="handleHrefClick(event, 'desc')" data-sort-type="desc">Sort Alphabetically DESC</a>
 										</li>
 										<li>
-											<a class="dropdown-item" href="#">Hide Column</a>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'title')">Hide Column</a>
 										</li>
 									</ul>
 								</div>
 							</th>
-							<th scope="col">description Article</th>
-							<th scope="col">date Article</th>
-							<th scope="col">image Article</th>
+							<th scope="col" class="hideable-column" data-column-name="description">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										description Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'description')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col" class="hideable-column" data-column-name="date">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										date Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'date')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col" class="hideable-column" data-column-name="image">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										image Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'image')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for article in articles %}
 							<tr>
-								<th scope="row">{{article.idArticle}}</th>
-								<td>{{ article.titleArticle }}</td>
-								<td>{{ article.descriptionArticle  |slice(0, 15) ~ '...' }}</td>
-								<td>{{ article.datePublished ? article.datePublished|date('Y-m-d H:i:s') : '' }}</td>
-								<td>{{ article.imgArticle |slice(0, 15) ~ '...' }}</td>
+								<th scope="row">{{ article.idArticle }}</th>
+								<td class="hideable-column" data-column-name="title">{{ article.titleArticle }}</td>
+								<td class="hideable-column" data-column-name="description">{{ article.descriptionArticle | slice(0, 15) ~ '...' }}</td>
+								<td class="hideable-column" data-column-name="date">{{ article.datePublished ? article.datePublished | date('Y-m-d H:i:s') : '' }}</td>
+								<td class="hideable-column" data-column-name="image">{{ article.imgArticle | slice(0, 15) ~ '...' }}</td>
 								<td>
 									<div class="btn-group-admin" role="group">
 										<button type="button" class="btn btn-info">Update</button>
@@ -58,6 +91,7 @@
 {% endblock %}
 {% block js %}
 	<script src={{asset("https://cdn.jsdelivr.net/npm/sweetalert2@11")}}></script>
+	<script src={{asset("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")}}></script>
 	<script src={{asset("backend/src/scripts/blog_js.js")}}></script>
 	<script src={{asset("backend/src/scripts/popper.min.js")}}></script>
 {% endblock %}
