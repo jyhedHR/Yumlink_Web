@@ -75,10 +75,10 @@ class Recettes
      * @ORM\Column(name="protein", type="integer", nullable=false)
      */
     private $protein;
-      /**
-     * @ORM\Column(name="rating",type="integer")
+     /**
+     * @ORM\Column(type="datetime")
      */
-    private $rating;
+    private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -97,7 +97,17 @@ class Recettes
     {
         return $this->idR;
     }
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
 
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
     public function getNom(): ?string
     {
         return $this->nom;
@@ -181,17 +191,8 @@ class Recettes
 
         return $this;
     }
-    public function getRating(): ?int
-    {
-        return $this->rating;
-    }
-
-    public function setRating(int $rating): static
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
+   
+    
     public function getUser(): ?User
     {
         return $this->user;

@@ -25,6 +25,7 @@ class RatingRecettesController extends AbstractController
     {
         $ratingData = $request->request->get('rating_data');
         $recetteId = $request->request->get('recette_id'); 
+        dump($recetteId) ;
         $rating = new RatingRecettes();
         $rating->setRating($ratingData);
        
@@ -32,7 +33,7 @@ class RatingRecettesController extends AbstractController
         $recette = $entityManager->getRepository(Recettes::class)->find($recetteId);
         $rating->setRecette($recette);
         $rating->setCreatedAt(new \DateTime());
-      
+        dump($rating) ;
         $entityManager->persist($rating);
         $entityManager->flush();
         return new Response('Rating submitted successfully!', Response::HTTP_OK);
@@ -108,4 +109,9 @@ class RatingRecettesController extends AbstractController
        
         return new JsonResponse($responseData);
 }
+
+
+
 }
+
+

@@ -39,6 +39,45 @@ class RecettesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function countRecipesByMonth()
+    {
+        $query = $this->createQueryBuilder('r')
+            ->select('r.date AS date')
+            ->getQuery();
+
+        $results = $query->getResult();
+
+        $activityData = [];
+        foreach ($results as $result) {
+            $month = $result['date']->format('n'); // Extract month (1-12)
+            if (!isset($activityData[$month])) {
+                $activityData[$month] = 0;
+            }
+            $activityData[$month]++;
+        }
+
+        return $activityData;
+    }
+    public function getMostPopularChefs(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.chef AS chef_name, COUNT(r.idR) AS recipe_count')
+            ->groupBy('r.chef')
+            ->orderBy('recipe_count', 'DESC')
+            ->setMaxResults(5) // Optional: Limit to the top 5 chefs
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByCaloriesAndProtein($calorie, $protein): array
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.calorie = :calorie')
+            ->setParameter('calorie', $calorie)
+            ->andWhere('r.protein = :protein')
+            ->setParameter('protein', $protein)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Recettes[] Returns an array of Recettes objects
 //     */
