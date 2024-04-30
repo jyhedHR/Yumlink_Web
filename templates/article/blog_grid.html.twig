@@ -37,15 +37,11 @@
 						<div class="side-bar-widget">
 							<h3 class="title-tag">Popular Tags</h3>
 							<ul class="side-bar-widget-tag">
-								<li>
-									<a href="tags.html" target="_blank">Health</a>
-								</li>
-								<li>
-									<a href="tags.html" target="_blank">Food</a>
-								</li>
-								<li>
-									<a href="tags.html" target="_blank">Happy</a>
-								</li>
+								{% for tag in tagsSide %}
+									<li>
+										<a href="{{ path('app_article_blog', {'id_chef': 'default', 'id_tag': tag.tagId}) }}" target="_blank">{{ tag.tagValue }}</a>
+									</li>
+								{% endfor %}
 							</ul>
 						</div>
 					</div>

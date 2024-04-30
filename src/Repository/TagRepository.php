@@ -21,6 +21,15 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findTopTags(int $limit): array
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.tagNbUsage', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Tag[] Returns an array of Tag objects
 //     */

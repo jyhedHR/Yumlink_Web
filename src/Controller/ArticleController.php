@@ -11,6 +11,7 @@ use App\Form\ArticleType;
 use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,18 +25,32 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/articles')]
 class ArticleController extends AbstractController
 {
-    #[Route('/{id_chef?}', name: 'app_article_blog', methods: ['GET'], defaults: ['id_chef' => null])]
-    public function index($id_chef, SecurityController $securityController, ArticleRepository $articleRepository): Response
+    #[Route('/{id_chef}/{id_tag?}', name: 'app_article_blog', methods: ['GET'], defaults: ['id_chef' => null, 'id_tag' => null])]
+    public function index($id_chef, $id_tag, SecurityController $securityController, ArticleRepository $articleRepository, TagRepository $tagRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($id_chef == null) {
-            $articles = $articleRepository->findAll();
+        if ($id_tag == null) {
+            if ($id_chef == null) {
+                $articles = $articleRepository->findAll();
+            } else {
+                $chef = $securityController->getUser();
+                $articles = $articleRepository->findByUser($chef);
+            }
         } else {
-            $chef = $securityController->getUser();
-            $articles = $articleRepository->findByUser($chef);
+            $tag = $entityManager->getReference(Tag::class, $id_tag);
+            $allArticles = $articleRepository->findAll();
+            $articles = [];
+            foreach ($allArticles as $article) {
+                $tags = $article->getTags();
+                if (in_array($tag->getTagValue(), $tags['tags'])) {
+                    $articles[] = $article;
+                }
+            }
         }
+
         $id_chef = $securityController->getUser();
         return $this->render('article/blog_grid.html.twig', [
             'articles' =>  $articles,
+            'tagsSide' => $tagRepository->findTopTags(3),
             'articlesSide' => $articleRepository->findTopArticles(5),
         ]);
     }
@@ -64,7 +79,7 @@ class ArticleController extends AbstractController
                 $article->setImgArticle('assets/images/' . $newFilename);
             }
             $tagsFormData = $form->get('tags')->getData();
-            
+
             $tagsArray = json_decode($tagsFormData, true);
             if (!empty($tagsArray)) {
                 $this->handleTags($tagsArray, $entityManager);
@@ -91,16 +106,12 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/show/{idArticle}', name: 'app_article_show', methods: ['GET', 'POST'])]
+    #[Route('/show/article/{idArticle}', name: 'app_article_show', methods: ['GET', 'POST'])]
     public function show(SecurityController $securityController, Article $article, EntityManagerInterface $entityManager, CommentaireRepository $commentaireRepository,  Request $request): Response
     {
         $isLikedByCurrentUser = false;
         $comments = $commentaireRepository->fetchComments($article->getIdArticle());
         $author = $article->getUser()->getNom();
-        // //temporary
-        // $userId = 39;
-        // $user = $entityManager->getReference(User::class, $userId);
-        // //
         $id = $securityController->getUser()->getIdU();
         $user = $entityManager->getReference(User::class, $id);
         $liked = $entityManager->getRepository(PostLikes::class)->findOneBy(['article' => $article, 'user' => $user]);
@@ -115,10 +126,6 @@ class ArticleController extends AbstractController
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //temporary
-            $userId = 39;
-            $user = $entityManager->getReference(User::class, $userId);
-            //
             $commentaire->setUser($user);
             $commentaire->setCommentDate(new DateTime());
             $commentaire->setIdArticle($article->getIdArticle());
@@ -166,7 +173,7 @@ class ArticleController extends AbstractController
 
     #[Route('/delete/{idArticle}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
-    {   
+    {
         if ($this->isCsrfTokenValid('delete' . $article->getIdArticle(), $request->request->get('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
@@ -223,7 +230,7 @@ class ArticleController extends AbstractController
     {
         $id = $securityController->getUser()->getIdU();
         $user = $entityManager->getReference(User::class, $id);
-        
+
         $liked = $entityManager->getRepository(PostLikes::class)->findOneBy(['article' => $article, 'user' => $user]);
 
         if (!$liked) {
@@ -238,5 +245,4 @@ class ArticleController extends AbstractController
         $entityManager->flush();
         return new JsonResponse(['message' => 'Article disliked', 'likes' => $article->getNbLikesArticle()]);
     }
-
 }
