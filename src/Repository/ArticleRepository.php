@@ -39,6 +39,21 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Fetch articles by user.
+     *
+     * @param User $user
+     * @return array
+     */
+    public function findByUser(User $user): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Article[] Returns an array of Article objects
     //     */

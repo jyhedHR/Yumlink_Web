@@ -14,13 +14,16 @@
 			<h3>
 				<a>{{ article.titleArticle }}</a>
 			</h3>
-			<p>{{ article.descriptionArticle }}</p>
+			<p>{{ article.descriptionArticle | slice(0, 100) ~ '...' }}</p>
 
 			<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}" class="read-btn">Read More</a>
-			<form method="post" action="{{ path('app_article_delete', {'idArticle': article.idArticle}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.idArticle) }}">
-				<button class="btn">Delete</button>
-			</form>
+			{% if app.user.getIdU() != article.user.getIdU() %}
+				{% else %}
+					<form method="post" action="{{ path('app_article_delete', {'idArticle': article.idArticle}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.idArticle) }}">
+						<button class="btn">Delete</button>
+					</form>
+			{% endif %}
 
 
 		</div>
