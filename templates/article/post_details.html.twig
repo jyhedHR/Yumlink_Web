@@ -49,7 +49,8 @@
 							</li>
 						</ul>
 						<h2>{{article.titleArticle}}</h2>
-						<p>{{article.descriptionArticle}}</p>
+						<p id="translatedText">{{article.descriptionArticle}}</p>
+						<a href="#" class="dropdown-item" onclick="handleTranslateText(event, '{{ article.descriptionArticle|escape('js') }}')">Translate</a>
 						<br/>
 						<div class="comments-wrap">
 							<div class="comment-title">
@@ -73,4 +74,22 @@
 {% endblock %}
 {% block js %}
 	<script src={{asset("assets/js/blog.js")}}></script>
+	<script src={{asset("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")}}></script>
+	<script>
+	function handleTranslateText(event, description) {
+  event.preventDefault(); 
+  console.log('Translate function called');
+  $.ajax({
+    url: `/articles/translate/article/${description}`,
+    method: "GET",
+    dataType: "json",
+    success: function (response) {
+      document.getElementById('translatedText').textContent = response.text;
+    },
+    error: function (xhr, status, error) {
+      console.error("Error:", error);
+    },
+  });
+}
+	</script>
 {% endblock %}

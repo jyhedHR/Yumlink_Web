@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Serializer\SerializerInterface;
+use Google\Cloud\Translate\V2\TranslateClient;
 
 #[Route('/articles')]
 class ArticleController extends AbstractController
@@ -55,7 +56,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/create/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    #[Route('/create/article/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
@@ -143,6 +144,22 @@ class ArticleController extends AbstractController
             'commentaire' => $commentaire,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/translate/article/{textToTranslate}", name="translate_article", methods={"GET"})
+     */
+    public function translate($textToTranslate): JsonResponse
+    {
+        $translate = new TranslateClient([
+            'key' => $this->getParameter('app.apiTranslateKey')
+        ]);
+        
+        $result = $translate->translate($textToTranslate, [
+            'target' => 'fr'
+        ]);
+        
+        return new JsonResponse($result);
     }
 
     #[Route('/{idArticle}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
