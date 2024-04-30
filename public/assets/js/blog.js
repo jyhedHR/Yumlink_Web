@@ -33,3 +33,19 @@ async function like() {
     console.error("Failed to perform like action.");
   }
 }
+
+// function handleTranslateText(event, description) {
+//   event.preventDefault(); 
+//   console.log('Translate function called');
+//   $.ajax({
+//     url: `/articles/translate/article/${description}`,
+//     method: "GET",
+//     dataType: "json",
+//     success: function (response) {
+//       console.log(response);
+//     },
+//     error: function (xhr, status, error) {
+//       console.error("Error:", error);
+//     },
+//   });
+// }

@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     uploads_directory: '%kernel.project_dir%/public/usersProfile'
+    app.apiTranslateKey: '%env(API_TRANSLATE_KEY_VALUE)%'
 
 services:
     # default configuration for services in *this* file
