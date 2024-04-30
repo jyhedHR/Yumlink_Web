@@ -27,14 +27,7 @@ use Dompdf\Options;
 #[Route('/nutrition')]
 class UserNutritionController extends AbstractController
 {
-    // #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
-    // public function index(UserNutritionRepository $userNutritionRepository): Response
-    // {
-        
-    //     return $this->render('user_nutrition/index.html.twig', [
-    //         'user_nutritions' => $userNutritionRepository->findAll(),
-    //     ]);
-    // }
+    
 
     #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
     public function index(UserNutritionRepository $userNutritionRepository, TokenStorageInterface $tokenStorage): Response
@@ -148,7 +141,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
                 'Active' => 1.9
             ];
             $activityFactor = $activityFactors[$activityLevel];
-            $calorie = $bmr * $activityFactor - 300;
+            $calorie = $bmr * $activityFactor - 400;
     
             // Distribute macronutrients
             $proteinRatio = 0.3; // 30%
