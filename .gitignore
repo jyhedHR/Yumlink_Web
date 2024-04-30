@@ -1,4 +1,5 @@
-
+# Ignore .env file
+.env
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -19,4 +20,3 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /public/assets/images/
-.env
