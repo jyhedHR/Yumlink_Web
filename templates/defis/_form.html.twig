@@ -6,6 +6,7 @@
         <div class="col-md-6">
             <div class="card rounded shadow-lg">
                 <div class="card-body">
+                
                     {{ form_start(form , {'attr': {'novalidate':'novalidate', 'autocomplete': 'off'}}) }}
                     
                     <div class="mb-3">
@@ -67,6 +68,7 @@
                     <div class="text-center">
                         <button class="btn btn-primary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">{{ button_label|default('Save') }}</button>
                     </div>
+                    
                     {{ form_end(form) }}
                 </div>
             </div>

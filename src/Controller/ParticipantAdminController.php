@@ -57,27 +57,24 @@ class ParticipantAdminController extends AbstractController
     #[Route('/Stat_admin', name: 'app_participant_Stat_admin', methods: ['GET'])]
     public function statistiques(ParticipantRepository $participantRepo): Response
     {
-        // Retrieve all participants
-        $participants = $participantRepo->findAll();
-    
-        // Initialize arrays to store participant data
+        // Retrieve the number of participations per challenge
+        $participationCounts = $participantRepo->getParticipationCountsPerChallenge();
+
+        // Separate participant IDs and votes into separate arrays
         $participantIds = [];
         $participantVotes = [];
-    
-        // Extract participant data
-        foreach ($participants as $participant) {
-            $participantIds[] = $participant->getIdpart();
-            $participantVotes[] = $participant->getVote();
+        foreach ($participationCounts as $count) {
+            $participantIds[] = $count['challengeId']; // Assuming 'challenge_id' is the column name
+            $participantVotes[] = $count['participantCount']; // Assuming 'participant_count' is the column name
         }
-    
+
         // Prepare the data for rendering
         $participantData = [
             'participantIds' => json_encode($participantIds),
             'participantVotes' => json_encode($participantVotes),
         ];
-    
+
         // Render the template with participant statistics data
         return $this->render('participant_admin/stats.html.twig', $participantData);
     }
-    
 }

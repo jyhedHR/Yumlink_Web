@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Defis;
+use App\Entity\Vote;
 use App\Entity\Participant;
 use App\Form\Participant1Type;
 use App\Repository\DefisRepository;
 use App\Repository\ParticipantRepository;
+use App\Repository\VoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/participant/controller/user')]
@@ -71,9 +74,44 @@ class ParticipantControllerUserController extends AbstractController
         return $this->redirectToRoute('app_participant_controller_user_index');
     }
 
-  
-
-  
+    #[Route('/vote/{idpart}', name: 'app_participant_vote', methods: ['POST'])] 
+    public function vote(SecurityController $session, Request $request, Participant $participant, EntityManagerInterface $entityManager, VoteRepository $voteRepository): Response
+    {
+        $user = $session->getUser();
+        $userId = $user->getIdU(); 
+      
+    
+        
+        if ($participant->getUser()->getIdU() === $userId) {
+        
+            return new Response('You cannot vote for yourself.');
+        }
+    
+      
+        if ($voteRepository->hasUserVotedForParticipant($userId, $participant->getIdpart())) {
+          
+            return new Response('You have already voted for this participant.');
+        }
+    
+        
+        $voteValue = $request->request->get('vote'); 
+        $vote = new Vote();
+        
+       
+        $vote->setParticipant($participant);
+        $vote->setUser($user);
+        
+        $participant->setVote($voteValue); 
+        
+        
+        $entityManager->persist($vote);
+        $entityManager->persist($participant);
+        $entityManager->flush();
+    
+       
+        return $this->redirectToRoute('app_participant_controller_user_index');
+    }
+    
 
   
 

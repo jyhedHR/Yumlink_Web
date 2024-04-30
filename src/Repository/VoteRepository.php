@@ -45,4 +45,24 @@ class VoteRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+  /**
+     * Check if the user has already voted for a participant.
+     *
+     * @param int $userId The ID of the user
+     * @param int $participantId The ID of the participant
+     * @return bool True if the user has voted for the participant, false otherwise
+     */
+    public function hasUserVotedForParticipant(int $userId, int $participantId): bool
+    {
+        $queryBuilder = $this->createQueryBuilder('v')
+            ->select('COUNT(v.id)')
+            ->where('v.user = :userId')
+            ->andWhere('v.participant = :participantId')
+            ->setParameter('userId', $userId)
+            ->setParameter('participantId', $participantId);
+
+        $count = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return $count > 0;
+    }
 }

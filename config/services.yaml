@@ -8,16 +8,24 @@ parameters:
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
-    # Default configuration for services in this file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # By default, services are private unless explicitly made public.
     
     App\Controller\BotManController:
         autowire: true
         autoconfigure: true
         public: false
+    # default configuration for services in this file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+             Twilio\Rest\Client: '@twilio.client'
+
+    App\Service\SmsSender:
+        arguments:
+            $sid: '%env(TWILIO_ACCOUNT_SID)%'
+            $token: '%env(TWILIO_AUTH_TOKEN)%'
+            $from: '%env(TWILIO_PHONE_NUMBER)%'
+
+            
 
     # Autowire classes in the App\ namespace as services
     App\:
