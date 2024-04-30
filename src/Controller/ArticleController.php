@@ -24,16 +24,23 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/articles')]
 class ArticleController extends AbstractController
 {
-    #[Route('/', name: 'app_article_blog', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    #[Route('/{id_chef?}', name: 'app_article_blog', methods: ['GET'], defaults: ['id_chef' => null])]
+    public function index($id_chef, SecurityController $securityController, ArticleRepository $articleRepository): Response
     {
+        if ($id_chef == null) {
+            $articles = $articleRepository->findAll();
+        } else {
+            $chef = $securityController->getUser();
+            $articles = $articleRepository->findByUser($chef);
+        }
+        $id_chef = $securityController->getUser();
         return $this->render('article/blog_grid.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' =>  $articles,
             'articlesSide' => $articleRepository->findTopArticles(5),
         ]);
     }
 
-    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    #[Route('/create/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
@@ -84,7 +91,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{idArticle}', name: 'app_article_show', methods: ['GET', 'POST'])]
+    #[Route('/show/{idArticle}', name: 'app_article_show', methods: ['GET', 'POST'])]
     public function show(SecurityController $securityController, Article $article, EntityManagerInterface $entityManager, CommentaireRepository $commentaireRepository,  Request $request): Response
     {
         $isLikedByCurrentUser = false;

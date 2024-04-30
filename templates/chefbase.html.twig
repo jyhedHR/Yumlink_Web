@@ -13,7 +13,7 @@
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 		{% block css %}
-			<link rel="stylesheet" href={{asset("assets/css/blogStylesheet.min.css")}}>
+			<link rel="stylesheet" href={{asset("frontend/assets/css/blogStylesheet.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/css/bootstrap.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/css/animate.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/fonts/flaticon.css")}}>
@@ -212,18 +212,39 @@
 								Blog
 								<i class="bx bx-chevron-down"></i>
 							</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item">
-									<a href="{{ path('app_article_blog')}}" class="nav-link">
-										Mes Publications
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ path('app_article_new')}}" class="nav-link">
-										Ajouter Publication
-									</a>
-								</li>
-							</ul>
+							{% if app.user.role == 'Chef' %}
+								<ul class="dropdown-menu">
+									<li class="nav-item">
+										<a href="{{ path('app_article_blog')}}" class="nav-link">
+											Toutes les Publications
+										</a>
+									</li>
+									<li class="nav-item">
+										{% set userId = app.user.getIdU() %}
+										<a href="{{ path('app_article_blog', {'id_chef': userId})}}" class="nav-link">
+											Mes Publications
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="{{ path('app_article_new')}}" class="nav-link">
+											Ajouter Publication
+										</a>
+									</li>
+								</ul>
+							{% else %}
+								<ul class="dropdown-menu">
+									<li class="nav-item">
+										<a href="{{ path('app_article_blog')}}" class="nav-link">
+											Publications récentes
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="tags.html" class="nav-link">
+											Tags
+										</a>
+									</li>
+								</ul>
+							{% endif %}
 						</li>
 
 						<li class="nav-item">

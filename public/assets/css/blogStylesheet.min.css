@@ -40,3 +40,12 @@
 .selected-tag:focus {
     outline: none;
 }
+
+.button-container {
+    text-align: center; 
+}
+
+.read-btn, .delete-btn {
+    display: inline-block; 
+    margin-right: 10px; 
+}

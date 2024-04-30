@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,26 +27,27 @@
 			<link rel="stylesheet" href={{asset("frontend/assets/css/style.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/responsive.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/theme-dark.css")}}>
-			 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+			<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 		{% endblock %}
 		{% block js %}
-		 <!-- Inclure Leaflet.js -->
-   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="frontend/assets/js/jquery.min.js"></script> <!-- Inclure jQuery en premier -->
+			<!-- Inclure Leaflet.js -->
+			<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+			<script src="frontend/assets/js/jquery.min.js"></script>
+			<!-- Inclure jQuery en premier -->
 
-    <!-- Ensuite, inclure les autres scripts -->
-    <script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/appear.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/meanmenu.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/owl.carousel.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/wow.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/jquery-ui.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/ajaxchimp.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/form-validator.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/contact-form-script.js")}}></script>
-    <script src={{asset("frontend/assets/js/custom.js")}}></script>
+			<!-- Ensuite, inclure les autres scripts -->
+			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/appear.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/meanmenu.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/owl.carousel.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/wow.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/jquery-ui.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/ajaxchimp.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/form-validator.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/contact-form-script.js")}}></script>
+			<script src={{asset("frontend/assets/js/custom.js")}}></script>
 		</head>
 	</html>
 </body>{% endblock %}</head><body>{% block header %}
@@ -87,7 +87,7 @@
 						</ul>
 					</div>
 					<div class="header-item">
-						<a  class="cart-top-btn">
+						<a class="cart-top-btn">
 							<i class="bx bx-shopping-bag"></i>
 							<span>0</span>
 						</a>
@@ -162,7 +162,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{ path('app_chef') }}"  class="nav-link">
+									<a href="{{ path('app_chef') }}" class="nav-link">
 										Nos Chefs
 									</a>
 								</li>
@@ -217,20 +217,41 @@
 								Blog
 								<i class="bx bx-chevron-down"></i>
 							</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item">
-									<a href="{{ path('app_article_blog')}}" class="nav-link">
-										Publications récentes
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
-										Tags
-									</a>
-								</li>
-							</ul>
-						</li>
 
+							{% if app.user.role == 'Chef' %}
+								<ul class="dropdown-menu">
+									<li class="nav-item">
+										<a href="{{ path('app_article_blog')}}" class="nav-link">
+											Toutes les Publications
+										</a>
+									</li>
+									<li class="nav-item">
+										{% set userId = app.user.getIdU() %}
+										<a href="{{ path('app_article_blog', {'id_chef': userId})}}" class="nav-link">
+											Mes Publications
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="{{ path('app_article_new')}}" class="nav-link">
+											Ajouter Publication
+										</a>
+									</li>
+								</ul>
+							{% else %}
+								<ul class="dropdown-menu">
+									<li class="nav-item">
+										<a href="{{ path('app_article_blog')}}" class="nav-link">
+											Publications récentes
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="tags.html" class="nav-link">
+											Tags
+										</a>
+									</li>
+								</ul>
+							{% endif %}
+						</li>
 						<li class="nav-item">
 							<a href="#" class="nav-link">
 								Nutritions
@@ -249,7 +270,7 @@
 								</li>
 							</ul>
 						</li>
-						
+
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">
@@ -260,7 +281,8 @@
 							</div>
 						</div>
 						<div class="optional-item">
-							<a href="{{ path('app_logout') }}" class="default-btn two">Log out </a>
+							<a href="{{ path('app_logout') }}" class="default-btn two">Log out
+							</a>
 						</div>
 					</div>
 					<div class="mobile-nav">
@@ -290,7 +312,7 @@
 					<img src={{asset("assets/images/YumLink_logo.png")}} alt="Images">
 				</a>
 			</div>
-			
+
 			<ul class="social-link">
 				<li>
 					<a href="https://www.facebook.com/" target="_blank">
@@ -356,13 +378,13 @@
 					<span>
 						<a href="tel:+50711106">+50711106</a><br>
 						<a href="tel:+26956338">+26956338</a><br>
-                        <a href="tel:+93588870">+93588870</a><br>
+						<a href="tel:+93588870">+93588870</a><br>
 					</span>
 				</li>
 				<li>
 					Email:
 					<span>
-                    
+
 						<a href="">yumlink2@gmail.com</a><br>
 					</span>
 				</li>
@@ -381,14 +403,14 @@
 			<h3>Newsletter</h3>
 			<p>Hello</p>
 			<!--<div class="newsletter-area">
-				<form class="newsletter-form" data-toggle="validator" method="POST">
-					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
-					<button class="subscribe-btn" type="submit">
-						Send
-					</button>
-					<div id="validator-newsletter" class="form-result"></div>
-				</form>
-			</div>-->
+																			<form class="newsletter-form" data-toggle="validator" method="POST">
+																				<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
+																				<button class="subscribe-btn" type="submit">
+																					Send
+																				</button>
+																				<div id="validator-newsletter" class="form-result"></div>
+																			</form>
+																		</div>-->
 		</div>
 	</div>
 </div></div></div><div class="copyright-area"><div class="container">
