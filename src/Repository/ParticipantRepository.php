@@ -59,4 +59,19 @@ class ParticipantRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   /**
+     * Get the participation counts per challenge.
+     *
+     * @return array
+     */
+    public function getParticipationCountsPerChallenge(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('IDENTITY(p.defis) AS challengeId, COUNT(p) AS participantCount')
+            ->groupBy('p.defis')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

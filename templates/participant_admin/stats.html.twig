@@ -1,59 +1,139 @@
 {% extends 'adminBase.html.twig' %}
+
 {% block title %} Les statistiques {% endblock %}
 {% block stylesheets %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Include necessary stylesheets -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <style>
+        /* Custom styles for the charts */
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 400px;
+        }
+        canvas {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 {% endblock %}
 {% block body %}
+<h1>Les statistiques</h1>
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10">
         <div class="min-height-200px">
 <div class="container">
-    <h1>Statistiques</h1>
-    <canvas id="participant" width="400" height="400"></canvas>
-</div>
-</div>
-</div>
+    <div class="row">
+        <div class="col-md-6" style="top: 20px;left:100px">
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-container" style="width: 100%; height: 400px;">
+                        <canvas id="participantsChart"></canvas> <!-- Updated ID -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="top: 100px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-container" style="width: 100%; height: 400px;">
+                        <canvas id="participationChart"></canvas> <!-- Updated ID -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-{% endblock %}
-{% block javascripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
 <script>
-    console.log("Chart rendering script executed!");
+    // Fetch data from PHP (assuming 'participantIds' and 'participantVotes' are passed from PHP)
+    let participantIds = {{ participantIds | raw }};
+    let participantVotes = {{ participantVotes | raw }};
 
-    document.addEventListener("DOMContentLoaded", function() {
-        console.log("DOM content loaded!");
-
-        var ctx = document.getElementById('participant').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: {{ participantIds|raw }},
-                datasets: [{
-                    label: '# of Votes',
-                    data: {{ participantVotes|raw }},
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    // Chart for Capacite par evenement
+    let participantsChart = document.querySelector("#participantsChart");
+    let participantsGraph = new Chart(participantsChart, {
+        type: "pie",
+        data: {
+            labels: participantIds,
+            datasets: [{
+                label: 'Capacite par Participant',
+                data: participantVotes,
+                backgroundColor: [
+                    '#4CAF50',
+                    '#2196F3',
+                    '#FFC107',
+                    '#9C27B0',
+                    '#FF5722',
+                    '#607D8B'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: '#333',
+                    fontSize: 14
                 }
             }
-        });
+        }
+    });
+
+    // Chart for Repartition par evenement
+    let participationChart = document.querySelector("#participationChart");
+    let participationGraph = new Chart(participationChart, {
+        type: "bar",
+        data: {
+            labels: participantIds,
+            datasets: [{
+                label: 'Repartition par Participation',
+                data: participantVotes,
+                backgroundColor: [
+                    '#4CAF50',
+                    '#2196F3',
+                    '#FFC107',
+                    '#9C27B0',
+                    '#FF5722',
+                    '#607D8B'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        color: '#eee'
+                    }
+                }]
+            }
+        }
     });
 </script>
-
+</div>
+</div>
+</div>
 {% endblock %}

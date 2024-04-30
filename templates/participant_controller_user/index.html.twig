@@ -17,7 +17,13 @@
                 <img src="{{ asset(participant.photoP) }}" class="card-img-top mx-auto d-block" alt="..."style="width:300px; height: 200px;">
                
                     <p class="card-text">Vote: {{ participant.vote }}</p>
-                   <a href="{{ path('app_participation_edit', {'idpart': participant.idpart}) }}" class="btn btn-secondary" style="background-color: #72ae44; color: white; border-color: #72ae44; border-radius: 30px;">Show</a>
+                <form method="post" action="{{ path('app_participant_vote', {'idpart': participant.idpart}) }}">
+                    <input type="hidden" name="vote" value="1"> 
+                    <button type="submit" class="btn btn-primary">Vote</button>
+                </form>
+                  
+                    </br> </br>
+                                {{ include('participant_controller_user/_delete_form.html.twig' ) }}
                 </div>
             </div>
         </div>

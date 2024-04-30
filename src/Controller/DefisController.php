@@ -13,11 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Form\FormError;
+use App\Service\SmsSender;
+
 
 #[Route('/defis')]
 class DefisController extends AbstractController
 {
-    
+   
     #[Route('/', name: 'app_defis_index', methods: ['GET'])]
     public function index(Request $request, DefisRepository $defisRepository): Response
     {
@@ -37,30 +39,29 @@ class DefisController extends AbstractController
     }
     
     #[Route('/new', name: 'app_defis_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,  SmsSender $smsSender,): Response
     {
         $defi = new Defis();
         $form = $this->createForm(DefisType::class, $defi);
         $form->handleRequest($request);
-      
     
         if ($form->isSubmitted() && $form->isValid()) {
             $userId = $request->request->get('id_client');
-         // Check if the challenge date is expired
-         $now = new \DateTime();
-          // Check if the challenge date is expired
-          $now = new \DateTime();
-          $defiDate = $defi->getDelai();
-          $defiTime = $defi->getHeure();
-  
-          if ($defiDate < $now || ($defiDate == $now && $defiTime < $now->format('H:i'))) {
-              $form->get('delai')->addError(new FormError('La date  du défi sont déjà passées.'));
-              $form->get('heure')->addError(new FormError('Lheure  du défi sont déjà passées.'));
-              return $this->renderForm('defis/new.html.twig', [
-                  'defi' => $defi,
-                  'form' => $form,
-              ]);
-          }
+    
+            // Check if the challenge date is expired
+            $now = new \DateTime();
+            $defiDate = $defi->getDelai();
+            $defiTime = $defi->getHeure();
+    
+            if ($defiDate < $now || ($defiDate == $now && $defiTime < $now->format('H:i'))) {
+                $form->get('delai')->addError(new FormError('La date du défi sont déjà passées.'));
+                $form->get('heure')->addError(new FormError('Lheure du défi sont déjà passées.'));
+                return $this->renderForm('defis/new.html.twig', [
+                    'defi' => $defi,
+                    'form' => $form,
+                ]);
+            }
+    
             $photoD = $form->get('photoD')->getData();
             if ($photoD) {
                 // Generate a unique filename
@@ -82,19 +83,18 @@ class DefisController extends AbstractController
                 // Set the image property in the entity to the relative path of the uploaded file
                 $defi->setPhotoD('assets/images/'.$newFilename);
             }
-            
-            
+    
             // Set the user to the Defis entity
             $id_user = $form->get('user')->getData();
             $user = $entityManager->getReference(User::class, $id_user);
             $defi->setUser($user);
-
-            // Set the user to the Defis entity
-            // Note: Make sure to update your setter method in Defis entity to accept integer instead of User object
-            
+    
             // Persist and flush the entity
             $entityManager->persist($defi);
             $entityManager->flush();
+    
+            $smsSender->sendSms('+21626956338', 'Un nouveau défi a été ajouter');
+            $this->addFlash('sms_sent', true);
     
             return $this->redirectToRoute('app_defis_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -104,7 +104,6 @@ class DefisController extends AbstractController
             'form' => $form,
         ]);
     }
-    
 
    
 
