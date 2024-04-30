@@ -78,4 +78,12 @@
             </div>
         </div>
     </div>
+    <script>
+    var recaptchaCallback_form_captcha = function() {
+        grecaptcha.execute('6Lc-DcopAAAAAAHuUCuML8O8pAiVl-d2U4O6UKC1', {action: 'AdminSignUp'}).then(function(token) {
+            document.getElementById('form_captcha').value = token;
+        });
+    };
+</script>
+<script src="https://www.google.com/recaptcha/api.js?render='6Lc-DcopAAAAAAHuUCuML8O8pAiVl-d2U4O6UKC1'&onload=recaptchaCallback_form_captcha" async defer></script>
 {% endblock %}

@@ -9,4 +9,4 @@ framework:
 when@prod:
     framework:
         router:
-            strict_requirements: null
+            base_url: 'http://127.0.0.1:8000'

@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Adresse;
 use App\Entity\User;
 use App\Form\AdminType;
 use App\Form\UserType;
+use App\Form\ResetPasswordType;
+use App\Form\ConfirmCodeType;
+use App\Form\ChangePasswordType;
 use App\Form\AdresseType;
 use App\Repository\UserRepository;
 use App\Repository\AdresseRepository;
@@ -26,12 +30,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     private UserPasswordHasherInterface $hasher;
-   
+
     public function __construct(UserPasswordHasherInterface $hasher)
     {
         $this->hasher = $hasher;
     }
-   
+
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -48,50 +52,50 @@ class UserController extends AbstractController
         if ($adresseId) {
             $adresse = $adresseRepository->find($adresseId);
         }
-    
+
         $user = new User();
         $userForm = $this->createForm(UserType::class, $user);
-    
+
         $formData = $request->getSession()->get('user_form_data', []);
         if (!empty($formData)) {
             $userForm->submit($formData);
         }
-    
+
         $userForm->handleRequest($request);
-    
+
         if ($adresse) {
             $user->setAdresse($adresse);
         }
-    
+
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            $user=$userForm->getData();
-            $password=$user->getMdp();
-            $hashedpassword= $this->hasher->hashPassword(
+            $user = $userForm->getData();
+            $password = $user->getMdp();
+            $hashedpassword = $this->hasher->hashPassword(
                 $user,
                 $password
             );
             $user->setMdp($hashedpassword);
-      /** @var UploadedFile $imageFile */
-      $imageFile = $userForm->get('image')->getData();
+            /** @var UploadedFile $imageFile */
+            $imageFile = $userForm->get('image')->getData();
 
-      if ($imageFile) {
-          $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
-          $imageFile->move(
-              $this->getParameter('uploads_directory'), 
-              $fileName
-          );
+            if ($imageFile) {
+                $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('uploads_directory'),
+                    $fileName
+                );
 
-          // Update the recette entity with the file path
-          $user->setImage('/usersProfile/'.$fileName);
-      }
-     
-      
+                // Update the recette entity with the file path
+                $user->setImage('/usersProfile/' . $fileName);
+            }
+
+
             $entityManager->persist($user);
             $entityManager->flush();
             $request->getSession()->remove('user_form_data');
             return $this->redirectToRoute('app_login');
         }
-  
+
         if ($request->isMethod('POST')) {
             $request->getSession()->set('user_form_data', $request->request->get('user_form', []));
         }
@@ -100,11 +104,12 @@ class UserController extends AbstractController
             'userForm' => $userForm->createView(),
         ]);
     }
-    
+
 
     #[Route('/{idu}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        var_dump($this->getUser());
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
 
@@ -123,7 +128,7 @@ class UserController extends AbstractController
     #[Route('/{idu}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getIdu(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getIdu(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
@@ -140,7 +145,7 @@ class UserController extends AbstractController
         ]);
     }
     #[Route('/search', name: 'user_search')]
-    public function search(Request $request,UserRepository $userRepository): Response
+    public function search(Request $request, UserRepository $userRepository): Response
     {
         $criteria = $request->query->get('q');
 
@@ -163,6 +168,7 @@ class UserController extends AbstractController
     #[Route('/{idu}/block', name: 'app_user_block', methods: ['POST'])]
     public function adminblockuser(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
+        
         $id = $request->request->get('id');
         $data = $userRepository->find($id);
         $data->setBlocked(!$data->isBlocked());
@@ -172,15 +178,44 @@ class UserController extends AbstractController
     }
     #[Route('/sendEmail', name: 'sendEmail', methods: ['GET'])]
     public function sendEmail(MailerInterface $mailer): Response
-{
-    $email = (new Email())
-        ->from('yumlink12@gmail.com') // Utilisez l'adresse e-mail définie dans votre .env comme expéditeur
-        ->to('ammoun2011@gmail.com') // Remplacez 'destination@example.com' par l'adresse e-mail de destination
-        ->subject('Test d\'envoi d\'e-mail')
-        ->text('Ceci est un test d\'envoi d\'e-mail.');
+    {
+        $email = (new Email())
+            ->from('yumlink12@gmail.com') // Utilisez l'adresse e-mail définie dans votre .env comme expéditeur
+            ->to('ammoun2011@gmail.com') // Remplacez 'destination@example.com' par l'adresse e-mail de destination
+            ->subject('Test d\'envoi d\'e-mail')
+            ->text('Ceci est un test d\'envoi d\'e-mail.');
 
-    $mailer->send($email);
+        $mailer->send($email);
 
-    return new Response('E-mail sent successfully', Response::HTTP_OK);
-}
+        return new Response('E-mail sent successfully', Response::HTTP_OK);
+    }
+    #[Route('/userStat', name: 'stat', methods: ['GET'])]
+    public function userRoleStats(): Response
+    {
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        
+        // Compter les utilisateurs par rôle
+        $rolesCount = [];
+        foreach ($users as $user) {
+            $role = $user->getRole();
+            if (!isset($rolesCount[$role])) {
+                $rolesCount[$role] = 1;
+            } else {
+                $rolesCount[$role]++;
+            }
+        }
+        
+        // Calculer les pourcentages de chaque rôle
+        $totalUsers = count($users);
+        $rolePercentages = [];
+        foreach ($rolesCount as $role => $count) {
+            $percentage = ($count / $totalUsers) * 100;
+            $rolePercentages[$role] = $percentage;
+        }
+
+        // Passer les données au template Twig
+        return $this->render('user/user_role_stats.html.twig', [
+            'rolePercentages' => $rolePercentages,
+        ]);
+    }
 }

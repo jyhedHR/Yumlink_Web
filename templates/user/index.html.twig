@@ -30,12 +30,7 @@ document.getElementById('searchInput').addEventListener('keyup', function() {
 });
 </script>
 {% endblock %}
-	{% block js %}
-		{{ parent() }}
-		<script src="{{ asset('backend/src/scripts/qr.js') }}" defer></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-	{% endblock %}
+
 
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">

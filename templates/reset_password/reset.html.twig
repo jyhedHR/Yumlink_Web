@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password
+{% endblock %}
+
+{% block body %}
+	<div class="inner-banner inner-bg9">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Reset password</h3>
+				<ul>
+					<li>
+						<a href="{{ path('Welcome') }}">Home</a>
+					</li>
+					<li>Reset Password</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="user-area pt-100 pb-70">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<div class="user-all-form">
+						<div class="contact-form">
+								{{ form_start(resetForm) }}
+								
+                            <div class="row">
+								<div class="col-lg-12 col-md-12">
+									<div class="form-group">
+										{{ form_row(resetForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>	
+								<div class="col-lg-12 col-md-12 text-center d-flex justify-content-center">
+								<button type="submit" class="default-btn">
+									Reset password
+								</button>
+							</div>
+								{{ form_end(resetForm) }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+
+	
+{% endblock %}

@@ -25,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idu;
+    public $idu;
      /**
      * @var string
      * @Assert\NotBlank(message="Le nom est requis.")

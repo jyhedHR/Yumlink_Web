@@ -77,7 +77,7 @@
 
 
 							<div class="row">
-								<div class="col-lg-12 col-md-12">
+								
 									<div class="mx-auto" style="width: fit-content;">
 
 										<a href="{{ path('app_adresse_new') }}" class="default-btn two">Ajouter votre adresse</a>
@@ -115,7 +115,7 @@
 			</div>
 <script>
     var recaptchaCallback_form_captcha = function() {
-        grecaptcha.execute('6Lc-DcopAAAAAAHuUCuML8O8pAiVl-d2U4O6UKC1', {action: 'homepage'}).then(function(token) {
+        grecaptcha.execute('6Lc-DcopAAAAAAHuUCuML8O8pAiVl-d2U4O6UKC1', {action: 'signup'}).then(function(token) {
             document.getElementById('form_captcha').value = token;
         });
     };
