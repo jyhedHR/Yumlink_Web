@@ -49,7 +49,12 @@ class SecurityController extends AbstractController
             // Redirect to login if no user is authenticated
             return $this->redirectToRoute('app_login');
         }else
-       
+        if ($user->isBlocked()) { // Modifiez cette ligne
+            // Afficher un message d'erreur
+            $this->addFlash('error', "Désolé, l'administrateur vous a bloqué. Veuillez contacter le support.");
+            // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_logout');
+        }
         $roles = $user->getRoles(); 
         $role = $roles[0]; 
     
