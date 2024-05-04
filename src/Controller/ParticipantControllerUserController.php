@@ -84,14 +84,14 @@ class ParticipantControllerUserController extends AbstractController
         
         if ($participant->getUser()->getIdU() === $userId) {
         
-            $this->addFlash('error','You cannot vote for yourself');
+            $this->addFlash('error','Vous ne pouvez pas voter pour vous-même');
             
             
         }
     
       
         if ($voteRepository->hasUserVotedForParticipant($userId, $participant->getIdpart())) {
-            $this->addFlash('error','You have already voted for this participant');
+            $this->addFlash('error','Vous avez déjà voté pour cette participation.');
           
            
         }
