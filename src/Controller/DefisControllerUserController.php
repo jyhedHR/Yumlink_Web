@@ -80,6 +80,7 @@ class DefisControllerUserController extends AbstractController
             // Save the Participant entity
             $entityManager->persist($participant);
             $entityManager->flush();
+            $this->addFlash('success', 'Your Participation has been submitted successfully.');
     
             // Redirect back to the Defis index
             return $this->redirectToRoute('app_participant_controller_user_index');

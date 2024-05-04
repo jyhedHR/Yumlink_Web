@@ -55,7 +55,7 @@ class VoteRepository extends ServiceEntityRepository
     public function hasUserVotedForParticipant(int $userId, int $participantId): bool
     {
         $queryBuilder = $this->createQueryBuilder('v')
-            ->select('COUNT(v.id)')
+            ->select('COUNT(v.idVote)')
             ->where('v.user = :userId')
             ->andWhere('v.participant = :participantId')
             ->setParameter('userId', $userId)

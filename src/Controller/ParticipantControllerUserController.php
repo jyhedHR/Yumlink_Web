@@ -84,13 +84,16 @@ class ParticipantControllerUserController extends AbstractController
         
         if ($participant->getUser()->getIdU() === $userId) {
         
-            return new Response('You cannot vote for yourself.');
+            $this->addFlash('error','You cannot vote for yourself');
+            
+            
         }
     
       
         if ($voteRepository->hasUserVotedForParticipant($userId, $participant->getIdpart())) {
+            $this->addFlash('error','You have already voted for this participant');
           
-            return new Response('You have already voted for this participant.');
+           
         }
     
         
@@ -101,7 +104,7 @@ class ParticipantControllerUserController extends AbstractController
         $vote->setParticipant($participant);
         $vote->setUser($user);
         
-        $participant->setVote($voteValue); 
+        $participant->setVote(++$voteValue); 
         
         
         $entityManager->persist($vote);
