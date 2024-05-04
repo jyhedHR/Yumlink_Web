@@ -1,6 +1,6 @@
 <?php
 
-/*namespace App\Controller;
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityAdminController extends AbstractController
 {
-    #[Route('/security/admin', name: 'app_security_admin')]
+   /* #[Route('/security/admin', name: 'app_security_admin')]
     public function index(): Response
     {
         return $this->render('security_admin/index.html.twig', [
@@ -42,5 +42,5 @@ class SecurityAdminController extends AbstractController
     {
         return $this->render('admin/index.html.twig');
     }
-    
-}*/
+ */   
+}

@@ -5,6 +5,7 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/public/usersProfile'
     app.apiTranslateKey: '%env(API_TRANSLATE_KEY_VALUE)%'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # Default configuration for services in this file
