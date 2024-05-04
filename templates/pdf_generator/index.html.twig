@@ -6,7 +6,7 @@
 </head>
 {% set subtotal = 0 %}
 										{% for panier in paniers %}
-											{% if panier.idClient == 3 %}
+											{% if panier.idClient == app.user.getIdu() %}
                                             {% set subtotal = subtotal + (panier.prixtotal * panier.quantite) %}
                                             {% endif %}
 										{% endfor %}

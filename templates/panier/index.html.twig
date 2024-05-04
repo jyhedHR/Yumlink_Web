@@ -62,7 +62,7 @@
 														{% set subtotal = subtotal + (panier.prixtotal * panier.quantite) %}
 														<form method="post" action="{{ path('app_panier_delete', {'idp': panier.idp}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
 															<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ panier.idp) }}">
-																<input type="hidden" name="id_client" value="{{ User.app.getIda() }}">
+																<input type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
 															<button type="submit" class="remove" style="border: none; background: none; cursor: pointer;">
 																<i class="bx bx-x-circle"></i>
 															</button>

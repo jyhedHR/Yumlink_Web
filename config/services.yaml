@@ -21,6 +21,19 @@ services:
             - '../src/Entity/'              # Exclude Doctrine entities
             - '../src/Kernel.php'           # Exclude Kernel.php
         public: true
+        
+
+    App\Twig\AppExtension:
+        tags:
+            - { name: twig.extension }   
+            
+    
+             
+
+    App\Service\ChatGPTService:
+          arguments:
+              $httpClient: '@http_client'
+              $apiKey: 'sk-proj-hCtKDfWwJm91rvritxXdT3BlbkFJ9YtpEs3UguKTSFtjU23p'
 
     # Define StripeService
     
