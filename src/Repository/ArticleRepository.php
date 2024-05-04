@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -77,6 +78,20 @@ class ArticleRepository extends ServiceEntityRepository
     public function findAllQuery(): Query
     {
         return $this->createQueryBuilder('a')->getQuery();
+    }
+
+    /**
+     * Fetch by tag using MEMBER OF
+     * 
+     * @param string $tag
+     * @return Query
+     */
+    public function findByTag(string $tag): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->where(':tag MEMBER OF a.tags')
+            ->setParameter('tag', $tag)
+            ->getQuery();
     }
 
     //    /**

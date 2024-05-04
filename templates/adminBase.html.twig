@@ -13,11 +13,6 @@
 		{% endblock %}
 
 		{% block css %}
-
-		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
-		{% endblock %}
-		{% block css %}
 			<link rel="stylesheet" href={{asset("backend/src/styles/blog_css.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/core.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/icon-font.min.css")}}>
@@ -29,9 +24,13 @@
 			<link rel="stylesheet" href={{asset("backend/https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258")}}>
 			
 		{% endblock %}
-{% block js %}
+		{% block js %}
 			
-
+			<script src={{asset("https://cdn.jsdelivr.net/npm/sweetalert2@11")}}></script>
+			<script src={{asset("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")}}></script>
+			<script src={{asset("backend/src/scripts/blog_js.js")}}></script>
+			<script src={{asset("backend/src/scripts/popper.min.js")}}></script>
+			
 			<script src={{asset("backend/vendors/scripts/core.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/script.min.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/process.js")}}></script>

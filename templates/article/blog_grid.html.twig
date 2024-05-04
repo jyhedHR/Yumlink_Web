@@ -15,9 +15,11 @@
 							{% endfor %}
 						</div>
 					</div>
-					<div class="navigation">
-						{{ knp_pagination_render(articles) }}
-					</div>
+					{% if pagination == 'on' %}
+						<div class="navigation">
+							{{ knp_pagination_render(articles) }}
+						</div>
+					{% endif %}
 				</div>
 				<div class="col-lg-4">
 					<div class="side-bar-area pl-20">

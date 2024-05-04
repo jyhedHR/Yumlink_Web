@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Google\Cloud\Translate\V2\TranslateClient;
@@ -28,20 +29,33 @@ use Knp\Component\Pager\PaginatorInterface;
 class ArticleController extends AbstractController
 {
     #[Route('/{id_chef}/{id_tag?}', name: 'app_article_blog', methods: ['GET'], defaults: ['id_chef' => null, 'id_tag' => null])]
-    public function index(Request $request, $id_chef, $id_tag, SecurityController $securityController, ArticleRepository $articleRepository, TagRepository $tagRepository, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
+    public function index(ManagerRegistry $em, Request $request, $id_chef, $id_tag, SecurityController $securityController, ArticleRepository $articleRepository, TagRepository $tagRepository, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {
-        
+
         if ($id_tag == null) {
             if ($id_chef == null) {
                 $query = $articleRepository->findAllQuery();
                 //$articles = $articleRepository->findAll();
+                $pagination = 'on';
+                $articles = $paginator->paginate(
+                    $query,
+                    $request->query->getInt('page', 1),
+                    4
+                );
             } else {
                 $chef = $securityController->getUser();
                 $query = $articleRepository->findByUserQuery($chef);
                 //$articles = $articleRepository->findByUser($chef);
+                $pagination = 'on';
+                $articles = $paginator->paginate(
+                    $query,
+                    $request->query->getInt('page', 1),
+                    4
+                );
             }
         } else {
             $tag = $entityManager->getReference(Tag::class, $id_tag);
+            $pagination = 'off';
             $allArticles = $articleRepository->findAll();
             $articles = [];
             foreach ($allArticles as $article) {
@@ -51,13 +65,9 @@ class ArticleController extends AbstractController
                 }
             }
         }
-        $articles = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1), 
-            4
-        );
         return $this->render('article/blog_grid.html.twig', [
             'articles' =>  $articles,
+            'pagination' => $pagination,
             'tagsSide' => $tagRepository->findTopTags(3),
             'articlesSide' => $articleRepository->findTopArticles(5),
         ]);
@@ -161,11 +171,11 @@ class ArticleController extends AbstractController
         $translate = new TranslateClient([
             'key' => $this->getParameter('app.apiTranslateKey')
         ]);
-        
+
         $result = $translate->translate($textToTranslate, [
             'target' => 'fr'
         ]);
-        
+
         return new JsonResponse($result);
     }
 
