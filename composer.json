@@ -13,6 +13,7 @@
         "doctrine/orm": "^2.16",
         "dompdf/dompdf": "^2.0",
         "endroid/qr-code-bundle": "^5.0",
+        "google/cloud-vision": "^1.9",
         "guzzlehttp/guzzle": "^7.8",
         "knplabs/knp-snappy-bundle": "^1.10",
         "nyholm/psr7": "^1.8",
@@ -56,6 +57,7 @@
         "symfony/web-link": "5.4.*",
         "symfony/webpack-encore-bundle": "^2.1",
         "symfony/yaml": "5.4.*",
+        "thiagoalessio/tesseract_ocr": "^2.13",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

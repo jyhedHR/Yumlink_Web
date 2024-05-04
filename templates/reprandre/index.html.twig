@@ -3,36 +3,55 @@
 {% block title %}Reclamation{% endblock %}
 
 {% block body %}
-    <h1> Reclamation</h1>
+    <h1> </h1>
+    <div class="inner-banner inner-bg3">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Reclamation</h3>
+				<ul>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
 
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th>Reclamation</th>
-                <th>reprandre</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reclamation in reclamations %}
-        {% if reclamation.iduser ==  app.user.getIdu()  %}
-            <tr>
-                
-                <td>{{ reclamation.comentair }}</td>
-                {% for reprander in reprandres %}
+				</div>
+
+			</div>
+		</div>
+
+   <table class="table table-striped" id="reclamationTable">
+    <thead class="thead-dark">
+        <tr>
+            <th>Reclamation</th>
+            <th>Réponse</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for reclamation in reclamations %}
+    {% if reclamation.iduser == app.user.getIdu() %}
+        <tr>
+            <td>{{ reclamation.comentair }}</td>
+            {% for reprander in reprandres %}
                 {% if reprander.idclient ==  reclamation.idr   %}
                 <td>
                     {{ reprander.description }}
                 </td>
                 {% endif %}
                 {% endfor %}
-            </tr>
-       {% endif %}
-          
-        {% endfor %}
-        </tbody>
-    </table>
+        </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
     
-
+<script>
+$(document).ready(function() {
+    $('#reclamationTable').DataTable({
+        // Options for DataTables (sorting, pagination, filtering, etc.)
+        "paging": true,
+        "searching": true,
+        "ordering": true
+    });
+});
+</script>
    
 {% endblock %}

@@ -13,6 +13,8 @@
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 		{% block css %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
 			<link rel="stylesheet" href={{asset("frontend/assets/css/bootstrap.min.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/animate.min.css")}}>
@@ -30,6 +32,8 @@
 			<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 		{% endblock %}
 		{% block js %}
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 			<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -385,6 +389,7 @@
 					</button>
 					<div id="validator-newsletter" class="form-result"></div>
 				</form>
+				
 			</div>
 		</div>
 	</div>

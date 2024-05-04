@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ChatGPTController!{% endblock %}
+
+{% block body %}
+{# templates/chat_gpt/index.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat avec ChatGPT</title>
+</head>
+<body>
+    <h1>Chat avec ChatGPT</h1>
+
+    <form method="POST" action="{{ path('chat') }}">
+        <label for="prompt">Entrez votre prompt :</label>
+        <input type="text" name="prompt" id="prompt" required>
+        <button type="submit">Envoyer</button>
+    </form>
+
+    {% if response %}
+        <h2>Réponse de ChatGPT :</h2>
+        <p>{{ response }}</p>
+    {% endif %}
+</body>
+</html>
+
+
+{% endblock %}
