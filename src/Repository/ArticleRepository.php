@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -52,6 +53,30 @@ class ArticleRepository extends ServiceEntityRepository
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Fetch articles by user.
+     *
+     * @param User $user
+     * @return Query
+     */
+    public function findByUserQuery(User $user): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+    }
+
+    /**
+     * Fetch all articles.
+     *
+     * @return Query
+     */
+    public function findAllQuery(): Query
+    {
+        return $this->createQueryBuilder('a')->getQuery();
     }
 
     //    /**

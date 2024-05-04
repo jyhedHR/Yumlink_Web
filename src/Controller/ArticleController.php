@@ -22,19 +22,23 @@ use DateTime;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Google\Cloud\Translate\V2\TranslateClient;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/articles')]
 class ArticleController extends AbstractController
 {
     #[Route('/{id_chef}/{id_tag?}', name: 'app_article_blog', methods: ['GET'], defaults: ['id_chef' => null, 'id_tag' => null])]
-    public function index($id_chef, $id_tag, SecurityController $securityController, ArticleRepository $articleRepository, TagRepository $tagRepository, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, $id_chef, $id_tag, SecurityController $securityController, ArticleRepository $articleRepository, TagRepository $tagRepository, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {
+        
         if ($id_tag == null) {
             if ($id_chef == null) {
-                $articles = $articleRepository->findAll();
+                $query = $articleRepository->findAllQuery();
+                //$articles = $articleRepository->findAll();
             } else {
                 $chef = $securityController->getUser();
-                $articles = $articleRepository->findByUser($chef);
+                $query = $articleRepository->findByUserQuery($chef);
+                //$articles = $articleRepository->findByUser($chef);
             }
         } else {
             $tag = $entityManager->getReference(Tag::class, $id_tag);
@@ -47,8 +51,11 @@ class ArticleController extends AbstractController
                 }
             }
         }
-
-        $id_chef = $securityController->getUser();
+        $articles = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), 
+            4
+        );
         return $this->render('article/blog_grid.html.twig', [
             'articles' =>  $articles,
             'tagsSide' => $tagRepository->findTopTags(3),
