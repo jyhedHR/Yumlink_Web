@@ -47,12 +47,13 @@ class RecettesController extends AbstractController
         ]);
     }
     #[Route('/new', name: 'app_recettes_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(SecurityController $securityC ,  Request $request, EntityManagerInterface $entityManager): Response
     {
         $recette = new Recettes();
         $form = $this->createForm(RecettesType::class, $recette);
         $form->handleRequest($request);
-       
+        $id = $securityC->getUser()->getIdU();
+        $user =  $entityManager->getReference(User::class, $id) ; 
         if ($form->isSubmitted() && $form->isValid()) {
             $selectedIngredients = $form->get('ingredients')->getData();
             
@@ -75,7 +76,7 @@ class RecettesController extends AbstractController
                 // Update the recette entity with the file path
                 $recette->setImgsrc('/uploads/'.$fileName);
             }
-
+            $recette->setUser($user); 
             $entityManager->persist($recette);
             $entityManager->flush();
     
@@ -142,6 +143,26 @@ class RecettesController extends AbstractController
         $ingredients = $entityManager->getRepository(Ingredient::class)->findBy(['idIng' => $ingredientIds]);
     
         return $this->render('recettes/show.html.twig', [
+            'recette' => $recette,
+            'ingredients' => $ingredients,
+        ]);
+    }
+    #[Route('/{idR}', name: 'app_recettes_show_chef', methods: ['GET'])]
+    public function showChef(Recettes $recette, EntityManagerInterface $entityManager): Response
+    {
+        $recetteId = $recette->getIdR();
+        $recettesIngredientRepository = $entityManager->getRepository(RecettesIngredient::class);
+        $recettesIngredients = $recettesIngredientRepository->findBy(['recette' => $recetteId]);
+    
+        $ingredientIds = [];
+        foreach ($recettesIngredients as $recettesIngredient) {
+            $ingredientIds[] = $recettesIngredient->getIngredient()->getIdIng();
+        }
+    
+        // Retrieve the ingredients by their IDs
+        $ingredients = $entityManager->getRepository(Ingredient::class)->findBy(['idIng' => $ingredientIds]);
+    
+        return $this->render('recettes/showChef.html.twig', [
             'recette' => $recette,
             'ingredients' => $ingredients,
         ]);
@@ -257,11 +278,12 @@ public function addToFavorites(Recettes $recette, EntityManagerInterface $entity
 }
 
 #[Route('/show_favorite', name: 'app_favorite_show' , methods: ['GET'])]
-public function favoriteRecipes(EntityManagerInterface $entityManager): Response
+public function favoriteRecipes(SecurityController $securityC , EntityManagerInterface $entityManager): Response
 {
 
-     $user = $entityManager->getRepository(User::class)->find(29);
-     $favoriteRecipes = $entityManager->getRepository(FavoriteRecipes::class)->findBy(['user' => $user]);
+    $id = $securityC->getUser()->getIdU();
+    $user = $entityManager->getReference(User::class, $id);
+    $favoriteRecipes = $entityManager->getRepository(FavoriteRecipes::class)->findBy(['user' => $user]);
   dump($favoriteRecipes) ; 
      $recipeIds = [];
      foreach ($favoriteRecipes as $favoriteRecipe) {
@@ -276,11 +298,26 @@ public function favoriteRecipes(EntityManagerInterface $entityManager): Response
      ]);
 }
 
+#[Route('/mes_recettes', name: 'app_mesRecettes_show' , methods: ['GET'])]
+public function MesRecettesChef(SecurityController $securityC , EntityManagerInterface $entityManager): Response
+{
+    $id = $securityC->getUser()->getIdU();
+    $user = $entityManager->getReference(User::class, $id);
+     $Recipes = $entityManager->getRepository(Recettes::class)->findBy(['user' => $user]);
+    
+ 
+ 
+     return $this->render('recettes/mesRecettesChef.html.twig', [
+         'Recipes' => $Recipes,
+     ]);
+}
+
 #[Route('/{idR}/remove_favorite', name: 'remove_favorite_recipe', methods: ['POST'])]
-public function removeFromFavorites(Recettes $recette, EntityManagerInterface $entityManager, Request $request): Response
+public function removeFromFavorites(SecurityController $securityC ,Recettes $recette, EntityManagerInterface $entityManager, Request $request): Response
 {
     if ($this->isCsrfTokenValid('remove' . $recette->getIdr(), $request->request->get('_token'))) {
-        $user = $entityManager->getRepository(User::class)->find(29);
+        $id = $securityC->getUser()->getIdU();
+        $user = $entityManager->getReference(User::class, $id);
         $favoriteRecipe = $entityManager->getRepository(FavoriteRecipes::class)->findOneBy([
             'user' => $user,
             'recipe' => $recette,

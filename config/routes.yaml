@@ -59,3 +59,9 @@ filtrer_recettes:
     path: /filter
     controller: App\Controller\RecettesController::filterRecipes
     methods: ['GET']
+
+app_mesRecettes_show:
+    path: /mes_recettes
+    controller: App\Controller\RecettesController::MesRecettesChef
+    methods: ['GET']
+

@@ -1,0 +1,104 @@
+
+{% extends 'Chefbase.html.twig' %}
+
+{% block title %}My Recipes{% endblock %}
+
+{% block body %}
+<div class="inner-banner inner-bg5">
+    <div class="container">
+        <div class="inner-title text-center">
+            <h3> Recipe</h3>
+            <ul>
+                <li>
+                      <a href="{{ path('indexChef') }}" >Home</a>
+                </li>
+                <li> Recipe</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="recent-recipe-area pt-100 pb-70">
+    <div class="container">
+        <div class="section-title text-center">
+            <span>Recent Recipe</span>
+            <h2>Your recipes</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row pt-45 justify-content-center" id="recipeContainer">
+             {% for Recipe in Recipes %}
+            <div class="col-lg-4 col-md-6 recipe-item">
+                <div class="recent-recipe-item">
+                    <a href="{{ path('app_recettes_show', {'idR': Recipe.idR}) }}">
+                        <img src="{{ Recipe.imgsrc }}" alt="Images">
+                    </a>
+                    <div class="content">
+                        <h3><a href="{{ path('app_recettes_show', {'idR': Recipe.idR}) }}">{{ Recipe.nom }}</a></h3>
+                        <p>{{ Recipe.description }}</p>
+        
+                        <ul>
+                            <li><img src="/assets/images/recipe-img/recipe-user1.jpg" alt="Images"></li>
+                            <li><a href="author.html">By {{ Recipe.chef }}</a></li>
+                        </ul>
+                     
+
+                        
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-12 col-md-12 text-center">
+            <div class="pagination-area" id="pagination-container"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const itemsPerPage = 6; 
+        const recipes = document.querySelectorAll('.recipe-item');
+        const numPages = Math.ceil(recipes.length / itemsPerPage);
+
+        function paginate(page) {
+            recipes.forEach((recipe, index) => {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                if (index >= start && index < end) {
+                    recipe.style.display = 'block';
+                } else {
+                    recipe.style.display = 'none';
+                }
+            });
+        }
+
+        function createPaginationLinks() {
+            const paginationContainer = document.getElementById('pagination-container');
+            for (let i = 1; i <= numPages; i++) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    paginate(i);
+                });
+                paginationContainer.appendChild(link);
+                paginationContainer.appendChild(document.createTextNode(' '));
+            }
+        }
+
+        createPaginationLinks();
+        paginate(1); 
+
+    });
+
+    
+</script>
+
+
+{% endblock %}
+
+
+
