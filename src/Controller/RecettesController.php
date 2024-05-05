@@ -74,7 +74,7 @@ class RecettesController extends AbstractController
                 );
     
                 // Update the recette entity with the file path
-                $recette->setImgsrc('/uploads/'.$fileName);
+                $recette->setImgsrc('/public/frontend/assets/images'.$fileName);
             }
             $recette->setUser($user); 
             $entityManager->persist($recette);
@@ -115,7 +115,7 @@ class RecettesController extends AbstractController
                 );
     
                 // Update the recette entity with the file path
-                $recette->setImgsrc('/uploads/'.$fileName);
+                $recette->setImgsrc('/public/frontend/assets/images'.$fileName);
             }
 
             $entityManager->persist($recette);
@@ -264,10 +264,11 @@ public function edit(Request $request, Recettes $recette, EntityManagerInterface
         ]);
 }
 #[Route('/{idR}/favorite', name: 'favorite_recipe', methods: ['POST'])]
-public function addToFavorites(Recettes $recette, EntityManagerInterface $entityManager, Request $request): Response
+public function addToFavorites(SecurityController $securityC ,Recettes $recette, EntityManagerInterface $entityManager, Request $request): Response
 {
     if ($this->isCsrfTokenValid('fav' . $recette->getIdr(), $request->request->get('_token'))) {
-    $user = $entityManager->getRepository(User::class)->find(29);
+        $id = $securityC->getUser()->getIdU();
+        $user = $entityManager->getReference(User::class, $id);
     $favoriteRecipe = new FavoriteRecipes(); 
     $favoriteRecipe->setUser($user);
     $favoriteRecipe->setRecipe($recette);

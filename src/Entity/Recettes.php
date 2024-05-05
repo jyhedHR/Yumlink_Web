@@ -79,15 +79,12 @@ class Recettes
      */
     private $date;
 
-    /**
-     * @var \User
-     *
+       /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iduser", referencedColumnName="idU")
-     * })
+     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
      */
     private ?User $user;
+   
    
     private Ingredient $ingredient ; 
 
@@ -197,6 +194,18 @@ class Recettes
    
     
     public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user =$user;
+
+        return $this;
+    }
+
+    public function setIduser(?User $iduser): static
     {
         $this->iduser = $iduser;
 

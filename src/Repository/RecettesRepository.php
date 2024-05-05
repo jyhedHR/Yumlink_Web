@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Recettes; // Corrected import to use Recettes entity
+use App\Entity\Recettes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,24 +18,9 @@ class RecettesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Recettes::class); // Corrected parent::__construct() call to use Recettes::class
+        parent::__construct($registry, Recettes::class);
     }
 
-    /**
-     * Fetches recipes with calorie counts under a certain threshold
-     * 
-     * @param int $calorieThreshold
-     * @return Recettes[]
-     */
-    public function getRecettesUnderCalorieThreshold(int $calorieThreshold): array
-    {
-        return $this->createQueryBuilder('r')
-            ->select('r.nom', 'r.calorie') // Selecting name and calorie attributes
-            ->andWhere('r.calorie < :calorieThreshold')
-            ->setParameter('calorieThreshold', $calorieThreshold)
-            ->getQuery()
-            ->getResult();
-    }
 
     public function searchByNameOrChef($query)
     {
@@ -45,6 +30,8 @@ class RecettesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    
     public function getRecipesPerCategory()
     {
         return $this->createQueryBuilder('r')
@@ -117,6 +104,32 @@ class RecettesRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+
+//    public function findOneBySomeField($value): ?Recettes
+//    {
+//        return $this->createQueryBuilder('r')
+//            ->andWhere('r.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
+
+   /**
+     * Fetches recipes with calorie counts under a certain threshold
+     * 
+     * @param int $calorieThreshold
+     * @return Recettes[]
+     */
+    public function getRecettesUnderCalorieThreshold(int $calorieThreshold): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.nom', 'r.calorie') // Selecting name and calorie attributes
+            ->andWhere('r.calorie < :calorieThreshold')
+            ->setParameter('calorieThreshold', $calorieThreshold)
+            ->getQuery()
+            ->getResult();
+    }
 
     public function deleteRecommendationsForUser($userId): void
     {

@@ -262,20 +262,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): string
-    {
-        return $this->mdp;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->mdp = $password;
-
-        return $this;
-    }
 
     /**
      * Returning a salt is only needed, if you are not using a modern
