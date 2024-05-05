@@ -1,4 +1,4 @@
-{% extends 'baseChef.html.twig' %}
+{% extends 'ChefBase.html.twig' %}
 
 {% block title %}Recettes index{% endblock %}
 
@@ -24,37 +24,35 @@
             <h2>Our Latest Recipe</h2>
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="side-bar-area pl-20">
-            <div class="search-widget">
-                <input type="search" id="searchInput" class="form-control" placeholder="Search..." data-search-url="{{ path('search_recipes') }}">
-                <div id="searchResults"></div> 
-            </div>
-        </div>
+    
+</div>
+
+    <div class="side-bar-area pl-20">
+    <div class="search-widget">
+        <input type="search" id="searchInput" class="form-control" placeholder="Search..." data-search-url="{{ path('search_recipes') }}">
+        <div id="searchResults" class="search-results"></div> 
     </div>
+    
     <div class="container">
         <div class="row pt-45 justify-content-center" id="recipeContainer">
             {% for recette in recettes %}
             <div class="col-lg-4 col-md-6 recipe-item">
                 <div class="recent-recipe-item">
-                    <a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">
+                    <a href="{{ path('app_recettes_show_chef', {'idR': recette.idR}) }}">
                         <img src="{{ recette.imgsrc }}" alt="Images">
                     </a>
                     <div class="content">
-                        <h3><a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">{{ recette.nom }}</a></h3>
+                        <h3><a href="{{ path('app_recettes_show_chef', {'idR': recette.idR}) }}">{{ recette.nom }}</a></h3>
                         <p>{{ recette.description }}</p>
-                        <div class="rating">
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                            <i class="bx bxs-star"></i>
-                        </div>
                         <ul>
                             <li><img src="/assets/images/recipe-img/recipe-user1.jpg" alt="Images"></li>
                             <li><a href="author.html">By {{ recette.chef }}</a></li>
                         </ul>
                     </div>
+                    
+                      
+
+                    
                 </div>
             </div>
             {% endfor %}
@@ -66,6 +64,28 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+        
+        document.getElementById('filterButton').addEventListener('click', function() {
+         
+            fetchFilteredRecipes();
+        });
+    });
+
+    function fetchFilteredRecipes() {
+       
+        const calories = document.getElementById('caloriesInput').value;
+        const protein = document.getElementById('proteinInput').value;  
+        const url = `/filter?calories=${calories}&protein=${protein}`;    
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('recipeContainer').innerHTML = html;
+            })
+            .catch(error => console.error('Error fetching filtered recipes:', error));
+    }
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const itemsPerPage = 6; 
         const recipes = document.querySelectorAll('.recipe-item');
@@ -100,26 +120,27 @@
 
         createPaginationLinks();
         paginate(1); 
+
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        const url = searchInput.getAttribute('data-search-url');
-        searchInput.addEventListener('input', function() {
-            const query = searchInput.value.trim();
-            if (query.length === 0) {
-                searchResults.innerHTML = '';
-                return;
-            }
-            const fullUrl = url + '?query=' + encodeURIComponent(query);
-            fetch(fullUrl)
-                .then(response => response.text())
-                .then(html => {
-                    searchResults.innerHTML = html;
-                })
-                .catch(error => console.error('Error fetching search results:', error));
-        });
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const url = searchInput.getAttribute('data-search-url');
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value.trim();
+        if (query.length === 0) {
+            searchResults.innerHTML = '';
+            return;
+        }
+        const fullUrl = url + '?query=' + encodeURIComponent(query);
+        fetch(fullUrl)
+            .then(response => response.text())
+            .then(html => {
+                searchResults.innerHTML = html;
+                // Add pagination for search results if needed
+            })
+            .catch(error => console.error('Error fetching search results:', error));
     });
 </script>
+
 {% endblock %}
