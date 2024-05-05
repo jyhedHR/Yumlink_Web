@@ -93,6 +93,16 @@ class RecettesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    /**
+     * Find Recettes query builder.
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findRecettesQueryBuilder()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.calorie', 'DESC'); // You can customize the query as per your requirements
+    }
 //    /**
 //     * @return Recettes[] Returns an array of Recettes objects
 //     */
