@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe Analyzer{% endblock %}
+
+{% block stylesheets %}
+    
+{% endblock %}
+
+{% block body %}
+
+<section class="inner-banner inner-bg4">
+    <div class="container">
+        <div class="inner-title text-center">
+            <h3>Recipe Analyzer</h3>
+            <ul>
+                <li>
+                    <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                </li>
+                <li>Analyzer</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="cart-wraps-area pt-100 pb-70">
+    <div class="container">
+        <div class="search-form">
+        
+            <form id="recipeForm" action="{{ path('get_regime') }}" method="post">
+                {{ form_start(form) }}
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        {{ form_widget(form.plat_choisie, {'attr': {'class': 'form-control', 'placeholder': 'Saisir le nom du plat'}}) }}
+                    </div>
+                </div>
+                <div class="row justify-content-center" style="margin-top: 10px;"> <!-- Add margin-top for space -->
+                    <div class="col-md-1">
+                        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary', 'onclick': 'submitForm(event)'}}) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </form>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="cart-wraps">
+                    <div class="cart-table table-responsive">
+                        <table class="table table-bordered" id="analysisTable">
+                            <thead>
+                                <tr>
+                                    <th>Propirtie</th>
+                                    <th>Values</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultContainer">
+                                <tr>
+                                    <td colspan="2">No Food available</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function submitForm(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var form = document.getElementById('recipeForm');
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            var table = document.getElementById('analysisTable');
+            table.innerHTML = ''; // Clear existing table rows
+            
+            for (var nutrient in data) {
+                if (data.hasOwnProperty(nutrient)) {
+                    var row = table.insertRow();
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = nutrient;
+                    cell2.innerHTML = data[nutrient];
+                }
+            }
+
+            document.getElementById('resultContainer').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+{% endblock %}

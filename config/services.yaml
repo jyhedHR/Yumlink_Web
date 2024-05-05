@@ -1,24 +1,56 @@
+
 # This file is the entry point to configure your own services.
 # Files in the packages/ subdirectory configure your dependencies.
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    uploads_directory: '%kernel.project_dir%/public/usersProfile'
+    app.apiTranslateKey: '%env(API_TRANSLATE_KEY_VALUE)%'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
-    # default configuration for services in *this* file
+    # Default configuration for services in this file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # By default, services are private unless explicitly made public.
+    
+    App\Controller\BotManController:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+    # Autowire classes in the App\ namespace as services
     App\:
-        resource: '../src/'
+        resource: '../src/'  # Load classes from the src/ directory
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+            - '../src/DependencyInjection/'  # Exclude dependency injection configuration
+            - '../src/Entity/'              # Exclude Doctrine entities
+            - '../src/Kernel.php'           # Exclude Kernel.php
+        public: true
+        
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Twig\AppExtension:
+        tags:
+            - { name: twig.extension }   
+            
+    
+             
+
+    App\Service\ChatGPTService:
+          arguments:
+              $httpClient: '@http_client'
+              $apiKey: 'sk-proj-hCtKDfWwJm91rvritxXdT3BlbkFJ9YtpEs3UguKTSFtjU23p'
+
+    # Define StripeService
+    
+    Knp\Snappy\GeneratorInterface:
+        alias: knp_snappy.pdf
+    # Define other services and configurations as needed
+
+    # Define the ToastrFactory service
+    Flasher\Toastr\Prime\ToastrFactory:
+        public: true  # Allow this service to be autowired
+    # Define your controller as a service
+    App\Controller\AdminUserNutritionController:
+        tags: ['controller.service_arguments']
+

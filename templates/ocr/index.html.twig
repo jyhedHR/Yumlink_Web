@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OcrController!{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OCR - Reconnaissance de texte</title>
+</head>
+<body>
+    <h1>Reconnaissance de texte (OCR)</h1>
+    <form method="POST" action="{{ path('ocr') }}" enctype="multipart/form-data">
+        <div>
+            <label for="image">Téléchargez une image pour effectuer la reconnaissance de texte :</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+        <div>
+            <button type="submit">Effectuer l'OCR</button>
+        </div>
+    </form>
+    
+</body>
+</html>
+
+{% endblock %}

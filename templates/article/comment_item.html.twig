@@ -1,0 +1,19 @@
+<li>
+	<img src="assets/images/blog/blog-user.jpg" alt="Image"/>
+    <h3>{{comment.user.nom}}</h3>
+	{# <h3>{{comment.author}}</h3> #}
+	<span>{{comment.commentDate ? comment.commentDate|date('Y-m-d H:i:s') : ''}}</span>
+	<p>
+		{{comment.commentText}}
+	</p>
+	<a href="blog-details.html">
+		Reply</a>
+</li>
+{# <li class="pl-80">
+	<img src="assets/images/blog/blog-user2.jpg" alt="Image"/>
+	<h3>{{subComment.author}}</h3>
+	<span>{{subComment.dateTime}}</span>
+	<p>
+		{{subComment.content}}
+	</p>
+</li> #}

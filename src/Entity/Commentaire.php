@@ -5,6 +5,7 @@ use App\Repository\CommentaireRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Commentaire
@@ -20,7 +21,7 @@ class Commentaire
      *
      * @ORM\Column(name="comment_id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $commentId;
 
@@ -28,22 +29,14 @@ class Commentaire
      * @var int
      *
      * @ORM\Column(name="id_article", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $idArticle;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idU", type="integer", nullable=false)
-     */
-    private $idu;
 
     /**
      * @var string
      *
      * @ORM\Column(name="comment_text", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Comment cannot be empty")     
      */
     private $commentText;
 
@@ -54,26 +47,15 @@ class Commentaire
      */
     private $commentDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
+     */
+    private ?User $user;
+
     public function getCommentId(): ?int
     {
         return $this->commentId;
-    }
-
-    public function getIdArticle(): ?int
-    {
-        return $this->idArticle;
-    }
-
-    public function getIdu(): ?int
-    {
-        return $this->idu;
-    }
-
-    public function setIdu(int $idu): static
-    {
-        $this->idu = $idu;
-
-        return $this;
     }
 
     public function getCommentText(): ?string
@@ -100,5 +82,27 @@ class Commentaire
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
 
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIdArticle(): ?int
+    {
+        return $this->idArticle;
+    }
+
+    public function setIdArticle(int $idArticle): static
+    {
+        $this->idArticle = $idArticle;
+
+        return $this;
+    }
 }

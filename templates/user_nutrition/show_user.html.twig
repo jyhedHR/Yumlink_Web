@@ -1,0 +1,54 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}User Nutrition Details{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Age</th>
+                <td>{{ user_nutrition.age }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ user_nutrition.weight }}</td>
+            </tr>
+            <tr>
+                <th>Height</th>
+                <td>{{ user_nutrition.height }}</td>
+            </tr>
+            <tr>
+                <th>Activity Level</th>
+                <td>{{ user_nutrition.activityLevel }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ user_nutrition.gender }}</td>
+            </tr>
+            <tr>
+                <th>Calorie</th>
+                <td>{{ user_nutrition.calorie }}</td>
+            </tr>
+            <tr>
+                <th>Protein</th>
+                <td>{{ user_nutrition.protein }}</td>
+            </tr>
+            <tr>
+                <th>Carbs</th>
+                <td>{{ user_nutrition.carbs }}</td>
+            </tr>
+            <tr>
+                <th>Fat</th>
+                <td>{{ user_nutrition.fat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+   
+
+    {# //{{ include('user_nutrition/_delete_form.html.twig') }} #}
+{% endblock %}

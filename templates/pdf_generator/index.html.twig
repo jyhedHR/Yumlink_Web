@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Resume</title>
+</head>
+{% set subtotal = 0 %}
+										{% for panier in paniers %}
+											{% if panier.idClient == app.user.getIdu() %}
+                                            {% set subtotal = subtotal + (panier.prixtotal * panier.quantite) %}
+                                            {% endif %}
+										{% endfor %}
+<body>
+    <div style="margin: 0 auto;display: block;width: 500px;">
+        <table width="100%" border="1">
+            <tr>
+                <td colspan="2">
+                 
+                </td>
+            </tr>
+            <tr>
+                <td>prix produit total :</td>
+                <td>{{ subtotal ~ "DT" }}</td>
+            </tr>
+            <tr>
+                <td>Shipping:</td>
+                <td>7DT</td>
+            </tr>
+            <tr>
+                <td>Coupon:</td>
+                <td>2DT</td>
+            </tr>
+            <tr>
+                <td>Total:</td>
+                <td>{{ (subtotal + 7 + 2) ~ "DT" }}</td>
+            </tr>
+        </table>
+        <ul>
+        	
+							<li>Subtotal
+								<span>{{ subtotal ~ "DT" }}</span>
+							</li>
+							<li>Shipping
+								<span>7DT</span>
+							</li>
+							<li>Coupon
+								<span>2DT</span>
+							</li>
+							<li>Total
+								<span>
+									<b>{{ (subtotal + 7 + 2) ~ "DT" }}</b>
+								</span>
+							</li>
+						</ul>
+    </div>
+    
+</body>
+</html>
+
+
+<script>
+
+function downloadAndRedirect(pdfUrl, redirectUrl) {
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'FACTURE.pdf';
+    
+    // Append the link to the body and trigger a click to download the PDF
+    document.body.appendChild(link);
+    link.click();
+    
+    // Remove the link from the DOM
+    document.body.removeChild(link);
+    
+    // Redirect the user after a short delay
+   
+        window.location.href = {{ path("app_panier_index") }}';
+    // Adjust delay as needed
+}
+
+// Example usage
+document.getElementById('deleteAllPanierButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // URL of the PDF generator endpoint
+    const pdfUrl = '/pdf/generator';
+    
+    // URL of the panier index page
+    const redirectUrl = '{{ path("app_panier_index") }}';
+    
+    // Call the function to download the PDF and redirect
+    downloadAndRedirect(pdfUrl, redirectUrl);
+});
+</script>

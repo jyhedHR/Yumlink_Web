@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+
+<section class="inner-banner inner-bg6">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3> Your ChatBot</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                    </li>
+                    <li>Chat</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        /* Add any custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #app {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            max-width: 300px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        .chat-header {
+            padding: 10px;
+            background-color: #3F51B5;
+            color: #fff;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .chat-body {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .message {
+            background-color: #f0f0f0;
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .message-bot {
+            background-color: #3F51B5;
+            color: #fff;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3F51B5;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="chat-header">
+            Nutrition Chat Bot
+        </div>
+        <div class="chat-body">
+            <p v-if="action === 'hello'" class="message message-bot">
+                Hello! I'm your nutritional chat bot. I'm here to help you lose or gain weight. Feel free to ask me how.
+            </p>
+            <p v-if="action === 'lose_weight'" class="message message-bot">
+                To lose weight, you should focus on eating nutrient-dense foods that are low in calories and high in fiber. Here is a sample meal plan for a day:<br>
+                - Breakfast: oatmeal with berries and almonds<br>
+                - Snack: carrot sticks with hummus<br>
+                - Lunch: grilled chicken salad with mixed greens, cherry tomatoes, cucumber, and avocado<br>
+                - Snack: apple slices with peanut butter<br>
+                - Dinner: baked salmon with quinoa and steamed broccoli<br>
+                Remember to also stay hydrated and exercise regularly to help boost your weight loss efforts.
+            </p>
+            <p v-if="action === 'gain_weight'" class="message message-bot">
+                To gain weight, you should focus on eating nutrient-dense foods that are high in calories and protein. Here is a sample meal plan for a day:<br>
+                - Breakfast: whole grain toast with avocado and scrambled eggs<br>
+                - Snack: Greek yogurt with granola and mixed berries<br>
+                - Lunch: turkey and cheese sandwich on whole grain bread with a side of fruit salad<br>
+                - Snack: trail mix with nuts, seeds, and dried fruit<br>
+                - Dinner: grilled steak with sweet potato and steamed vegetables<br>
+                Remember to also engage in strength training exercises to help build muscle mass.
+            </p>
+        </div>
+        <input type="text" name="query" v-model="query" placeholder="Type your message...">
+        <button @click="setAction('lose_weight')">What should I eat to lose weight?</button>
+        <button @click="setAction('gain_weight')">What should I eat to gain weight?</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                query: '',
+                action: 'hello' // Initial action
+            },
+            methods: {
+                setAction(newAction) {
+                    this.action = newAction; // Update the action
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

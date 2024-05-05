@@ -1,0 +1,10 @@
+<h1>Hi!</h1>
+<p>To reset your password, please visit the following link</p>
+
+<a href="http://127.0.0.1:8000/reset-password/reset/{{ resetToken.token }}">Reset Password</a>
+
+
+<p>This link will expire in
+    {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>Cheers!</p>

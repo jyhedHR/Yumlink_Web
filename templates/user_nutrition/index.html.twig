@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
+<<<<<<< HEAD
 {% block title %}UserNutrition index{% endblock %}
 
 {% block body %}
+=======
+{% block title %}Votre espace du nutrition {% endblock %}
+{% block body %}
+    <section class="inner-banner inner-bg3">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3> your Information</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </section>
+>>>>>>> gestion_nutrition
     <style>
         /* Add your CSS styles here */
         .table {
@@ -10,13 +28,22 @@
         }
 
         th, td {
+<<<<<<< HEAD
             padding: 8px;
             text-align: left;
+=======
+            padding: 13px;
+            text-align: middle;
+>>>>>>> gestion_nutrition
             border-bottom: 1px solid #ddd;
         }
 
         th {
+<<<<<<< HEAD
             background-color: #f2f2f2;
+=======
+            background-color: #555353;
+>>>>>>> gestion_nutrition
             color: #333;
         }
 
@@ -50,7 +77,10 @@
         }
     </style>
 
+<<<<<<< HEAD
     <h1>UserNutrition index</h1>
+=======
+>>>>>>> gestion_nutrition
 
     <table class="table">
         <thead>
@@ -82,6 +112,15 @@
                 <td>
                     <a href="{{ path('app_user_nutrition_show', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Show</a>
                     <a href="{{ path('app_user_nutrition_edit', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Edit</a>
+<<<<<<< HEAD
+=======
+                    <a href="{{ path('app_generate_pdf', {'userId': user_nutrition.user.getIdu()}) }}" class="btn btn-secondary">Generate your bilan</a>
+                      <a href="{{ path('meal_plan') }}?calorie={{ user_nutrition.calorie }}" class="btn btn-secondary">Meal Plan</a>
+                      <a href="{{ path('chat') }}" class="btn btn-secondary">Chat</a>
+
+
+
+>>>>>>> gestion_nutrition
                 </td>
             </tr>
         {% else %}
@@ -92,5 +131,11 @@
         </tbody>
     </table>
 
+<<<<<<< HEAD
     <a href="{{ path('app_user_nutrition_new') }}" class="btn-secondary btn">Create new</a>
+=======
+    {# <a href="{{ path('app_user_nutrition_new') }}" class="btn-secondary btn">Create new</a>#}
+        <a href="{{ path('recommendations') }}" class="btn-secondary btn">View Recommendations</a> 
+
+>>>>>>> gestion_nutrition
 {% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}User Role Statistics{% endblock %}
+
+{% block body %}
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>liste des utilisateurs</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Utilisateurs
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="header-left">
+                        <div class="header-search">
+                            <form id="searchForm">
+                                <div class="form-group mb-0">
+                                    <i class="dw dw-search2 search-icon"></i>
+                                    <input type="text" class="form-control search-input" id="searchInput" placeholder="Search Here"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="piechart" style="width: 100%; height: 500px;"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Role');
+        data.addColumn('number', 'Percentage');
+        data.addRows([
+            {% for role, percentage in rolePercentages %}
+                ['{{ role }}', {{ percentage }}],
+            {% endfor %}
+        ]);
+
+        var options = {
+            title: 'User Roles Distribution',
+            is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
+</script>
+{% endblock %}

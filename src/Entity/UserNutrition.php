@@ -2,6 +2,11 @@
 
 namespace App\Entity;
 use App\Repository\UserNutritionRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
+//add log 
+
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,22 +21,31 @@ class UserNutrition
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="age", type="integer", nullable=false)
+    *@ORM\Column(name="age", type="integer", nullable=false)
+     * @Assert\NotBlank(message="L'âge ne peut pas être vide.")
+     * @Assert\Type(type="integer", message="L'âge doit être un nombre entier.")
+     * @Assert\Range(min=18, max=99, minMessage="L'âge minimum requis est {{ 18 }} ans.", maxMessage="L'âge maximum autorisé est {{ 99 }} ans.") 
      */
+     
     private $age;
 
     /**
      * @var float
      *
      * @ORM\Column(name="weight", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(message="Le poids ne peut pas être vide.")
+     * @Assert\Type(type="float", message="Le poids doit être un nombre décimal.")
+     * @Assert\Range(min=45, max=200, minMessage="Le poids minimum autorisé est {{ 45 }} kg.", maxMessage="Le poids maximum autorisé est {{ 200 }} kg.")
      */
     private $weight;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="height", type="float", precision=10, scale=0, nullable=false)
+      *@ORM\Column(name="height", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(message="La taille ne peut pas être vide.")
+     * @Assert\Type(type="float", message="La taille doit être un nombre décimal.")
+     * @Assert\Range(min=110, max=230, minMessage="La taille minimum autorisée est  110  cm.", maxMessage="La taille maximum autorisée est {{ 230 }} cm.")
      */
     private $height;
 
@@ -248,4 +262,10 @@ public function __toString(): string
             'fat' => $fatCalories / 9 // Convert fat calories to grams
         ];
     }
+<<<<<<< HEAD
+=======
+
+   
+ 
+>>>>>>> gestion_nutrition
 }

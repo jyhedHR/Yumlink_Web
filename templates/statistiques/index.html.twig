@@ -1,0 +1,96 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}New Reprandre{% endblock %}
+
+{% block body %}
+<html>
+<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-12 col-sm-12">
+							<div class="title">
+								<h4>Statistiques des commandes</h4>
+							</div>
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item">
+										<a href="index.html">Home</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page">
+										Statistiques
+									</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+					<div class="row">
+						<div class="header-left">
+							<div class="header-search">
+								<form action="{{ path('app_oeuvre_index_ss') }}" method="get">
+									<div class="form-group mb-0">
+										<i class="dw dw-search2 search-icon"></i>
+										<input type="text" class="form-control search-input"  name="q" value="{{ searchTerm ?? '' }}" placeholder="Search Here"/>
+										<input type="submit" style="display: none;">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+<head>
+    <title>Statistiques</title>
+    <!-- Inclure Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    
+    <p>Total des commandes: {{ stats.total_commandes }}</p>
+    <p>Montant total des commandes: {{ stats.montant_total * 10 }} DT</p>
+
+    <!-- Ajouter un canevas pour le graphique -->
+    <canvas id="commandeChart" width="400" height="200"></canvas>
+
+    <!-- Script JavaScript pour initialiser le graphique -->
+    <script>
+        // Récupérer le contexte du canevas
+        var ctx = document.getElementById('commandeChart').getContext('2d');
+
+        // Initialiser le graphique avec Chart.js
+        var chart = new Chart(ctx, {
+            type: 'bar', // Choisissez le type de graphique (bar, line, pie, etc.)
+            data: {
+                labels: ['Total des commandes', 'Montant total'],
+                datasets: [{
+                    label: 'Statistiques',
+                    data: [{{ stats.total_commandes  }}, {{ stats.montant_total * 10 }}],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+	</div>
+		</div>
+	</div>
+</html>
+
+
+{% endblock %}

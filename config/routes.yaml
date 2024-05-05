@@ -1,3 +1,33 @@
+search_product:
+    path: /search/product
+    controller: 'App\Controller\ProductController::search'
+    methods: ['GET']
+
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+user_nutrition_new:
+    path: '/user_nutrition/new'
+    controller: App\Controller\UserNutritionController::new
+
+user_nutrition_edit:
+    path: /user/nutrition/edit/{id}
+    controller: App\Controller\UserNutritionController::edit
+
+user_nutrition_index:
+    path: /user/nutrition
+    controller: App\Controller\UserNutritionController::index    
+
+recipe_analyzer:
+    path: /get-regime
+    controller: App\Controller\RecipeAnalyzerController::index    
+
+
+# ai bot 
+botman:
+    path: /botman
+    controller: App\Controller\BotManController::index
+
+botman_handle:
+    path: /botman/chat
+    controller: App\Controller\BotManController::handle

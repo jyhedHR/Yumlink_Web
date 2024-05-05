@@ -1,0 +1,19 @@
+<div class="contact-form">
+	<h4>Leave A Reply</h4>
+	{{ form_start(form, {'attr': {'id': 'new_comment_form', 'autocomplete': 'off', 'novalidate': 'novalidate'}}) }}
+	<div class="row">
+		<div class="col-lg-12 col-md-12">
+			<div class="form-group">
+				<label>Comment*</label>
+				{{ form_widget(form.commentText, {'attr': {'class': 'form-control', 'placeholder': 'Comment', 'id': 'commentText'}}) }}
+				{% if form_errors(form.commentText) is not empty %}
+					<div class="alert alert-danger" role="alert">
+						{{ form_errors(form.commentText) }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<button class="btn">{{ button_label|default('Save') }}</button>
+		{{ form_end(form) }}
+	</div>
+</div>

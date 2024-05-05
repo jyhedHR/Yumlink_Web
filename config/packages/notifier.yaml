@@ -1,12 +1,12 @@
 framework:
     notifier:
-        chatter_transports:
         texter_transports:
+            sendgrid: '%env(MAILER_DSN)%'
+            win_toast: 'App\Notifier\Notification'
         channel_policy:
-            # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
-            urgent: ['email']
-            high: ['email']
-            medium: ['email']
-            low: ['email']
-        admin_recipients:
-            - { email: admin@example.com }
+            # Specify the priority levels and the corresponding channels for each level
+            urgent: ['win_toast']
+            high: ['win_toast']
+            medium: ['win_toast']
+            low: ['win_toast']
+

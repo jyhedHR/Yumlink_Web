@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\RecettesRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Recettes
  *
- * @ORM\Table(name="recettes", indexes={@ORM\Index(name="fk_recette_userr", columns={"idu"})})
+ * @ORM\Table(name="recettes", indexes={@ORM\Index(name="fk_recette_users", columns={"iduser"}), @ORM\Index(name="fk_recettes_user", columns={"idu"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\RecettesRepository")
  */
 class Recettes
 {
@@ -26,35 +24,14 @@ class Recettes
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=20, nullable=false)
      */
     private $nom;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="chef", type="string", length=50, nullable=true)
-     */
-    private $chef;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="ingredients", type="json", nullable=false)
-     */
-    private $ingredients;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="Categorie", type="string", length=50, nullable=true)
-     */
-    private $categorie;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=false)
+     * @ORM\Column(name="description", type="string", length=100, nullable=false)
      */
     private $description;
 
@@ -80,10 +57,25 @@ class Recettes
     private $protein;
 
     /**
+     * @var \User
+     *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iduser", referencedColumnName="idU")
+     * })
      */
-    private ?User $user;
+    private $iduser;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idu", referencedColumnName="idU")
+     * })
+     */
+    private $idu;
+
     public function getIdR(): ?int
     {
         return $this->idR;
@@ -97,42 +89,6 @@ class Recettes
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getChef(): ?string
-    {
-        return $this->chef;
-    }
-
-    public function setChef(?string $chef): static
-    {
-        $this->chef = $chef;
-
-        return $this;
-    }
-
-    public function getIngredients(): array
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients): static
-    {
-        $this->ingredients = $ingredients;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?string
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?string $categorie): static
-    {
-        $this->categorie = $categorie;
 
         return $this;
     }
@@ -185,14 +141,20 @@ class Recettes
         return $this;
     }
 
-    public function getUser(): ?User
+    
+
+    public function setIduser(?User $iduser): static
     {
-        return $this->user;
+        $this->iduser = $iduser;
+
+        return $this;
     }
 
-    public function setUser(?User $user): static
+ 
+
+    public function setIdu(?User $idu): static
     {
-        $this->user =$user;
+        $this->idu = $idu;
 
         return $this;
     }

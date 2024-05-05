@@ -1,0 +1,51 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Admin Graph{% endblock %}
+
+{% block body %}
+ <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+   
+
+    <table class="table">
+        <thead>
+            <tr>
+                 <th>Id</th>
+                <th>Age</th>
+                <th>Weight</th>
+                <th>Height</th>
+                <th>ActivityLevel</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_nutrition in user_nutritions %}
+            <tr>
+                 <td>{{ user_nutrition.user.idu}}</td>
+                <td>{{ user_nutrition.age }}</td>
+                <td>{{ user_nutrition.weight }}</td>
+                <td>{{ user_nutrition.height }}</td>
+                <td>{{ user_nutrition.activityLevel }}</td>
+                <td>{{ user_nutrition.gender }}</td>
+                
+                <td>
+                    <a href="{{ path('admin_user_nutrition_show', {'user': user_nutrition.user.getIdu()}) }}" class="btn-secondary btn">Show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">No records found</td
+ </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div> 
+</div>
+
+
+
+{% endblock %}

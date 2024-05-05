@@ -2,6 +2,7 @@
 
 {% block title %}Edit Your Information{% endblock %}
 
+<<<<<<< HEAD
 {% block stylesheets %}
     <style>
         /* Container styling */
@@ -94,6 +95,33 @@
             <a href="{{ path('app_user_nutrition_index') }}" class="button back-to-list">Back to list</a>
 
             {{ include('user_nutrition/_delete_form.html.twig', {'button_class': 'button delete-button'}) }}
+=======
+{% block body %}
+    <section class="inner-banner inner-bg6">
+        <div class="container">
+            <div class="inner-title text-center">
+                <h3>Edit Your Information</h3>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_user_nutrition_index') }}">Dashboard</a>
+                    </li>
+                    <li>Edit</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div>
+        <div>
+            <div >
+                <div class="form-card">
+
+                    {{ include('user_nutrition/_form.html.twig', {'button_label': 'Update', 'button_class': 'button update-button'}) }}
+
+                    {{ include('user_nutrition/_delete_form.html.twig', {'button_class': 'button delete-button'}) }}
+                </div>
+            </div>
+>>>>>>> gestion_nutrition
         </div>
     </div>
 {% endblock %}

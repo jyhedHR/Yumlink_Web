@@ -1,0 +1,91 @@
+{% extends 'adminBase.html.twig' %}
+{% block body %}
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col" class="hideable-column" data-column-name="id">#</th>
+							<th scope="col" class="hideable-column" data-column-name="title">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										Title Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item sort-option" onclick="handleHrefClick(event, 'asc')" data-sort-type="asc">Sort Alphabetically ASC</a>
+										</li>
+										<li>
+											<a href="#" class="dropdown-item sort-option" onclick="handleHrefClick(event, 'desc')" data-sort-type="desc">Sort Alphabetically DESC</a>
+										</li>
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'title')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col" class="hideable-column" data-column-name="description">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										description Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'description')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col" class="hideable-column" data-column-name="date">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										date Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'date')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col" class="hideable-column" data-column-name="image">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+										image Article
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+										<li>
+											<a href="#" class="dropdown-item" onclick="handleHide(event, 'image')">Hide Column</a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for article in articles %}
+							<tr>
+								<th scope="row">{{ article.idArticle }}</th>
+								<td class="hideable-column" data-column-name="title">{{ article.titleArticle }}</td>
+								<td class="hideable-column" data-column-name="description">{{ article.descriptionArticle | slice(0, 15) ~ '...' }}</td>
+								<td class="hideable-column" data-column-name="date">{{ article.datePublished ? article.datePublished | date('Y-m-d H:i:s') : '' }}</td>
+								<td class="hideable-column" data-column-name="image">{{ article.imgArticle | slice(0, 15) ~ '...' }}</td>
+								<td>
+									<div class="btn-group-admin" role="group">
+										<button type="button" class="btn btn-info">Update</button>
+										<form id="deleteForm{{ article.idArticle }}" method="post" action="{{ path('article_delete_admin', {'idArticle': article.idArticle}) }}">
+											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.idArticle) }}">
+											<button type="button" onclick="confirmDelete('{{ article.idArticle }}')" class="btn btn-danger">Delete</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

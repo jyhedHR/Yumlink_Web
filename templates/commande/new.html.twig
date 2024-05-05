@@ -1,0 +1,277 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% set subtotal = app.request.query.get('subtotal') %}
+								{% set shipping = app.request.query.get('shipping') %}
+								{% set coupon = app.request.query.get('coupon') %}
+
+	<section class="checkout-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="checkout-user">
+						<i class="fas fa-sign-out-alt"></i>
+						<span>Returning customer?
+							<a href="login.html">Click here to Log In</a>
+						</span>
+					</div>
+					<form>
+						<div id="paypal-form" style="display: none;" class="billing-details">
+							<h3 class="title">Billing details</h3>
+							<div class="row">
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>First Name
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Last Name
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12">
+									<div class="form-group">
+										<label>Company Name</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12">
+									<div class="form-group">
+										<label>Country</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-6">
+									<div class="form-group">
+										<label>Address
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-6">
+									<div class="form-group">
+										<label>Town / City
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>State / County
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Postcode / Zip
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Email Address
+											<span class="required">*</span>
+										</label>
+										<input type="email" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<div class="form-group">
+										<label>Phone
+											<span class="required">*</span>
+										</label>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="create-an-account">
+										<label class="form-check-label" for="create-an-account">Create an account?</label>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="ship-different-address">
+										<label class="form-check-label" for="ship-different-address">Ship to a different address?</label>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12">
+									<div class="form-group">
+										<textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes" class="form-message"></textarea>
+									</div>
+								</div>
+							</div>
+							<a href="{{ path('app_produit_index')}} " class="default-btn">
+								Place to Order
+							</a>
+						</div>
+					</form>
+
+					
+
+						<div id="Card-form" style="display: none;" class="billing-details">
+							<h3 class="title">Billing details</h3>
+
+							<div class="col-4">
+								<div class="card">
+									<div class="card-body">
+										{% for message in app.flashes('success') %}
+											<div style="color: green;
+													                                    border: 2px green solid;
+													                                    text-align: center;
+													                                    padding: 5px;margin-bottom: 10px;">
+												{{ message }}
+											</div>
+										{% endfor %}
+										{% set total = subtotal + shipping + coupon %}
+
+
+										<form id='checkout-form' method='post' action="{{ path('app_stripe_charge') }}">
+											<input type='hidden' name='stripeToken' id='stripe-token-id'>
+											 <input type="hidden" name="total_cost" id="total_cost" value="{{ total }}">
+											<label for="card-element" class="mb-5">Checkout Forms</label>
+											<br>
+											<div id="card-element" class="form-control"></div>
+											<button id='pay-btn' class="btn btn-success mt-3" type="button" style="margin-top: 20px; width: 100%;padding: 7px;" onclick="createToken()">{{ (subtotal + shipping + coupon) ~ "DT" }}
+											</button>
+											<form></div>
+										</div>
+									</div>
+									<button type="submit" class="default-btn">Submit</button>
+								</div>
+
+							
+						</div>
+						<div class="col-lg-4">
+							<div class="billing-sildbar pl-20">
+								
+								<div class="billing-totals">
+
+									<h3>Checkout Summary</h3>
+									<ul>
+										<li>Total
+											<span>{{ subtotal ~ "DT" }}</span>
+										</li>
+										<li>Shipping
+											<span>{{ shipping ~ "DT" }}</span>
+										</li>
+										<li>Coupon
+											<span>{{ coupon ~ "DT" }}</span>
+										</li>
+										<li>Total
+											<span>
+												<b>{{ (subtotal + shipping + coupon) ~ "DT" }}</b>
+											</span>
+										</li>
+										<li>Payable Total
+											<span>
+												<b>{{ (subtotal + shipping + coupon) ~ "DT" }}</b>
+											</span>
+										</li>
+									</ul>
+								</div>
+								<div class="payment-box">
+									<div class="payment-method">
+										<h3>Payment Method</h3>
+										<p>
+											<input type="radio" id="paypal" name="radio-group">
+											<label for="paypal">Cash On Delivery</label>
+											Pour garantir une livraison sans problème, assurez-vous que votre adresse est complète et précise.
+																																																								Vérifiez que vous avez inclus tous les détails nécessaires
+										</p>
+										<p>
+											<input type="radio" id="Card" name="radio-group">
+											<label for="Card">Card</label>
+										</p>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+const paypalRadio = document.getElementById('paypal');
+const paypalForm = document.getElementById('paypal-form');
+const CardRadio = document.getElementById('Card');
+const CardForm = document.getElementById('Card-form');
+
+// Listen for changes to the radio button selection
+document.querySelectorAll('input[name="radio-group"]').forEach(function (radio) {
+radio.addEventListener('change', function () {
+if (paypalRadio.checked) {
+paypalForm.style.display = 'block';
+CardForm.style.display = 'none';
+} else if (CardRadio.checked) {
+CardForm.style.display = 'block';
+paypalForm.style.display = 'none';
+} else {
+CardForm.style.display = 'none';
+paypalForm.style.display = 'none';
+
+}
+});
+});
+});
+
+$(function () {
+$('[data-toggle="popover"]').popover();
+
+$('#cvc').on('click', function () {
+if ($('.cvc-preview-container').hasClass('hide')) {
+$('.cvc-preview-container').removeClass('hide');
+} else {
+$('.cvc-preview-container').addClass('hide');
+}
+});
+
+$('.cvc-preview-container').on('click', function () {
+$(this).addClass('hide');
+});
+});
+			</script>
+			
+				<script src="https://js.stripe.com/v3/"></script>
+				<script>
+					var stripe = Stripe("{{ stripe_key }}");
+var elements = stripe.elements();
+var cardElement = elements.create('card');
+cardElement.mount('#card-element');
+
+function createToken() {
+document.getElementById("pay-btn").disabled = true;
+stripe.createToken(cardElement).then(function (result) {
+
+
+if (typeof result.error != 'undefined') {
+document.getElementById("pay-btn").disabled = false;
+alert(result.error.message);
+}
+
+// creating token success
+if (typeof result.token != 'undefined') {
+document.getElementById("stripe-token-id").value = result.token.id;
+document.getElementById('checkout-form').submit();
+}
+});
+}
+				
+
+			</script>
+
+			<a href="{{ path('app_commande_index') }}">back to list</a>
+		{% endblock %}

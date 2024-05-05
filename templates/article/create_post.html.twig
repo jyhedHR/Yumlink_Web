@@ -1,0 +1,163 @@
+{% extends 'chefbase.html.twig' %}
+
+{% block title %}Yumlink: Blog
+{% endblock %}
+
+{% block body %}
+	<div class="inner-banner inner-bg6">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Post a new article</h3>
+				<ul>
+					<li>
+						<a href="{{ path('app_article_blog')}}">Blog</a>
+					</li>
+					<li>New post</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="work-area pt-100 pb-70">
+		<div class="container">
+			<div class="section-title text-center">
+				<span>new article</span>
+				<h2>[Blog] yumlink blog</h2>
+			</div>
+		</div>
+	</div>
+	<div class="appointment-area pt-100 pb-70">
+		<div class="container">
+			<div class="appointment-form">
+				<h2>Post new article</h2>
+				{{ form_start(form, {'attr': {'id': 'new_article_form', 'autocomplete': 'off', 'novalidate': 'novalidate'}}) }}
+				<div class="row">
+					<div class="col-lg-12">
+						<label for="titleArticle">Title*</label>
+						{{ form_widget(form.titleArticle, {'attr': {'class': 'form-control', 'placeholder': 'Title', 'id': 'titleArticle'}}) }}
+						{% if form_errors(form.titleArticle) is not empty %}
+							<div class="alert alert-danger" role="alert">
+								{{ form_errors(form.titleArticle) }}
+							</div>
+						{% endif %}
+					</div>
+					<div class="col-lg-12">
+						<label for="imgArticle">Upload Image*</label>
+						{{ form_widget(form.imgArticle, {'attr': {'class': 'form-control', 'id': 'imgArticle'}}) }}
+					</div>
+					<div class="col-lg-12 col-md-6">
+						<label for="descriptionArticle">Description*</label>
+						{{ form_widget(form.descriptionArticle, {'attr': {'id': 'descriptionArticle','class': 'form-control'}}) }}
+						{% if form_errors(form.descriptionArticle) is not empty %}
+							<div class="alert alert-danger" role="alert">
+								{{ form_errors(form.descriptionArticle) }}
+							</div>
+						{% endif %}
+					</div>
+					<div class="col-lg-12">
+						{{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					<div class="col-lg-12">
+						{% set userId = app.user.getIdU() %}
+						{{ form_widget(form.user, {'attr': {'class': 'form-control'}, 'value': userId }) }}
+					</div>
+				</div>
+				<div>
+					<label for="suggested_tags">Suggested Tags :</label>
+					<div id="tagSuggestionsContainer"></div>
+				</div>
+				<div>
+					<label for="chosen_tags">Chosen Tags :</label>
+					<div id="selectedTagsContainer"></div>
+				</div>
+				{{ form_row(form.submit, {'attr': {'class': 'default-btn'}}) }}
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+	<script>
+		document.addEventListener("DOMContentLoaded", async function () {
+let suggestedTags = [];
+
+try {
+suggestedTags = await fetchSuggestedTags();
+} catch (error) {
+console.error(error);
+}
+
+const form = document.getElementById('new_article_form');
+
+const textarea = form.querySelector('#article_descriptionArticle');
+const tagsInput = form.querySelector('#article_tags');
+const selectedTagsContainer = document.getElementById('selectedTagsContainer');
+const tagSuggestionsContainer = document.getElementById('tagSuggestionsContainer');
+const selectedTagsSet = new Set();
+const suggestTags = () => {
+const text = textarea.value;
+const matches = text.match(/#\w+/g);
+tagSuggestionsContainer.innerHTML = '';
+const presentTagsSet = new Set();
+
+if (matches) {
+matches.forEach(match => {
+const tag = match.substring(1);
+presentTagsSet.add(tag.toLowerCase());
+if (! selectedTagsSet.has(tag.toLowerCase())) {
+const temporaryAdd = document.createElement('button');
+temporaryAdd.classList.add('selected-tag');
+temporaryAdd.textContent = '#' + tag.toLowerCase() + ' ';
+selectedTagsContainer.appendChild(temporaryAdd);
+selectedTagsSet.add(tag.toLowerCase());
+}
+const filteredTags = suggestedTags.filter(suggestedTag => {
+const suggestedTagLowerCase = suggestedTag.toLowerCase();
+return ! selectedTagsSet.has(suggestedTagLowerCase) && suggestedTagLowerCase.includes(tag.toLowerCase());
+});
+
+filteredTags.forEach(filteredTag => {
+const tagElement = document.createElement('button');
+tagElement.classList.add('suggested-tag');
+tagElement.textContent = '#' + filteredTag + ' ';
+tagSuggestionsContainer.appendChild(tagElement);
+tagElement.addEventListener('click', () => {
+textarea.value = text.replace(/#\w*$/, '#' + filteredTag + ' ');
+textarea.dispatchEvent(new Event('input'));
+});
+});
+});
+}
+selectedTagsContainer.childNodes.forEach(node => {
+const tagText = node.textContent.trim().toLowerCase().replace('#', '');
+if (! presentTagsSet.has(tagText)) {
+selectedTagsContainer.removeChild(node);
+selectedTagsSet.delete(tagText);
+}
+});
+const tagsArray = Array.from(selectedTagsSet);
+tagsInput.value = JSON.stringify({tags: tagsArray});
+};
+if (textarea) {
+textarea.addEventListener('input', suggestTags);
+} else {
+console.error("Textarea element not found");
+console.log('Textarea element:', textarea);
+}
+});
+async function fetchSuggestedTags() {
+try {
+console.log("running fetch tags");
+const response = await fetch('{{ path('fetch_tag_suggestions') }}');
+if (! response.ok) {
+throw new Error('Failed to fetch suggested tags');
+}
+const suggestedTags = await response.json();
+return suggestedTags;
+} catch (error) {
+console.log("error fetch");
+console.error(error);
+return [];
+}
+};
+	</script>
+{% endblock %}

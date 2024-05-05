@@ -5,6 +5,7 @@ use App\Repository\ArticleRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -28,6 +29,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="title_article", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Title is required")
      */
     private $titleArticle;
 
@@ -42,6 +44,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="description_article", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Description is required")
      */
     private $descriptionArticle;
 
@@ -81,7 +84,7 @@ class Article
         return $this->titleArticle;
     }
 
-    public function setTitleArticle(string $titleArticle): static
+    public function setTitleArticle(?string $titleArticle): self
     {
         $this->titleArticle = $titleArticle;
 
@@ -93,7 +96,7 @@ class Article
         return $this->imgArticle;
     }
 
-    public function setImgArticle(string $imgArticle): static
+    public function setImgArticle(string $imgArticle): self
     {
         $this->imgArticle = $imgArticle;
 
@@ -105,7 +108,7 @@ class Article
         return $this->descriptionArticle;
     }
 
-    public function setDescriptionArticle(string $descriptionArticle): static
+    public function setDescriptionArticle(?string $descriptionArticle): self
     {
         $this->descriptionArticle = $descriptionArticle;
 
@@ -117,7 +120,7 @@ class Article
         return $this->nbLikesArticle;
     }
 
-    public function setNbLikesArticle(int $nbLikesArticle): static
+    public function setNbLikesArticle(int $nbLikesArticle): self
     {
         $this->nbLikesArticle = $nbLikesArticle;
 
@@ -129,7 +132,7 @@ class Article
         return $this->datePublished;
     }
 
-    public function setDatePublished(\DateTimeInterface $datePublished): static
+    public function setDatePublished(\DateTimeInterface $datePublished): self
     {
         $this->datePublished = $datePublished;
 
@@ -141,7 +144,7 @@ class Article
         return $this->tags;
     }
 
-    public function setTags(array $tags): static
+    public function setTags(array $tags): self
     {
         $this->tags = $tags;
 
@@ -159,6 +162,17 @@ class Article
 
         return $this;
     }
+    
+    public function incrementLikes(): void
+    {
+        $this->nbLikesArticle++;
+    }
 
+    public function decrementLikes(): void
+    {
+        if ($this->nbLikesArticle > 0) {
+            $this->nbLikesArticle--;
+        }
+    }
 
 }

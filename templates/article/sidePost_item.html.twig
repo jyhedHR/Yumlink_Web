@@ -1,0 +1,13 @@
+<article class="item">
+	<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}" class="thumb">
+		<span class="full-image cover bg1" role="img"></span>
+	</a>
+	<div class="info">
+		<h4 class="title-text">
+			<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">
+				{{article.titleArticle}}
+			</a>
+		</h4>
+		<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}" class="read-btn" target="_blank">Read More</a>
+	</div>
+</article>
