@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome Chef !
+			{% block title %}Welcome!
 			{% endblock %}
 		</title>
 		<link
@@ -13,7 +13,7 @@
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 		{% block css %}
-			<link rel="stylesheet" href={{asset("frontend/assets/css/blogStylesheet.min.css")}}>
+
 			<link rel="stylesheet" href={{asset("assets/css/bootstrap.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/css/animate.min.css")}}>
 			<link rel="stylesheet" href={{asset("assets/fonts/flaticon.css")}}>
@@ -51,7 +51,7 @@
 		<div class="row align-items-center">
 			<div class="col-lg-3 col-md-4">
 				<div class="header-left">
-					<p>Welcome {{ app.user.username }}</p>
+					<p>Welcome To Arrola Health!</p>
 				</div>
 			</div>
 			<div class="col-lg-9 col-md-8">
@@ -132,7 +132,7 @@
 	<div class="desktop-nav nav-area">
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md navbar-light ">
-				<a class="navbar-brand" href="index.html">
+				<a class="navbar-brand" href="indexChef.html">
 					<img src={{asset("assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
 
 
@@ -152,13 +152,13 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="404.html" class="nav-link">
-										Mes Recettes
+	                              <a href="{{ path('app_mesRecettes_show') }}" class="nav-link">
+											Mes Recettes
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="coming-soon.html" class="nav-link">
-										Ajouter Recette
+									<a href="{{ path('app_recettes_new') }}" class="nav-link">
+										 ajouter une Recette 
 									</a>
 								</li>
 							</ul>
@@ -193,13 +193,13 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="{{ path('app_defis_index') }}" class="nav-link">
+									<a href="categories.html" class="nav-link">
 										Les defis
 									</a>
 								</li>
 
 								<li class="nav-item">
-									<a href="{{ path('app_participant_index') }}" class="nav-link">
+									<a href="categories.html" class="nav-link">
 										les participations
 									</a>
 								</li>
@@ -212,39 +212,18 @@
 								Blog
 								<i class="bx bx-chevron-down"></i>
 							</a>
-							{% if app.user.role == 'Chef' %}
-								<ul class="dropdown-menu">
-									<li class="nav-item">
-										<a href="{{ path('app_article_blog')}}" class="nav-link">
-											Toutes les Publications
-										</a>
-									</li>
-									<li class="nav-item">
-										{% set userId = app.user.getIdU() %}
-										<a href="{{ path('app_article_blog', {'id_chef': userId})}}" class="nav-link">
-											Mes Publications
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="{{ path('app_article_new')}}" class="nav-link">
-											Ajouter Publication
-										</a>
-									</li>
-								</ul>
-							{% else %}
-								<ul class="dropdown-menu">
-									<li class="nav-item">
-										<a href="{{ path('app_article_blog')}}" class="nav-link">
-											Publications récentes
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="tags.html" class="nav-link">
-											Tags
-										</a>
-									</li>
-								</ul>
-							{% endif %}
+							<ul class="dropdown-menu">
+								<li class="nav-item">
+									<a href="categories.html" class="nav-link">
+										Mes Publications
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="tags.html" class="nav-link">
+										Ajouter Publication
+									</a>
+								</li>
+							</ul>
 						</li>
 
 						<li class="nav-item">
@@ -254,7 +233,11 @@
 							</a>
 							
 						</li>
-						
+						<li class="nav-item">
+							<a href="contact.html" class="nav-link">
+								Contact Us
+							</a>
+						</li>
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">
@@ -265,7 +248,7 @@
 							</div>
 						</div>
 						<div class="optional-item">
-							<a href="{{ path('app_logout') }}" class="default-btn two">Log out </a>
+							<a href="appointment.html" class="default-btn two">Book An Appointment</a>
 						</div>
 					</div>
 					<div class="mobile-nav">
