@@ -8,7 +8,6 @@ parameters:
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
-    
     App\Controller\BotManController:
         autowire: true
         autoconfigure: true
@@ -19,14 +18,12 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
              Twilio\Rest\Client: '@twilio.client'
 
-    App\Service\SmsSender:
-        arguments:
-            $sid: '%env(TWILIO_ACCOUNT_SID)%'
-            $token: '%env(TWILIO_AUTH_TOKEN)%'
-            $from: '%env(TWILIO_PHONE_NUMBER)%'
-
-            
-
+     # App\Service\SmsSender:
+      #   arguments:
+       #      $sid: 'ACea997cd4e060d8ea6714cacac022e63b'
+     #        $token: 'a98be76928517aa9719d1f3b40a322ab'
+        #     $from: '+12184322342'
+    
     # Autowire classes in the App\ namespace as services
     App\:
         resource: '../src/'  # Load classes from the src/ directory
@@ -34,15 +31,11 @@ services:
             - '../src/DependencyInjection/'  # Exclude dependency injection configuration
             - '../src/Entity/'              # Exclude Doctrine entities
             - '../src/Kernel.php'           # Exclude Kernel.php
-        public: true
-        
+        public: true  
 
     App\Twig\AppExtension:
         tags:
             - { name: twig.extension }   
-            
-    
-             
 
     App\Service\ChatGPTService:
           arguments:

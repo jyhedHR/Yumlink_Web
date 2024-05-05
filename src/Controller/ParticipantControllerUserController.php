@@ -79,39 +79,21 @@ class ParticipantControllerUserController extends AbstractController
     {
         $user = $session->getUser();
         $userId = $user->getIdU(); 
-      
-    
-        
         if ($participant->getUser()->getIdU() === $userId) {
-        
             $this->addFlash('error','Vous ne pouvez pas voter pour vous-même');
-            
-            
         }
-    
-      
         if ($voteRepository->hasUserVotedForParticipant($userId, $participant->getIdpart())) {
             $this->addFlash('error','Vous avez déjà voté pour cette participation.');
-          
-           
+        } else {
+            $voteValue = $request->request->get('vote'); 
+            $vote = new Vote();
+            $vote->setParticipant($participant);
+            $vote->setUser($user);
+            $participant->setVote(++$voteValue); 
+            $entityManager->persist($vote);
+            $entityManager->persist($participant);
+            $entityManager->flush();
         }
-    
-        
-        $voteValue = $request->request->get('vote'); 
-        $vote = new Vote();
-        
-       
-        $vote->setParticipant($participant);
-        $vote->setUser($user);
-        
-        $participant->setVote(++$voteValue); 
-        
-        
-        $entityManager->persist($vote);
-        $entityManager->persist($participant);
-        $entityManager->flush();
-    
-       
         return $this->redirectToRoute('app_participant_controller_user_index');
     }
     

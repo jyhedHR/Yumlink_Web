@@ -23,7 +23,7 @@ class Participant1Type extends AbstractType
                 // Use JavaScript to display the selected file name in a separate label
                 'onchange' => 'document.getElementById("image-file-name").textContent = this.files[0].name;',
             ],])
-            ->add('vote')
+           
             ->add('user', HiddenType::class, [
                 'mapped' => false,
             ])

@@ -67,7 +67,7 @@ class DefisControllerUserController extends AbstractController
                 }
     
                 // Set the image property in the entity to the relative path of the uploaded file
-                $participant->setPhotoP('assets/images/'.$newFilename);
+                $participant->setPhotoP('frontend/assets/images/'.$newFilename);
             }
     
             // Set the relationship between Participant and Defis
@@ -76,7 +76,7 @@ class DefisControllerUserController extends AbstractController
             $user = $entityManager->getReference(User::class, $id_user);
             $participant->setUser($user);
 
-    
+            $participant->setVote(0);
             // Save the Participant entity
             $entityManager->persist($participant);
             $entityManager->flush();
