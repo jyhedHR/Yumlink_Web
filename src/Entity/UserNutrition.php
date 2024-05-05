@@ -262,10 +262,4 @@ public function __toString(): string
             'fat' => $fatCalories / 9 // Convert fat calories to grams
         ];
     }
-<<<<<<< HEAD
-=======
-
-   
- 
->>>>>>> gestion_nutrition
 }

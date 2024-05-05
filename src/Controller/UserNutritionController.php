@@ -2,46 +2,18 @@
 
 namespace App\Controller;
 
-<<<<<<< HEAD
-use App\Entity\UserNutrition;
-use App\Form\UserNutritionType;
-use App\Repository\UserNutritionRepository;
-=======
 use App\Entity\Recettes;
 use App\Entity\User;
 use App\Entity\UserNutrition;
 use App\Form\UserNutritionType;
 use App\Repository\UserNutritionRepository;
 use App\Repository\RecettesRepository; 
->>>>>>> gestion_nutrition
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-<<<<<<< HEAD
-#[Route('/nutrition')]
-class UserNutritionController extends AbstractController
-{
-    #[Route('/', name: 'app_user_nutrition_index', methods: ['GET'])]
-    public function index(UserNutritionRepository $userNutritionRepository): Response
-    {
-        return $this->render('user_nutrition/index.html.twig', [
-            'user_nutritions' => $userNutritionRepository->findAll(),
-        ]);
-    }
-
-
-
-
-    #[Route('/new', name: 'app_user_nutrition_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager): Response
-{
-    $userNutrition = new UserNutrition();
-    $form = $this->createForm(UserNutritionType::class, $userNutrition);
-    $form->handleRequest($request);
-=======
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Security;
@@ -91,7 +63,6 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
  
          $form = $this->createForm(UserNutritionType::class, $userNutrition);
          $form->handleRequest($request);
->>>>>>> gestion_nutrition
 
     if ($form->isSubmitted() && $form->isValid()) {
         // Get user input
@@ -117,15 +88,9 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
         $proteinCalories = $calorie * $proteinRatio;
         $carbCalories = $calorie * $carbRatio;
         $fatCalories = $calorie * $fatRatio;
-<<<<<<< HEAD
-        $protein = $proteinCalories / 4;
-        $carbs = $carbCalories / 4;
-        $fat = $fatCalories / 9;
-=======
         $protein = $proteinCalories / 4 - 100;
         $carbs = $carbCalories / 4 -100;
         $fat = $fatCalories / 9 - 30 ;
->>>>>>> gestion_nutrition
 
         // Update entity with calculated values
         $userNutrition->setCalorie($calorie);
@@ -147,10 +112,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
         'form' => $form,
     ]);
 }
-<<<<<<< HEAD
-=======
 }
->>>>>>> gestion_nutrition
 
 
 
@@ -163,10 +125,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-<<<<<<< HEAD
-=======
             
->>>>>>> gestion_nutrition
             // Get user input
             $age = $form->get('age')->getData();
             $weight = $form->get('weight')->getData();
@@ -182,11 +141,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
                 'Active' => 1.9
             ];
             $activityFactor = $activityFactors[$activityLevel];
-<<<<<<< HEAD
-            $calorie = $bmr * $activityFactor;
-=======
             $calorie = $bmr * $activityFactor - 400;
->>>>>>> gestion_nutrition
     
             // Distribute macronutrients
             $proteinRatio = 0.3; // 30%
@@ -195,15 +150,9 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
             $proteinCalories = $calorie * $proteinRatio;
             $carbCalories = $calorie * $carbRatio;
             $fatCalories = $calorie * $fatRatio;
-<<<<<<< HEAD
-            $protein = $proteinCalories / 4;
-            $carbs = $carbCalories / 4;
-            $fat = $fatCalories / 9;
-=======
             $protein = $proteinCalories / 4 - 100;
             $carbs = $carbCalories / 4 - 100;
             $fat = $fatCalories / 9 - 30;
->>>>>>> gestion_nutrition
     
             // Update entity with calculated values
             $userNutrition->setCalorie($calorie);
@@ -238,30 +187,19 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
     
 
     #[Route('/{user}', name: 'app_user_nutrition_delete', methods: ['POST'])]
-<<<<<<< HEAD
-    public function delete(Request $request, UserNutrition $userNutrition, EntityManagerInterface $entityManager): Response
-=======
     public function delete(Request $request, UserNutrition $userNutrition, RecettesRepository $recettesRepository, EntityManagerInterface $entityManager): Response
->>>>>>> gestion_nutrition
     {
         if ($this->isCsrfTokenValid('delete'.$userNutrition->getUser()->getIdu(), $request->request->get('_token'))) {
             $entityManager->remove($userNutrition);
             $entityManager->flush();
-<<<<<<< HEAD
-=======
 
             // Delete recommendations associated with this user
        //$recetteRepository->deleteRecommendationsForUser($userNutrition->getUser()->getIdu());
   
->>>>>>> gestion_nutrition
         }
 
         return $this->redirectToRoute('app_user_nutrition_index', [], Response::HTTP_SEE_OTHER);
     }
-<<<<<<< HEAD
-    
-}
-=======
 
 
     #[Route('/generate-pdf/{userId}', name: 'app_generate_pdf')]
@@ -324,4 +262,3 @@ public function new(Request $request, EntityManagerInterface $entityManager, Sec
 
 
 }
->>>>>>> gestion_nutrition

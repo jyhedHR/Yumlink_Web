@@ -1,6 +1,6 @@
 parameters:
     images_directory: '%kernel.project_dir%/public/frontend/assets/images'
-
+    uploads_directory: '%kernel.project_dir%/public/frontend/assets/images'
 
   
 
@@ -9,6 +9,3 @@ twig:
 when@test:
     twig:
         strict_variables: true
-
-parameters:
-    uploads_directory: '%kernel.project_dir%/public/frontend/assets/images'
