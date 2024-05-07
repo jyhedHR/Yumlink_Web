@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends app.user.role == 'Chef' ? 'chefbase.html.twig' : 'base.html.twig' %}
 
 {% block title %}Panier index
 {% endblock %}

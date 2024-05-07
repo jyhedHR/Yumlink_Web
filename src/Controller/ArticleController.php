@@ -94,7 +94,7 @@ class ArticleController extends AbstractController
                     $this->addFlash('error', 'An error occurred while uploading the image.');
                     return $this->redirectToRoute('app_produit_new');
                 }
-                $article->setImgArticle('assets/images/' . $newFilename);
+                $article->setImgArticle('frontend/assets/images/' . $newFilename);
             }
             $tagsFormData = $form->get('tags')->getData();
 

@@ -17,7 +17,7 @@ class ChatGPTController extends AbstractController
         $this->chatGPTService = $chatGPTService;
     }
 
-    #[Route('/chat', name: 'chat', methods: ['POST', 'GET'])]
+    #[Route('/chatt', name: 'chatt', methods: ['POST', 'GET'])]
     public function chat(Request $request): Response
     {
         $responseText = null;

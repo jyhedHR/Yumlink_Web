@@ -10,8 +10,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Recettes
  *
- * @ORM\Table(name="recettes", indexes={@ORM\Index(name="fk_recette_users", columns={"iduser"}), @ORM\Index(name="fk_recettes_user", columns={"idu"})})
+ * @ORM\Table(name="recettes", indexes={@ORM\Index(name="fk_recette_userr", columns={"idu"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\RecettesRepository")
  */
 class Recettes
 {
@@ -79,12 +80,11 @@ class Recettes
      */
     private $date;
 
-       /**
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
      */
     private ?User $user;
-   
    
     private Ingredient $ingredient ; 
 
@@ -201,22 +201,6 @@ class Recettes
     public function setUser(?User $user): static
     {
         $this->user =$user;
-
-        return $this;
-    }
-
-    public function setIduser(?User $iduser): static
-    {
-        $this->iduser = $iduser;
-
-        return $this;
-    }
-
- 
-
-    public function setIdu(?User $idu): static
-    {
-        $this->idu = $idu;
 
         return $this;
     }

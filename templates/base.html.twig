@@ -65,7 +65,7 @@
 		<div class="row align-items-center">
 			<div class="col-lg-3 col-md-4">
 				<div class="header-left">
-					<p>Welcome To Yumlink!</p>
+					<p>Welcome {{app.user.nom}}</p>
 				</div>
 			</div>
 			<div class="col-lg-9 col-md-8">
@@ -139,13 +139,15 @@
 				<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item">
-							<a href="#" class="nav-link active">
+						
+							<a href="{{ path('Welcome') }}" class="nav-link active">
 								Home
 
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+						
+							<a  href="{{ path('app_recettes_index') }}" class="nav-link">
 								Recette
 								<i class="bx bx-chevron-down"></i>
 							</a>
@@ -249,7 +251,7 @@
 							{% endif %}
 						</li>
 						
-						<li class="nav-item">
+					<li class="nav-item">
                         <a href="{{ path('user_nutrition_index') }}" class="nav-link">
 							Nutritions
 							<i class="bx bx-chevron-down"></i>
@@ -261,11 +263,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                              <a href="{{ path('user_nutrition_edit', {'id': app.user.getIdu() }) }}" class="nav-link">
-  								  Modifier
-								</a>
-                                </a>
-                            </li> <li class="nav-item">
                               <a href="{{ path('recipe_analyzer') }}" class="nav-link">
   								  Analysez un plat 
 								</a>
@@ -349,22 +346,17 @@
 					</a>
 				</li>
 				<li>
-					<a href="about.html" target="_blank">
-						About Us
-					</a>
-				</li>
-				<li>
-					<a href="portfolio.html" target="_blank">
+					<a href="{{ path('app_chef') }}" target="_blank">
 						Nos Chefs
 					</a>
 				</li>
 				<li>
-					<a href="privacy-policy.html" target="_blank">
+					<a href="{{ path('app_produit_index') }}" target="_blank">
 						Shop
 					</a>
 				</li>
 				<li>
-					<a href="terms-condition.html" target="_blank">
+					<a href="{{ path('app_defis_controller_user_index') }}" target="_blank">
 						Defis
 					</a>
 				</li>

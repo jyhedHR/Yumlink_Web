@@ -104,7 +104,7 @@ class UserController extends AbstractController
     #[Route('/{idu}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        var_dump($this->getUser());
+       
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
 

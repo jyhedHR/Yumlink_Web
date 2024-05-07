@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="user_nutrition")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserNutritionRepository")
  */
 class UserNutrition
 {
@@ -91,14 +92,10 @@ class UserNutrition
     private $fat;
 
     /**
-     * @var \User
-     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id", referencedColumnName="idU")
-     * })
      */
     private ?User $user;
     
@@ -210,14 +207,14 @@ class UserNutrition
         return $this;
     }
 
-    public function getId(): ?User
+    public function getUser(): ?User
     {
-        return $this->id;
+        return $this->user;
     }
 
-    public function setId(?User $id): static
+    public function setUser(?User $user): static
     {
-        $this->id = $id;
+        $this->user =$user;
 
         return $this;
     }
@@ -265,4 +262,7 @@ public function __toString(): string
             'fat' => $fatCalories / 9 // Convert fat calories to grams
         ];
     }
+
+   
+ 
 }

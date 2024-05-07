@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\Cast\Object_;
 
 /**
  * RatingRecettes
@@ -75,7 +76,7 @@ class RatingRecettes
         return $this;
     }
 
-    public function getRecette(): ?Recettes
+    public function getRecette(): Object
     {
         return $this->recette;
     }

@@ -1,5 +1,5 @@
 
-{% extends 'Chefbase.html.twig' %}
+{% extends 'chefbase.html.twig' %}
 
 {% block title %}My Recipes{% endblock %}
 
@@ -30,11 +30,11 @@
              {% for Recipe in Recipes %}
             <div class="col-lg-4 col-md-6 recipe-item">
                 <div class="recent-recipe-item">
-                    <a href="{{ path('app_recettes_show', {'idR': Recipe.idR}) }}">
+                    <a href="{{ path('app_recettes_show_chef', {'idR': Recipe.idR}) }}">
                         <img src="{{ Recipe.imgsrc }}" alt="Images">
                     </a>
                     <div class="content">
-                        <h3><a href="{{ path('app_recettes_show', {'idR': Recipe.idR}) }}">{{ Recipe.nom }}</a></h3>
+                        <h3><a href="{{ path('app_recettes_show_chef', {'idR': Recipe.idR}) }}">{{ Recipe.nom }}</a></h3>
                         <p>{{ Recipe.description }}</p>
         
                         <ul>

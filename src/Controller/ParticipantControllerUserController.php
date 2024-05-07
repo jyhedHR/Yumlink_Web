@@ -64,13 +64,21 @@ class ParticipantControllerUserController extends AbstractController
     }
    
     #[Route('/{idpart}', name: 'app_participation_delete', methods: ['POST'])]
-    public function delete(Request $request, Participant $participant, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Participant $participant, EntityManagerInterface $entityManager, SecurityController $session): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$participant->getIdpart(), $request->request->get('_token'))) {
+        $user = $session->getUser();
+        $userId = $user->getIdU();
+    
+        // Check if the user attempting to delete is the creator of the participant
+        if ($participant->getUser()->getIdU() === $userId) {
+            $this->addFlash('error','Vous ne pouvez pas supprimer votre propre participation');
+            return $this->redirectToRoute('app_participant_controller_user_index');
+        }elseif ($this->isCsrfTokenValid('delete'.$participant->getIdpart(), $request->request->get('_token'))) {
             $entityManager->remove($participant);
             $entityManager->flush();
+            $this->addFlash('success', 'La participation a été supprimée avec succès.');
         }
-
+    
         return $this->redirectToRoute('app_participant_controller_user_index');
     }
 
@@ -81,8 +89,7 @@ class ParticipantControllerUserController extends AbstractController
         $userId = $user->getIdU(); 
         if ($participant->getUser()->getIdU() === $userId) {
             $this->addFlash('error','Vous ne pouvez pas voter pour vous-même');
-        }
-        if ($voteRepository->hasUserVotedForParticipant($userId, $participant->getIdpart())) {
+        }elseif ($voteRepository->hasUserVotedForParticipant($userId, $participant->getIdpart())) {
             $this->addFlash('error','Vous avez déjà voté pour cette participation.');
         } else {
             $voteValue = $request->request->get('vote'); 

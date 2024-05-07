@@ -80,7 +80,7 @@ class RecettesController extends AbstractController
             $entityManager->persist($recette);
             $entityManager->flush();
     
-            return $this->redirectToRoute('app_recettes_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_mesRecettes_show', [], Response::HTTP_SEE_OTHER);
         }
     
         return $this->renderForm('recettes/new.html.twig', [
@@ -88,6 +88,27 @@ class RecettesController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/{idR}', name: 'app_recettes_show_chef', methods: ['GET'])]
+    public function showChef(Recettes $recette, EntityManagerInterface $entityManager): Response
+    {
+        $recetteId = $recette->getIdR();
+        $recettesIngredientRepository = $entityManager->getRepository(RecettesIngredient::class);
+        $recettesIngredients = $recettesIngredientRepository->findBy(['recette' => $recetteId]);
+    
+        $ingredientIds = [];
+        foreach ($recettesIngredients as $recettesIngredient) {
+            $ingredientIds[] = $recettesIngredient->getIngredient()->getIdIng();
+        }
+    
+        // Retrieve the ingredients by their IDs
+        $ingredients = $entityManager->getRepository(Ingredient::class)->findBy(['idIng' => $ingredientIds]);
+    
+        return $this->render('recettes/showChef.html.twig', [
+            'recette' => $recette,
+            'ingredients' => $ingredients,
+        ]);
+    }
+    
     #[Route('/admin/new', name: 'app_recettes_new_admin', methods: ['GET', 'POST'])]
     public function newA(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -147,26 +168,7 @@ class RecettesController extends AbstractController
             'ingredients' => $ingredients,
         ]);
     }
-    #[Route('/{idR}', name: 'app_recettes_show_chef', methods: ['GET'])]
-    public function showChef(Recettes $recette, EntityManagerInterface $entityManager): Response
-    {
-        $recetteId = $recette->getIdR();
-        $recettesIngredientRepository = $entityManager->getRepository(RecettesIngredient::class);
-        $recettesIngredients = $recettesIngredientRepository->findBy(['recette' => $recetteId]);
     
-        $ingredientIds = [];
-        foreach ($recettesIngredients as $recettesIngredient) {
-            $ingredientIds[] = $recettesIngredient->getIngredient()->getIdIng();
-        }
-    
-        // Retrieve the ingredients by their IDs
-        $ingredients = $entityManager->getRepository(Ingredient::class)->findBy(['idIng' => $ingredientIds]);
-    
-        return $this->render('recettes/showChef.html.twig', [
-            'recette' => $recette,
-            'ingredients' => $ingredients,
-        ]);
-    }
     #[Route('/admin/{idR}', name: 'app_recettes_show_admin', methods: ['GET'])]
     public function showA(Recettes $recette, EntityManagerInterface $entityManager): Response
     {

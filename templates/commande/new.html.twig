@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends app.user.role == 'Chef' ? 'chefbase.html.twig' : 'base.html.twig' %}
 {% block body %}
 {% set subtotal = app.request.query.get('subtotal') %}
 								{% set shipping = app.request.query.get('shipping') %}

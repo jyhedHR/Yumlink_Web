@@ -11,32 +11,28 @@
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-
 		{% block css %}
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-
-			<link rel="stylesheet" href={{asset("backend/src/styles/blog_css.css")}}>
+			<!-- Toastr CSS -->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.css" integrity="sha256-ejA/z0dc7D+StbJL/0HAnRG/Xae3yS2gzg0OAnIURC4=" crossorigin="anonymous">
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/core.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/icon-font.min.css")}}>
 			<link rel="stylesheet" href={{asset("backend/src/plugins/datatables/css/dataTables.bootstrap4.min.css")}}>
 			<link rel="stylesheet" href={{asset("backend/https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap")}}>
 			<link rel="stylesheet" href={{asset("backend/src/plugins/datatables/css/responsive.bootstrap4.min.css")}}>
 			<link rel="stylesheet" href={{asset("backend/vendors/styles/style.css")}}>
-			
 			<link rel="stylesheet" href={{asset("backend/https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85")}}>
 			<link rel="stylesheet" href={{asset("backend/https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258")}}>
 
 		{% endblock %}
 		{% block js %}
-		
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-			<link rel="stylesheet" href="/error.css">
 			<script src={{asset("https://cdn.jsdelivr.net/npm/sweetalert2@11")}}></script>
 			<script src={{asset("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js")}}></script>
 			<script src={{asset("backend/src/scripts/blog_js.js")}}></script>
 			<script src={{asset("backend/src/scripts/popper.min.js")}}></script>
-			
+			<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.js" integrity="sha256-rPPF6R+AH/Gilj2aC00ZAuB2EKmnEjXlEWx5MkAp7bw=" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 			<script src={{asset("backend/vendors/scripts/core.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/script.min.js")}}></script>
 			<script src={{asset("backend/vendors/scripts/process.js")}}></script>
@@ -51,127 +47,69 @@
 
 			<script src="https://cdn.jsdelivr.net/npm/qrcode-generator"></script>
 			<script src="{{ asset('backend/src/scripts/qr.js') }}" defer></script>
-			<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+			
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+			<script>
+				toastr.options = {
+"closeButton": true,
+"progressBar": true,
+"timeOut": 1200,
+"positionClass": "toast-top-right"
+};{% for flash in app.flashes %}toastr["{{ flash.type }}"]("{{ flash.message }}");{% endfor %}
+			</script>
 
-<script>
-  toastr.options = {
-     "closeButton": true,
-    "progressBar": true,
-    "timeOut": 1200,
-    "positionClass": "toast-top-right"
-};
-
-    {% for flash in app.flashes %}
-        toastr["{{ flash.type }}"]("{{ flash.message }}");
-    {% endfor %}
-</script>
 		</head>
 	</html>
-</body>{% endblock %}</head><body>{% block header %}
+</body>{% endblock %}{% block header %}
 <div class="header">
-	<div class="header-left">
-		<div class="menu-icon bi bi-list"></div>
-		<div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
-		<div class="header-search">
-			<form>
-				<div class="form-group mb-0">
-					<i class="dw dw-search2 search-icon"></i>
-					<input type="text" class="form-control search-input" placeholder="Search Here"/>
-					<div class="dropdown">
-						<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-							<i class="ion-arrow-down-c"></i>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">From</label>
-								<div class="col-sm-12 col-md-10">
-									<input class="form-control form-control-sm form-control-line" type="text"/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">To</label>
-								<div class="col-sm-12 col-md-10">
-									<input class="form-control form-control-sm form-control-line" type="text"/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Subject</label>
-								<div class="col-sm-12 col-md-10">
-									<input class="form-control form-control-sm form-control-line" type="text"/>
-								</div>
-							</div>
-							<div class="text-right">
-								<button class="btn btn-primary">Search</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="user-info-dropdown">
-					<div class="dropdown">
-						<a
-							class="dropdown-toggle"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<span class="user-icon">
-								<img src="{{ app.user.image }}" alt="">
-							</span>
-							<span class="user-name">{{ app.user.username }}</span>
-						</a>
-						<div
-							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-						>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-user1"></i> Profile</a
-							>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-settings2"></i> Setting</a
-							>
-							<a class="dropdown-item" href="faq.html"
-								><i class="dw dw-help"></i> Help</a
-							>
-							<a class="dropdown-item" href="{{ path('app_logout') }}"
-								><i class="dw dw-logout"></i> Log Out</a
-							>
-						</div>
-					</div>
-				</div>
-				<div class="github-link">
-					<a href="https://github.com/dropways/deskapp" target="_blank"
-						><img src="vendors/images/github.svg" alt=""
-					/></a>
-				</div>
-			</div>
-		</div>
-		<div class="user-notification">
-			<div class="dropdown">
-				<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-					<i class="icon-copy dw dw-notification"></i>
-					<span class="badge notification-active"></span>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right">
-					<div class="notification-list mx-h-350 customscroll">
-						<ul>
-							<li><a href="#"><img src="vendors/images/img.jpg" alt=""/><h3>John Doe</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing
-																																				elit, sed...</p></a></li>
-							<li><a href="#"><img src="vendors/images/photo1.jpg" alt=""/><h3>Lea R. Frith</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing
-																																				elit, sed...</p></a></li>
-							<li><a href="#"><img src="vendors/images/photo2.jpg" alt=""/><h3>Erik L. Richards</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing
-																																				elit, sed...</p></a></li>
-							<li><a href="#"><img src="vendors/images/photo3.jpg" alt=""/><h3>John Doe</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing
-																																				elit, sed...</p></a></li>
-							<li><a href="#"><img src="vendors/images/photo4.jpg" alt=""/><h3>Renee I. Hansen</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing
-																																				elit, sed...</p></a></li>
-							<li><a href="#"><img src="vendors/images/img.jpg" alt=""/><h3>Vicki M. Coleman</h3><p>Lorem ipsum dolor sit amet, consectetur adipisicing
-																																				elit, sed...</p></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="user-info-dropdown">
+    <div class="header-left">
+        <div class="menu-icon bi bi-list"></div>
+        <div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
+        <div class="header-search">
+            <form>
+                <div class="form-group mb-0">
+                    <i class="dw dw-search2 search-icon"></i>
+                    <input type="text" class="form-control search-input" placeholder="Search Here"/>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
+                            <i class="ion-arrow-down-c"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">From</label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input class="form-control form-control-sm form-control-line" type="text"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">To</label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input class="form-control form-control-sm form-control-line" type="text"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">Subject</label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input class="form-control form-control-sm form-control-line" type="text"/>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Add more header-left content here if needed -->
+    </div>
+    
+    <!-- header-right starts here -->
+    
+       
+       
+        
+      <div class="user-info-dropdown">
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 					<span class="user-icon">
@@ -195,11 +133,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="github-link">
-			<a href="https://github.com/dropways/deskapp" target="_blank"><img src="vendors/images/github.svg" alt=""/></a>
-		</div>
-	</div>
-</div>{% endblock %}{% block body %}{% endblock %}{% block right_side_bar %}
+		 <div class="dashboard-setting user-notification">
+            <div class="dropdown">
+                <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
+                    <i class="dw dw-settings2"></i>
+                </a>
+            </div>
+        </div>
+        
+      
+    
+    <!-- End of header-right -->
+</div>
+{% endblock %}
+{% block body %}{% endblock %}{% block right_side_bar %}
 <div class="right-sidebar">
 	<div class="sidebar-title">
 		<h3 class="weight-600 font-16 text-blue">
@@ -308,65 +255,126 @@
 	<div class="menu-block customscroll">
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
-				
-				<li>
-					<a class="dropdown-toggle no-arrow" href="{{ path('stat') }}">
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon bi bi-house"></span>
 						<span class="mtext">Home</span>
 					</a>
+					<ul class="submenu">
+						<li>
+							<a href="index.html">Home</a>
+						</li>
+					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon bi bi-textarea-resize"></span>
-						<span class="mtext">User</span>
+						<span class="mtext">Administrateur</span>
 					</a>
 					<ul class="submenu">
 						<li>
-							<a href="form-basic.html">Form Basic</a>
+							<a href="{{ path('app_user_index') }}">Liste Utilisateur</a>
 						</li>
 						<li>
-							<a class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-file-earmark-text"></span
-								><span class="mtext" href="{{ path('app_user_index') }}">liste des utilisateurs</span>
-							</a>
+							<a href="{{ path('app_admin_new') }}">Ajouter un administrateur</a>
 						</li>
-						
-						
-						
+
 					</ul>
 				</li>
-	
-								<li><a class="dropdown-toggle no-arrow" href="{{ path('app_produit_indexadmin') }}">List Produit</a></li>
-								<li><a class="dropdown-toggle no-arrow" href="{{ path('app_commande_index') }}">List Commande</a></li>
-								<li><a class="dropdown-toggle no-arrow" href="{{ path('app_reclamation_indexadmin') }}">List Reclamation</a></li>
-								<li><a class="dropdown-toggle no-arrow" href="{{ path('app_panier_indexadmin') }}">List Panier</a></li>
-								<li><a class="dropdown-toggle no-arrow" href="{{ path('app_produit_new') }}">Add Produit</a></li>
-								<li><a class="dropdown-toggle no-arrow" href="{{ path('statistiques') }}">statistiques</a></li>
-								
-
-				<li>
-					<a class="dropdown-toggle no-arrow" href="{{ path('app_admin_new') }}">
-						<span class="micon bi bi-receipt-cutoff"></span>
-						<span class="mtext">Ajouter un administrateur</span>
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon bi bi-textarea-resize"></span>
+						<span class="mtext">Recettes</span>
 					</a>
-				</li>
-			
-								<li><a href="{{ path('app_recettes_new_admin') }}">Ajouter une recette</a></li>
-								<li><a href="{{ path('app_ingredient_index') }}">Liste des ingredients</a></li>
-								<li><a href="{{ path('admin_recipes_and_activity_charts') }}">Consulter statistiques</a></li>
-							
-				<li>
-					<a class="dropdown-toggle no-arrow" href="{{ path('app_user_index') }}">
-						<span class="micon bi bi-file-earmark-text"></span>
-						<span class="mtext">liste des utilisateurs</span>
-					</a>
-				</li>
-<li><a href="{{ path('admin_user_nutrition_index') }}">Liste</a></li>
-								<li><a href="{{ path('admin_average_calories_chart') }}">Graph du mode</a></li>
+					<ul class="submenu">
+						<li>
+							<a href="{{ path('indexAdmin') }}">List Recettes</a>
+						</li>
+						<li>
+							<a href="{{ path('app_ingredient_index') }}">List Ingredients</a>
+						</li>
+						<li>
+							<a href="{{ path('admin_recipes_and_activity_charts') }}">statistiques</a>
+						</li>
+						<li>
+							<a href="{{ path('app_recettes_new_admin') }}">Ajouter une recette</a>
+						</li>
 
-			</ul>
-		</div>
-      
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon bi bi-textarea-resize"></span>
+						<span class="mtext">Produit</span>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="{{ path('app_produit_indexadmin') }}">List Produit</a>
+						</li>
+						<li>
+							<a href="{{ path('app_commande_index') }}">List Commande</a>
+						</li>
+						<li>
+							<a href="{{ path('app_reclamation_indexadmin') }}">List Reclamation</a>
+						</li>
+						<li>
+							<a href="{{ path('app_panier_indexadmin') }}">List Panier</a>
+						</li>
+						<li>
+							<a href="{{ path('app_produit_new') }}">Add Produit</a>
+						</li>
+						<li>
+							<a href="{{ path('statistiques') }}">statistiques</a>
+						</li>
+
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon bi bi-textarea-resize"></span>
+						<span class="mtext">Défis</span>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="{{ path('app_defis_admin_index') }}">List Défis</a>
+						</li>
+						<li>
+							<a href="{{ path('app_participant_admin_index') }}">List Participants</a>
+						</li>
+						<li>
+							<a href="{{ path('app_participant_Stat_admin') }}">statistiques</a>
+						</li>
+
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon bi bi-textarea-resize"></span>
+						<span class="mtext">Blogs</span>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="{{ path('article_admin_list') }}">List Articles</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon bi bi-textarea-resize"></span>
+						<span class="mtext">Nutritions</span>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="{{ path('admin_user_nutrition_index') }}">List Des nutritionniste
+							</a>
+						</li>
+						<li>
+							<a href="{{ path('admin_average_calories_chart') }}">Statestique</a>
+						</li>
+
+
+					</ul>
+				</li>
 
 
 			</ul>

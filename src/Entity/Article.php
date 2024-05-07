@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\ArticleRepository;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="article", indexes={@ORM\Index(name="fk_user_id", columns={"idU"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  */
 class Article
 {
@@ -68,15 +70,10 @@ class Article
     private $tags;
 
     /**
-     * @var \User
-     *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idU", referencedColumnName="idU")
-     * })
+     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
      */
-    private $idu;
-
+    private ?User $user;
     public function getIdArticle(): ?int
     {
         return $this->idArticle;
@@ -154,14 +151,14 @@ class Article
         return $this;
     }
 
-    public function getIdu(): ?User
+    public function getUser(): ?User
     {
-        return $this->idu;
+        return $this->user;
     }
 
-    public function setIdu(?User $idu): static
+    public function setUser(?User $user): static
     {
-        $this->idu = $idu;
+        $this->user =$user;
 
         return $this;
     }

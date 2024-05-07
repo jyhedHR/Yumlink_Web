@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\VoteRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Vote
  *
- * @ORM\Table(name="vote", indexes={@ORM\Index(name="fk_userr", columns={"idU"}), @ORM\Index(name="fk_part", columns={"idpart"})})
+ * @ORM\Table(name="vote", indexes={@ORM\Index(name="fk_part", columns={"idpart"}), @ORM\Index(name="fk_userr", columns={"idU"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\VoteRepository")
  */
 class Vote
 {
@@ -21,51 +23,44 @@ class Vote
      */
     private $idVote;
 
-    /**
-     * @var \Participant
-     *
-     * @ORM\ManyToOne(targetEntity="Participant")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idpart", referencedColumnName="idpart")
-     * })
-     */
-    private $idpart;
+    
 
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idU", referencedColumnName="idU")
-     * })
+     /**
+     * @ORM\ManyToOne(targetEntity="Participant")
+     * @ORM\JoinColumn(name="idpart", referencedColumnName="idpart")
      */
-    private $idu;
+    private ?Participant $participant;
+     /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
+     */
+    private ?User $user;
 
     public function getIdVote(): ?int
     {
         return $this->idVote;
     }
 
-    public function getIdpart(): ?Participant
+    public function getParticipant(): ?Participant
     {
-        return $this->idpart;
+        return $this->participant;
     }
 
-    public function setIdpart(?Participant $idpart): static
+    public function setParticipant(?Participant $participant): static
     {
-        $this->idpart = $idpart;
+        $this->participant = $participant;
 
         return $this;
     }
 
-    public function getIdu(): ?User
+    public function getUser(): ?User
     {
-        return $this->idu;
+        return $this->user;
     }
 
-    public function setIdu(?User $idu): static
+    public function setUser(?User $user): self
     {
-        $this->idu = $idu;
+        $this->user = $user;
 
         return $this;
     }

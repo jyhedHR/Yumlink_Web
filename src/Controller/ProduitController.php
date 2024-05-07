@@ -34,6 +34,13 @@ class ProduitController extends AbstractController
             'produits' => $produitRepository->findAll(),
         ]);
     }
+    #[Route('/chef', name: 'app_produit_indexchef', methods: ['GET'])]
+    public function indexchef(ProduitRepository $produitRepository): Response
+    {
+        return $this->render('produit/indexchef.html.twig', [
+            'produits' => $produitRepository->findAll(),
+        ]);
+    }
     #[Route('/admin', name: 'app_produit_indexadmin', methods: ['GET'])]
     public function index_admin(ProduitRepository $produitRepository): Response
     {

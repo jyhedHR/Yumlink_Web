@@ -51,7 +51,7 @@
 		<div class="row align-items-center">
 			<div class="col-lg-3 col-md-4">
 				<div class="header-left">
-					<p>Welcome To Arrola Health!</p>
+					<p>Welcome Chef {{app.user.nom}}</p>
 				</div>
 			</div>
 			<div class="col-lg-9 col-md-8">
@@ -60,29 +60,14 @@
 						<ul>
 							<li class="title">Follow us :</li>
 							<li>
-								<a href="https://www.facebook.com/" target="_blank">
-									<i class="bx bxl-facebook"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://www.instagram.com/" target="_blank">
-									<i class="bx bxl-instagram"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://twitter.com/" target="_blank">
-									<i class="bx bxl-twitter"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://www.youtube.com/" target="_blank">
-									<i class="bx bxl-youtube"></i>
+								<a href="{{ path('app_qr_codes') }}" target="_blank">
+									<i>QR</i>
 								</a>
 							</li>
 						</ul>
 					</div>
 					<div class="header-item">
-						<a href="cart.html" class="cart-top-btn">
+						<a href="{{ path('app_panier_indexchef') }}" class="cart-top-btn">
 							<i class="bx bx-shopping-bag"></i>
 							<span>0</span>
 						</a>
@@ -124,7 +109,10 @@
 
 
 					</a>
-				</div>
+				</div>*
+
+
+
 			</div>
 		</div>
 	</div>
@@ -161,6 +149,11 @@
 										 ajouter une Recette 
 									</a>
 								</li>
+								<li class="nav-item">
+									<a href="{{ path('indexChef') }}" class="nav-link">
+										 List recettes
+									</a>
+								</li>
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -170,20 +163,15 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="shop.html" class="nav-link">Shop</a>
+									<a href="{{ path('app_produit_indexchef') }}" class="nav-link">Shop</a>
 								</li>
 								<li class="nav-item">
-									<a href="cart.html" class="nav-link">Cart</a>
+									<a href="{{ path('app_panier_indexchef') }}" class="nav-link">Panier</a>
 								</li>
 								<li class="nav-item">
-									<a href="checkout.html" class="nav-link">Checkout</a>
+									<a href="{{ path('app_reprandre_indexchef') }}" class="nav-link">Reclamation</a>
 								</li>
-								<li class="nav-item">
-									<a href="wishlist.html" class="nav-link">Wishlist</a>
-								</li>
-								<li class="nav-item">
-									<a href="shop-details.html" class="nav-link">Shop Details</a>
-								</li>
+
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -193,13 +181,13 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
+									<a href="{{ path('app_defis_index') }}" class="nav-link">
 										Les defis
 									</a>
 								</li>
 
 								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
+									<a href="{{ path('app_participant_index') }}" class="nav-link">
 										les participations
 									</a>
 								</li>
@@ -212,32 +200,60 @@
 								Blog
 								<i class="bx bx-chevron-down"></i>
 							</a>
-							<ul class="dropdown-menu">
-								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
-										Mes Publications
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
-										Ajouter Publication
-									</a>
-								</li>
-							</ul>
+							{% if app.user.role == 'Chef' %}
+								<ul class="dropdown-menu">
+									<li class="nav-item">
+										<a href="{{ path('app_article_blog')}}" class="nav-link">
+											Toutes les Publications
+										</a>
+									</li>
+									<li class="nav-item">
+										{% set userId = app.user.getIdU() %}
+										<a href="{{ path('app_article_blog', {'id_chef': userId})}}" class="nav-link">
+											Mes Publications
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="{{ path('app_article_new')}}" class="nav-link">
+											Ajouter Publication
+										</a>
+									</li>
+								</ul>
+							{% else %}
+								<ul class="dropdown-menu">
+									<li class="nav-item">
+										<a href="{{ path('app_article_blog')}}" class="nav-link">
+											Publications récentes
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="tags.html" class="nav-link">
+											Tags
+										</a>
+									</li>
+								</ul>
+							{% endif %}
 						</li>
 
-						<li class="nav-item">
-							<a href="#" class="nav-link">
-								Nutritions
-								
-							</a>
-							
-						</li>
-						<li class="nav-item">
-							<a href="contact.html" class="nav-link">
-								Contact Us
-							</a>
-						</li>
+					<li class="nav-item">
+                        <a href="{{ path('user_nutrition_index') }}" class="nav-link">
+							Nutritions
+							<i class="bx bx-chevron-down"></i>
+						</a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item">
+                                <a href="{{ path('user_nutrition_new') }}" class="nav-link">
+                                    Ajouter
+                                </a>
+                            </li>
+                             <li class="nav-item">
+                              <a href="{{ path('recipe_analyzer') }}" class="nav-link">
+  								  Analysez un plat 
+								</a>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 					</ul>
 					<div class="others-options d-flex align-items-center">
 						<div class="optional-item">
@@ -248,7 +264,7 @@
 							</div>
 						</div>
 						<div class="optional-item">
-							<a href="appointment.html" class="default-btn two">Book An Appointment</a>
+							<a href="{{ path('app_logout') }}" class="default-btn two">Log out</a>
 						</div>
 					</div>
 					<div class="mobile-nav">
@@ -368,16 +384,33 @@
 	</div>
 	<div class="col-lg-4 col-sm-6">
 		<div class="footer-widget ps-5">
-			<h3>Newsletter</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+			<div class="footer-widget ps-5">
+			<h3>Reclamation</h3>
+			<p>Any reclamation ?</p>
+			{% for message in app.flashes('success') %}
+				<div style="color: green;
+																			                                    border: 2px green solid;
+																			                                    text-align: center;
+																			                                    padding: 5px;margin-bottom: 10px;">
+					{{ message }}
+				</div>
+			{% endfor %}
+
 			<div class="newsletter-area">
-				<form class="newsletter-form" data-toggle="validator" method="POST">
-					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
+				<form class="newsletter-form" action="{{ path('app_reclamation_indexchef') }}" method="POST" onsubmit="return confirm('Are you sure you want to send this reclamation?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('app_reclamation_indexchef') }}">
+					<input
+					type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
+
+					<!-- Change the textarea to an input field -->
+					<input type="text" name="reclamation" id="notes" placeholder="Reclamation" class="form-control" required>
+
 					<button class="subscribe-btn" type="submit">
-						Subscribe
+						Send
 					</button>
 					<div id="validator-newsletter" class="form-result"></div>
 				</form>
+				
 			</div>
 		</div>
 	</div>

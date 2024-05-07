@@ -121,9 +121,11 @@ document.getElementById('searchInput').addEventListener('keyup', function() {
 
 									<td>
 										<form method="post" action="{{ path('app_user_delete', {'idu': user.idu}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.idu) }}">
-											<button type="submit" class="btn btn-danger btn-sm">Delete</button>
-										</form>
+    <!-- Include CSRF token -->
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.idu) }}">
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+</form>
 									</td>
 
 								</tr>

@@ -1,0 +1,131 @@
+{% extends app.user.role == 'Chef' ? 'chefbase.html.twig' : 'base.html.twig' %}
+
+{% block title %}Panier index
+{% endblock %}
+
+{% block body %}
+
+	<div class="inner-banner inner-bg4">
+		<div class="container">
+			<div class="inner-title text-center">
+				<h3>Cart</h3>
+				<ul>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>Panier</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<section class="cart-wraps-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<form>
+						<div class="cart-wraps">
+							<div class="cart-table table-responsive">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">Product</th>
+											<th scope="col">Name</th>
+											<th scope="col">Unit Price</th>
+											<th scope="col">Quantity</th>
+											<th scope="col">Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% set subtotal = 0 %}
+										{% for panier in paniers %}
+											{% if panier.idClient ==  app.user.getIdu()  %}
+												<tr>
+													<td class="product-thumbnail">
+														<a href="cart.html">
+															<img src="{{ asset( panier.produit.image ) }}" alt="Product Image">
+														</a>
+													</td>
+													<td class="product-name">
+														<a href="cart.html">{{ panier.produit.nom }}</a>
+													</td>
+													<td class="product-price">
+														<span class="unit-amount">{{ panier.produit.prix ~ "DT"  }}</span>
+													</td>
+													<td class="product-quantity">
+														<div class="input-counter">
+															<input type="text" value="{{ panier.quantite }}" readonly>
+														</div>
+													</td>
+													<td class="product-subtotal">
+														<span class="subtotal-amount">{{ panier.prixtotal * panier.quantite ~ "DT" }}</span>
+														{% set subtotal = subtotal + (panier.prixtotal * panier.quantite) %}
+														<form method="post" action="{{ path('app_panier_deletechef', {'idp': panier.idp}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+															<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ panier.idp) }}">
+																<input type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
+															<button type="submit" class="remove" style="border: none; background: none; cursor: pointer;">
+																<i class="bx bx-x-circle"></i>
+															</button>
+														</form>
+													</td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+							<div class="cart-buttons">
+								<div class="row align-items-center">
+									<div class="col-lg-7 col-sm-7 col-md-7">
+										<div class="continue-shopping-box">
+											<a href="{{ path('app_produit_indexchef') }}" class="default-btn">
+												Continue Shopping
+											</a>
+										</div>
+										<div class="continue-shopping-box">
+											<form method="post" action="{{ path('panier_delete_allchef') }}" onsubmit="return confirm('Are you sure you want to delete all items in the panier?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('panier_delete_allchef') }}">
+	<input type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
+    <button type="submit" class="default-btn">
+        Delete all panier
+    </button>
+</form>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-lg-4">
+					<div class="cart-totals">
+						<h3>Order Summary</h3>
+						<ul>
+							<li>Subtotal
+								<span>{{ subtotal ~ "DT" }}</span>
+							</li>
+							<li>Shipping
+								<span>7DT</span>
+							</li>
+							<li>Coupon
+								<span>2DT</span>
+							</li>
+							<li>Total
+								<span>
+									<b>{{ (subtotal + 7 + 2) ~ "DT" }}</b>
+								</span>
+							</li>
+						</ul>
+						<a href="{{ path('app_commande_new', {'subtotal': subtotal, 'shipping': 7, 'coupon': 2}) }}" class="default-btn border-radius-5">
+							Commander
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	
+
+{% endblock %}

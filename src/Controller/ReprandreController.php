@@ -24,6 +24,15 @@ class ReprandreController extends AbstractController
         ]);
     }
 
+    #[Route('/chef', name: 'app_reprandre_indexchef', methods: ['GET'])]
+    public function indexchef(ReprandreRepository $reprandreRepository,ReclamationRepository $reclamationRepository): Response
+    {
+        return $this->render('reprandre/indexchef.html.twig', [
+            'reprandres' => $reprandreRepository->findAll(),
+            'reclamations' => $reclamationRepository->findAll(),
+        ]);
+    }
+
     #[Route('/reclamation/respond', name: 'app_reprandre_respond', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,ReclamationRepository $reclamationRepository): Response
     {

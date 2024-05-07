@@ -1,5 +1,4 @@
-{% extends 'base.html.twig' %}
-
+{% extends app.user.role == 'Chef' ? 'chefbase.html.twig' : 'base.html.twig' %}
 {% block title %}User Nutrition History{% endblock %}
 
 {% block body %}

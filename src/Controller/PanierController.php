@@ -41,6 +41,25 @@ public function index(PanierRepository $panierRepository, EntityManagerInterface
     ]);
 }
 
+#[Route('/chef', name: 'app_panier_indexchef', methods: ['GET'])]
+public function indexchef(PanierRepository $panierRepository, EntityManagerInterface $entityManager,Request $request): Response
+{
+    // Fetch paniers along with associated Produit entities using custom DQL query
+    $query = $entityManager->createQuery(
+        'SELECT p, produit FROM App\Entity\Panier p
+        LEFT JOIN p.produit produit'
+    );
+    $paniers = $query->getResult();
+
+         // Use $stripeService to create a charge
+   
+       
+
+    return $this->render('panier/indexchef.html.twig', [
+        'paniers' => $paniers,
+    ]);
+}
+
 
 #[Route('/panier/delete-all', name: 'panier_delete_all', methods: ['POST'])]
 public function deleteAll(Request $request,EntityManagerInterface $entityManager): Response
@@ -63,6 +82,28 @@ public function deleteAll(Request $request,EntityManagerInterface $entityManager
 
     // Redirect the user to the panier index or any other desired page
     return $this->redirectToRoute('app_panier_index');
+}
+#[Route('/panier/delete-all_chef', name: 'panier_delete_allchef', methods: ['POST'])]
+public function deleteAllchef(Request $request,EntityManagerInterface $entityManager): Response
+{
+        
+    $id_client = $request->request->get('id_client');
+    
+        // Query to find all items in the "panier" for idClient 3
+        $repository = $entityManager->getRepository(Panier::class);
+        $items = $repository->findBy(['idClient' => $id_client]);
+
+        // Remove each item from the database
+        foreach ($items as $item) {
+            $entityManager->remove($item);
+        }
+
+        // Flush changes to the database
+        $entityManager->flush();
+   
+
+    // Redirect the user to the panier index or any other desired page
+    return $this->redirectToRoute('app_panier_indexchef');
 }
 
 
@@ -109,9 +150,6 @@ public function deleteAll(Request $request,EntityManagerInterface $entityManager
 
     
 }
-
-
-
 #[Route('/new', name: 'app_panier_new', methods: ['POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
@@ -151,6 +189,45 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
 }
 
 
+#[Route('/newchef', name: 'app_panier_newchef', methods: ['POST'])]
+public function newchef(Request $request, EntityManagerInterface $entityManager): Response
+{
+   
+    // Extract data from the form submission
+    $id_client = $request->request->get('id_client');
+    $id_produit = $request->request->get('id_produit');
+    $QUANT = $request->request->get('quantite');
+
+    // Fetch the Produit entity by id_produit
+    $produit = $entityManager->getRepository(Produit::class)->find($id_produit);
+
+    if (!$produit) {
+        // Handle error if produit is not found
+        throw $this->createNotFoundException('Product not found');
+    }
+
+    // Create a new Panier entity
+    $panier = new Panier();
+    $panier->setIdClient($id_client);
+    $panier->setProduit($produit); // Associate the produit with panier
+    $panier->setQuantite($QUANT);
+
+    // Set the price and quantity from the produit entity
+    $panier->setPrixtotal($produit->getPrix());
+    
+    
+
+    // Persist the new Panier entity to the database
+    $entityManager->persist($panier);
+    $entityManager->flush();
+
+    
+
+    // Redirect to the Panier index page or any other page after adding the Panier
+    return $this->redirectToRoute('app_panier_indexchef');
+}
+
+
     #[Route('/{idp}', name: 'app_panier_show', methods: ['GET'])]
     public function show(Panier $panier): Response
     {
@@ -186,6 +263,16 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         }
 
         return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/chef/{idp}', name: 'app_panier_deletechef', methods: ['POST'])]
+    public function deletechef(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$panier->getIdp(), $request->request->get('_token'))) {
+            $entityManager->remove($panier);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_panier_indexchef', [], Response::HTTP_SEE_OTHER);
     }
 
 

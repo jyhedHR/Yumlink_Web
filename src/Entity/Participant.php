@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\ParticipantRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert; 
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="participant", indexes={@ORM\Index(name="fk_id_user", columns={"idU"}), @ORM\Index(name="fk_id_d", columns={"id_d"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  */
 class Participant
 {
@@ -37,25 +39,18 @@ class Participant
      */
     private $vote;
 
-    /**
-     * @var \Defis
-     *
+   
+       /**
      * @ORM\ManyToOne(targetEntity="Defis")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_d", referencedColumnName="id_d")
-     * })
+     * @ORM\JoinColumn(name="id_d", referencedColumnName="id_d")
      */
-    private $idD;
+    private ?Defis $defis;
 
     /**
-     * @var \User
-     *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idU", referencedColumnName="idU")
-     * })
+     * @ORM\JoinColumn(name="idU", referencedColumnName="idU")
      */
-    private $idu;
+    private ?User $user;
 
     public function getIdpart(): ?int
     {
@@ -86,24 +81,24 @@ class Participant
         return $this;
     }
 
-    public function getIdD(): ?Defis
+    public function getDefis(): ?Defis
     {
-        return $this->idD;
+        return $this->defis;
     }
 
-    public function setIdD(?Defis $idD): static
+    public function setIdD(?Defis $defis): static
     {
-        $this->idD = $idD;
+        $this->defis = $defis;
 
         return $this;
     }
 
-    public function getIdu(): ?User
+    public function getUser(): ?User
     {
-        return $this->idu;
+        return $this->user;
     }
 
-    public function setIdu(?User $idu): static
+    public function setUser(?User $user): static
     {
         $this->user =$user;
 
