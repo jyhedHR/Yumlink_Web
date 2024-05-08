@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,13 +9,11 @@
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run composer require symfony/webpack-encore-bundle to start using Symfony UX #}
-		{% block stylesheets %}
-
-		{% endblock %}
+		{% block stylesheets %}{% endblock %}
 		{% block css %}
 			<link rel="stylesheet" href={{asset("frontend/assets/css/blogStylesheet.min.css")}}>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
 			<link rel="stylesheet" href={{asset("frontend/assets/css/bootstrap.min.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/animate.min.css")}}>
@@ -35,14 +32,14 @@
 		{% endblock %}
 		{% block js %}
 			<!-- Inclure Leaflet.js -->
-			
+
 			<script src="frontend/assets/js/jquery.min.js"></script>
 			<!-- Inclure jQuery en premier -->
 
 			<!-- Ensuite, inclure les autres scripts -->
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 			<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
@@ -65,7 +62,8 @@
 		<div class="row align-items-center">
 			<div class="col-lg-3 col-md-4">
 				<div class="header-left">
-					<p>Welcome {{app.user.nom}}</p>
+					<p>Welcome
+						{{app.user.username}}</p>
 				</div>
 			</div>
 			<div class="col-lg-9 col-md-8">
@@ -139,20 +137,20 @@
 				<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item">
-						
+
 							<a href="{{ path('Welcome') }}" class="nav-link active">
 								Home
 
 							</a>
 						</li>
 						<li class="nav-item">
-						
-							<a  href="{{ path('app_recettes_index') }}" class="nav-link">
+
+							<a href="{{ path('app_recettes_index') }}" class="nav-link">
 								Recette
 								<i class="bx bx-chevron-down"></i>
 							</a>
 							<ul class="dropdown-menu">
-							
+
 								<li class="nav-item">
 									<a href="{{ path('app_favorite_show') }}" class="nav-link">
 										Recette Favorie
@@ -164,7 +162,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{ path('app_chef') }}"  class="nav-link">
+									<a href="{{ path('app_chef') }}" class="nav-link">
 										Nos Chefs
 									</a>
 								</li>
@@ -185,7 +183,7 @@
 								<li class="nav-item">
 									<a href="{{ path('app_reprandre_index') }}" class="nav-link">Reclamations</a>
 								</li>
-								
+
 
 							</ul>
 						</li>
@@ -196,7 +194,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									  <a href="{{ path('app_defis_controller_user_index') }}" class="nav-link">
+									<a href="{{ path('app_defis_controller_user_index') }}" class="nav-link">
 										Les defis
 									</a>
 								</li>
@@ -250,186 +248,160 @@
 								</ul>
 							{% endif %}
 						</li>
-						
-					<li class="nav-item">
-                        <a href="{{ path('user_nutrition_index') }}" class="nav-link">
-							Nutritions
-							<i class="bx bx-chevron-down"></i>
-						</a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item">
-                                <a href="{{ path('user_nutrition_new') }}" class="nav-link">
-                                    Ajouter 
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="{{ path('recipe_analyzer') }}" class="nav-link">
-  								  Analysez un plat 
-								</a>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-						
+
+						<li class="nav-item">
+							<a href="{{ path('user_nutrition_index') }}" class="nav-link">
+								Nutritions
+								<i class="bx bx-chevron-down"></i>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="nav-item">
+									<a href="{{ path('user_nutrition_new') }}" class="nav-link">
+										Ajouter
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ path('recipe_analyzer') }}" class="nav-link">
+										Analysez un plat</a>
+								</li>
+							</a>
+						</li>
 					</ul>
-					<div class="others-options d-flex align-items-center">
-						<div class="optional-item">
-							<div class="search-btn">
-								<a class="#" href="#searchmodal" data-bs-toggle="modal" data-bs-target="#searchmodal">
-									<i class="bx bx-search"></i>
-								</a>
-							</div>
-						</div>
-						<div class="optional-item">
-							<a href="{{ path('app_logout') }}" class="default-btn two">Log out
+				</li>
+
+			</ul>
+			<div class="others-options d-flex align-items-center">
+				<div class="optional-item">
+					<div class="search-btn">
+						<a class="#" href="#searchmodal" data-bs-toggle="modal" data-bs-target="#searchmodal">
+							<i class="bx bx-search"></i>
+						</a>
+					</div>
+				</div>
+				<div class="optional-item">
+					<a href="{{ path('app_logout') }}" class="default-btn two">Log out
+					</a>
+				</div>
+			</div>
+			<div class="mobile-nav">
+				<div class="mobile-other d-flex align-items-center">
+					<div class="optional-item">
+						<div class="search-btn">
+							<a class="#" href="#searchmodal" data-bs-toggle="modal" data-bs-target="#searchmodal">
+								<i class="bx bx-search"></i>
 							</a>
 						</div>
 					</div>
-					<div class="mobile-nav">
-						<div class="mobile-other d-flex align-items-center">
-							<div class="optional-item">
-								<div class="search-btn">
-									<a class="#" href="#searchmodal" data-bs-toggle="modal" data-bs-target="#searchmodal">
-										<i class="bx bx-search"></i>
-									</a>
-								</div>
-							</div>
-							<div class="optional-item">
-								<a href="appointment.html" class="default-btn two">Appointment</a>
-							</div>
-						</div>
+					<div class="optional-item">
+						<a href="appointment.html" class="default-btn two">Appointment</a>
 					</div>
-				</li>
-			</div>
-		</nav>
-	</div>
-</body></body></div></div>{% endblock %}{% block body %}{% endblock %}{% block footer %}<footer class="footer-area footer-area-bg"><div class="container"><div class="footer-top pt-100 pb-70">
-<div class="row">
-	<div class="col-lg-3 col-sm-6">
-		<div class="footer-widget">
-			<div class="footer-logo">
-				<a href="index.html">
-					<img src={{asset("frontend/assets/images/YumLink_logo.png")}} alt="Images">
-				</a>
-			</div>
-			<ul class="social-link">
-				<li>
-					<a href={{asset("https://www.facebook.com/")}} target="_blank">
-						<i class="bx bxl-facebook"></i>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.linkedin.com/" target="_blank">
-						<i class="bx bxl-linkedin"></i>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.pinterest.com/" target="_blank">
-						<i class="bx bxl-pinterest-alt"></i>
-					</a>
-				</li>
-				<li>
-					<a href="https://www.instagram.com/" target="_blank">
-						<i class="bx bxl-instagram"></i>
-					</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-lg-2 col-sm-6">
-		<div class="footer-widget ps-5">
-			<h3>Useful Links</h3>
-			<ul class="footer-list">
-				<li>
-					<a href="index.html" target="_blank">
-						Home
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('app_chef') }}" target="_blank">
-						Nos Chefs
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('app_produit_index') }}" target="_blank">
-						Shop
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('app_defis_controller_user_index') }}" target="_blank">
-						Defis
-					</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-lg-3 col-sm-6">
-		<div class="footer-widget ps-5">
-			<h3>Information</h3>
-			<ul class="footer-contact">
-				<li>
-					Phone:
-					<span>
-						<a href="tel:+50711106">+50711106</a><br>
-						<a href="tel:+26956338">+26956338</a><br>
-						<a href="tel:+93588870">+93588870</a><br>
-					</span>
-				</li>
-				<li>
-					Email:
-					<span>
-						<a href="">yumlink2@gmail.com</a><br>
-					</span>
-				</li>
-				<li>
-					Address:
-					<span>
-						El ghazala,  La petite Ariana ,<br>
-						Tunisie
-					</span>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="col-lg-4 col-sm-6">
-		<div class="footer-widget ps-5">
-			<h3>Reclamation</h3>
-			<p>Any reclamation ?</p>
-			{% for message in app.flashes('success') %}
-				<div style="color: green;
-																			                                    border: 2px green solid;
-																			                                    text-align: center;
-																			                                    padding: 5px;margin-bottom: 10px;">
-					{{ message }}
 				</div>
-			{% endfor %}
-
-			<div class="newsletter-area">
-				<form class="newsletter-form" action="{{ path('app_reclamation_index') }}" method="POST" onsubmit="return confirm('Are you sure you want to send this reclamation?');">
-					<input type="hidden" name="_token" value="{{ csrf_token('app_reclamation_index') }}">
-					<input
-					type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
-
-					<!-- Change the textarea to an input field -->
-					<input type="text" name="reclamation" id="notes" placeholder="Reclamation" class="form-control" required>
-
-					<button class="subscribe-btn" type="submit">
-						Send
-					</button>
-					<div id="validator-newsletter" class="form-result"></div>
-				</form>
-				
 			</div>
-		</div>
+		</li>
 	</div>
-</div></div></div><div class="copyright-area"><div class="container">
-<div class="copy-right-text text-center">
-	<p>
-		Copyright @<script data-cfasync="false" src={{asset("../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js")}}></script>
-		<script>
-			document.write(new Date().getFullYear())
-		</script>
-		Arrola. All Rights Reserved by
-		<a href="https://hibootstrap.com/" target="_blank">HiBootstrap</a>
-	</p>
-</div></div></div></footer>{% endblock %}</body></body></html>
+</nav></body></div></body></body></div></div>{% endblock %}{% block body %}{% endblock %}{% block footer %}<footer class="footer-area footer-area-bg"><div class="container"><div class="footer-top pt-100 pb-70"><div class="row"><div class="col-lg-3 col-sm-6"><div class="footer-widget">
+<div class="footer-logo">
+	<a href="index.html">
+		<img src={{asset("frontend/assets/images/YumLink_logo.png")}} alt="Images">
+	</a>
+</div>
+<ul class="social-link">
+	<li>
+		<a href={{asset("https://www.facebook.com/")}} target="_blank">
+			<i class="bx bxl-facebook"></i>
+		</a>
+	</li>
+	<li>
+		<a href="https://www.linkedin.com/" target="_blank">
+			<i class="bx bxl-linkedin"></i>
+		</a>
+	</li>
+	<li>
+		<a href="https://www.pinterest.com/" target="_blank">
+			<i class="bx bxl-pinterest-alt"></i>
+		</a>
+	</li>
+	<li>
+		<a href="https://www.instagram.com/" target="_blank">
+			<i class="bx bxl-instagram"></i>
+		</a>
+	</li>
+</ul></div></div><div class="col-lg-2 col-sm-6"><div class="footer-widget ps-5">
+<h3>Useful Links</h3>
+<ul class="footer-list">
+	<li>
+		<a href="index.html" target="_blank">
+			Home
+		</a>
+	</li>
+	<li>
+		<a href="{{ path('app_chef') }}" target="_blank">
+			Nos Chefs
+		</a>
+	</li>
+	<li>
+		<a href="{{ path('app_produit_index') }}" target="_blank">
+			Shop
+		</a>
+	</li>
+	<li>
+		<a href="{{ path('app_defis_controller_user_index') }}" target="_blank">
+			Defis
+		</a>
+	</li>
+</ul></div></div><div class="col-lg-3 col-sm-6"><div class="footer-widget ps-5">
+<h3>Information</h3>
+<ul class="footer-contact">
+	<li>
+		Phone:
+		<span>
+			<a href="tel:+50711106">+50711106</a><br>
+			<a href="tel:+26956338">+26956338</a><br>
+			<a href="tel:+93588870">+93588870</a><br>
+		</span>
+	</li>
+	<li>
+		Email:
+		<span>
+			<a href="">yumlink2@gmail.com</a><br>
+		</span>
+	</li>
+	<li>
+		Address:
+		<span>
+			El ghazala,  La petite Ariana ,<br>
+			Tunisie
+		</span>
+	</li>
+</ul></div></div><div class="col-lg-4 col-sm-6"><div class="footer-widget ps-5">
+<h3>Reclamation</h3>
+<p>Any reclamation ?</p>
+{% for message in app.flashes('success') %}
+	<div style="color: green;
+																						                                    border: 2px green solid;
+																						                                    text-align: center;
+																						                                    padding: 5px;margin-bottom: 10px;">
+		{{ message }}
+	</div>
+{% endfor %}
+
+<div class="newsletter-area">
+	<form class="newsletter-form" action="{{ path('app_reclamation_index') }}" method="POST" onsubmit="return confirm('Are you sure you want to send this reclamation?');">
+		<input type="hidden" name="_token" value="{{ csrf_token('app_reclamation_index') }}">
+		<input
+		type="hidden" name="id_client" value="{{ app.user.getIdu() }}">
+
+		<!-- Change the textarea to an input field -->
+		<input type="text" name="reclamation" id="notes" placeholder="Reclamation" class="form-control" required>
+
+		<button class="subscribe-btn" type="submit">
+			Send
+		</button>
+		<div id="validator-newsletter" class="form-result"></div>
+	</form>
+
+</div></div></div></div></div></div><div class="copyright-area"><div class="container"><div class="copy-right-text text-center"><p>Copyright @<script data-cfasync="false" src={{asset("../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js")}}></script><script>
+document.write(new Date().getFullYear()) < script > window.embeddedChatbotConfig = {
+chatbotId: "h-1vR5Zy64IbtgKvA5xV_",
+domain: "www.chatbase.co"
+}</script><script src="https://www.chatbase.co/embed.min.js" chatbotid="h-1vR5Zy64IbtgKvA5xV_" domain="www.chatbase.co" defer></script></p></script>Yumlink. All Rights Reserved by<a href="https://hibootstrap.com/" target="_blank">HiBootstrap</a></p></div></div></div></footer>{% endblock %} </body></body></html>

@@ -1,0 +1,71 @@
+{% extends app.user.role == 'Chef' ? 'chefbase.html.twig' : 'base.html.twig' %}
+{% block title %}Yumlink: Blog
+{% endblock %}
+
+{% block body %}
+	<div class="banner-area">
+		<div class="container">
+			<div class="banner-content wow animate__animated animate__fadeInUp" data-wow-delay="00ms" data-wow-duration="1000ms">
+				<h1 class="wow animate__animated animate__fadeInLeft" data-wow-delay="100ms" data-wow-duration="1000ms">Nourishing with Healthy Food
+					<b>Choices</b>
+				</h1>
+			</p>
+			<a href="about.html" class="default-btn  wow animate__animated animate__fadeInLeft" data-wow-delay="300ms" data-wow-duration="1200ms">Learn More</a>
+			<div class="banner-shape">
+				<img src="assets/images/shape/shape1.png" alt="Banner Images">
+				<img src="assets/images/shape/shape2.png" alt="Banner Images">
+				<img src="assets/images/shape/shape3.png" alt="Banner Images">
+			</div>
+		</div>
+	</div>
+</div>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+
+<div class="form-group">
+	<label class="col-sm-12 col-md-2 col-form-label">Image</label>
+	{{ form_widget(form.photoD, { 'attr': { 'class': 'form-control-file form-control height-auto' ~ (form_errors(form.photoD)|length ? ' error' : (form.photoD.vars.valid ? ' success' : '')), 'placeholder':'select image'} }) }}
+	<span class="error-message">{{ form_errors(form.photoD) }}</span>
+	<span id="image-file-name"></span>
+</div>
+{{ form_end(form) }}
+<div class="event-area pt-100 pb-70">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="event-content">
+					<div class="section-title">
+						<span>Your favorite plate to classify</span>
+						<h2>{{ namePlate }}
+						</h2>
+					</div>
+					<div class="row">
+
+						<table>
+							<thead>
+								<tr>
+									<th>Ingredient Name</th>
+									<th>Grams Per Serving</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for ingredientsAndServing in ingredientsAndServings %}
+									<tr>
+										<td>{{ ingredientsAndServing.ingredient }}</td>
+										<td>{{ ingredientsAndServing.serving }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="event-img">
+					<img src={{ asset(imageUploaded) }} alt="Images">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

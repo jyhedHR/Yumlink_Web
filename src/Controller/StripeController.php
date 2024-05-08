@@ -16,11 +16,13 @@ use Symfony\Component\Mime\Email;
 class StripeController extends AbstractController
 {
     #[Route('/stripe', name: 'app_stripe')]
-    public function index(EntityManagerInterface $entityManager , Request $request): Response
+    public function index(EntityManagerInterface $entityManager , Request $request,SecurityController $session ): Response
     {
+        $user = $session->getUser();
+        $id=$user->getIdu();
         $commande = new Commande();
         $commande->setDate(new \DateTime());
-        $commande->setIdClient(15); // Set client ID as needed
+        $commande->setIdClient($id); // Set client ID as needed
     
         // Persist the Commande entity to the database
         $entityManager->persist($commande);

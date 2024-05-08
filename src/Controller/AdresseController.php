@@ -21,6 +21,7 @@ class AdresseController extends AbstractController
         return $this->render('adresse/index.html.twig', [
             'adresses' => $adresseRepository->findAll(),
         ]);
+        
     }
 
     #[Route('/new', name: 'app_adresse_new', methods: ['GET', 'POST'])]

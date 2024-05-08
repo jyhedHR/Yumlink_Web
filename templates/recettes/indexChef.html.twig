@@ -38,11 +38,11 @@
             {% for recette in recettes %}
             <div class="col-lg-4 col-md-6 recipe-item">
                 <div class="recent-recipe-item">
-                    <a href="{{ path('app_recettes_show_chef', {'idR': recette.idR}) }}">
+                    <a href="{{ path('app_recettes_show_chef_2', {'idR': recette.idR}) }}">
                         <img src="{{ recette.imgsrc }}" alt="Images">
                     </a>
                     <div class="content">
-                        <h3><a href="{{ path('app_recettes_show_chef', {'idR': recette.idR}) }}">{{ recette.nom }}</a></h3>
+                        <h3><a href="{{ path('app_recettes_show_chef_2', {'idR': recette.idR}) }}">{{ recette.nom }}</a></h3>
                         <p>{{ recette.description }}</p>
                         <ul>
                             <li><img src="/assets/images/recipe-img/recipe-user1.jpg" alt="Images"></li>

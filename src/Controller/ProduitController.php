@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
@@ -18,11 +19,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
 use Flasher\Toastr\Prime\ToastrFactory;
+use Symfony\Component\Mime\Email;
 use Psr\Log\LoggerInterface;
-
-
-
-
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/produit')]
 class ProduitController extends AbstractController
@@ -30,6 +29,39 @@ class ProduitController extends AbstractController
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
+        return $this->render('produit/index.html.twig', [
+            'produits' => $produitRepository->findAll(),
+        ]);
+    }
+    #[Route('/1', name: 'app_produit_index1', methods: ['GET'])]
+    public function index1(ProduitRepository $produitRepository, EntityManagerInterface $entityManager , Request $request,SecurityController $session , MailerInterface $mailer): Response
+    {
+        $user = $session->getUser();
+        $id=$user->getIdu();
+        $commande = new Commande();
+        $commande->setDate(new \DateTime());
+        $commande->setIdClient($id); // Set client ID as needed
+    
+        $this->addFlash(
+            'success',
+            'Order In Delivry'
+        );
+        $email = (new Email())
+        ->from('yumlink12@gmail.com') 
+        ->to('jihedhorchani1234@gmail.com') 
+        //->cc('exemple@mail.com') 
+        //->bcc('exemple@mail.com')
+        //->replyTo('test42@gmail.com')
+            ->priority(Email::PRIORITY_HIGH) 
+            ->subject('I n Order ')
+        // If you want use text mail only
+            ->text(' Order Successful! wait 3 days ') 
+        ;
+         // Try to send the email
+         $mailer->send($email);
+        // Persist the Commande entity to the database
+        $entityManager->persist($commande);
+        $entityManager->flush();
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
         ]);

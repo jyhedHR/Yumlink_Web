@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Form\CommandeType;
+use App\Repository\AdresseRepository;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,12 +53,15 @@ class CommandeController extends AbstractController
     }
     
     #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, NotifierInterface $notifier): Response
+    public function new( SecurityController $session , AdresseRepository $adresseRepository ): Response
     {
+        $user = $session->getUser();
+        dump($user);
       
         return $this->render('commande/new.html.twig', [
             'stripe_key' => $_ENV["STRIPE_KEY"],
-        ]);
+            'adresses' => $adresseRepository->findAll(),     
+           ]);
     }
 
 

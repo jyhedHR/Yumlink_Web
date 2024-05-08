@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Controller;
+
+use App\Entity\Article;
+use App\Entity\Recettes;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,37 +46,49 @@ class SecurityController extends AbstractController
          return $this->redirectToRoute('homeOn');
     }
     #[Route('/', name: 'homeOn')]
-    public function homeOn(): Response
-    {$user = $this->getUser();
-        if (!$user)
-        {
+    public function homeOn(SecurityController $securityC, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
             // Redirect to login if no user is authenticated
             return $this->redirectToRoute('app_login');
-        }else
+        } else
         if ($user->isBlocked()) { // Modifiez cette ligne
             // Afficher un message d'erreur
             $this->addFlash('error', "Désolé, l'administrateur vous a bloqué. Veuillez contacter le support.");
             // Rediriger vers la page de connexion
             return $this->redirectToRoute('app_logout');
         }
-        $roles = $user->getRoles(); 
-        $role = $roles[0]; 
-    
-        
-        switch($role) 
-        {
+        $roles = $user->getRoles();
+        $role = $roles[0];
+
+
+        switch ($role) {
             case 'Client':
                 return $this->render('user/ClientHome.html.twig');
             case 'Chef':
-                return $this->render('user/ChefHome.html.twig');
+                $id = $securityC->getUser()->getIdU();
+                $user = $entityManager->getReference(User::class, $id);
+                $Recipes = $entityManager->getRepository(Recettes::class)->findBy(['user' => $user]);
+                $articles = $entityManager->getRepository(Article::class)->findAll();
+                $articleBig = array_shift($articles);
+                if (count($articles) > 3) {
+                    $articles = array_slice($articles, 0, 3);
+                }
+                dump($articles);
+                dump($Recipes);
+                return $this->render('user/ChefHome.html.twig', [
+                    'Recipes' => $Recipes,
+                    'articles' => $articles,
+                    'articleBig' => $articleBig,
+                ]);
             case 'Admin':
-                return $this->redirectToRoute('app_user_index'); 
-            
+                return $this->redirectToRoute('app_user_index');
+
             default:
-            return $this->redirectToRoute('app_user_new'); 
-            break;
+                return $this->redirectToRoute('app_user_new');
+                break;
         }
-       
     }
     #[Route('/Welcome', name: 'Welcome')]
     public function Welcome(): Response
