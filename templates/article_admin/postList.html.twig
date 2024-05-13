@@ -74,7 +74,6 @@
 								<td class="hideable-column" data-column-name="image">{{ article.imgArticle | slice(0, 15) ~ '...' }}</td>
 								<td>
 									<div class="btn-group-admin" role="group">
-										<button type="button" class="btn btn-info">Update</button>
 										<form id="deleteForm{{ article.idArticle }}" method="post" action="{{ path('article_delete_admin', {'idArticle': article.idArticle}) }}">
 											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.idArticle) }}">
 											<button type="button" onclick="confirmDelete('{{ article.idArticle }}')" class="btn btn-danger">Delete</button>

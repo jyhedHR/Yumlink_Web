@@ -14,7 +14,6 @@ class ImageAPIType extends AbstractType
     {
         $builder
             ->add('photoD', FileType::class, [
-                'label' => 'Image', // Set label for the file input
                 'mapped' => false, // This field is not mapped to any property of your entity
                 'required' => false, // Not required, since image upload is optional
                 'attr' => [

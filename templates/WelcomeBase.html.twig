@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,26 +27,27 @@
 			<link rel="stylesheet" href={{asset("frontend/assets/css/style.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/responsive.css")}}>
 			<link rel="stylesheet" href={{asset("frontend/assets/css/theme-dark.css")}}>
-			 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+			<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 		{% endblock %}
 		{% block js %}
-		 <!-- Inclure Leaflet.js -->
-   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="frontend/assets/js/jquery.min.js"></script> <!-- Inclure jQuery en premier -->
+			<!-- Inclure Leaflet.js -->
+			<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+			<script src="frontend/assets/js/jquery.min.js"></script>
+			<!-- Inclure jQuery en premier -->
 
-    <!-- Ensuite, inclure les autres scripts -->
-    <script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/appear.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/meanmenu.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/owl.carousel.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/wow.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/jquery-ui.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/ajaxchimp.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/form-validator.min.js")}}></script>
-    <script src={{asset("frontend/assets/js/contact-form-script.js")}}></script>
-    <script src={{asset("frontend/assets/js/custom.js")}}></script>
+			<!-- Ensuite, inclure les autres scripts -->
+			<script src={{asset("frontend/assets/js/bootstrap.bundle.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/magnific-popup.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/odometer.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/appear.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/meanmenu.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/owl.carousel.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/wow.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/jquery-ui.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/ajaxchimp.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/form-validator.min.js")}}></script>
+			<script src={{asset("frontend/assets/js/contact-form-script.js")}}></script>
+			<script src={{asset("frontend/assets/js/custom.js")}}></script>
 		</head>
 	</html>
 </body>{% endblock %}</head><body>{% block header %}
@@ -65,29 +65,29 @@
 						<ul>
 							<li class="title">Follow us :</li>
 							<li>
-								<a href="https://www.facebook.com/" target="_blank">
+								<a href="#" target="_blank">
 									<i class="bx bxl-facebook"></i>
 								</a>
 							</li>
 							<li>
-								<a href="https://www.instagram.com/" target="_blank">
+								<a href="#"  target="_blank">
 									<i class="bx bxl-instagram"></i>
 								</a>
 							</li>
 							<li>
-								<a href="https://twitter.com/" target="_blank">
+								<a href="#"  target="_blank">
 									<i class="bx bxl-twitter"></i>
 								</a>
 							</li>
 							<li>
-								<a href="https://www.youtube.com/" target="_blank">
+								<a href="#"  target="_blank">
 									<i class="bx bxl-youtube"></i>
 								</a>
 							</li>
 						</ul>
 					</div>
 					<div class="header-item">
-						<a  class="cart-top-btn">
+						<a class="cart-top-btn">
 							<i class="bx bx-shopping-bag"></i>
 							<span>0</span>
 						</a>
@@ -124,7 +124,7 @@
 		<div class="container-fluid">
 			<div class="mobile-responsive-menu">
 				<div class="logo">
-					<a href="index.html">
+					<a  href="#">
 						<img src={{asset("assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
 
 
@@ -137,7 +137,7 @@
 	<div class="desktop-nav nav-area">
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md navbar-light ">
-				<a class="navbar-brand" href="index.html">
+				<a class="navbar-brand"  href="#">
 					<img src={{asset("assets/images/YumLink_logo.png")}} class="logo-one" alt="Logo" style="max-width: 100px; height: auto;">
 
 
@@ -151,7 +151,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-						
+
 							<a href="#" class="nav-link">
 								Recette
 								<i class="bx bx-chevron-down"></i>
@@ -184,8 +184,8 @@
 								<li class="nav-item">
 									<a href="{{ path('Welcome') }}" class="nav-link">Checkout</a>
 								</li>
-							
-							
+
+
 							</ul>
 						</li>
 						<li class="nav-item">
@@ -195,13 +195,13 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
+									<a href="{{ path('Welcome') }}" class="nav-link">
 										Les defis
 									</a>
 								</li>
 
 								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
+									<a href="{{ path('Welcome') }}" class="nav-link">
 										les participations
 									</a>
 								</li>
@@ -216,15 +216,11 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="categories.html" class="nav-link">
+									<a href="{{ path('Welcome') }}" class="nav-link">
 										Publications récentes
 									</a>
 								</li>
-								<li class="nav-item">
-									<a href="tags.html" class="nav-link">
-										Tags
-									</a>
-								</li>
+								
 							</ul>
 						</li>
 
@@ -235,12 +231,12 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="nav-item">
-									<a href="{{ path('app_login') }}" class="nav-link">
+									<a href="{{ path('Welcome') }}" class="nav-link">
 										Ajouter
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{ path('app_login') }}" class="nav-link">
+									<a href="{{ path('Welcome') }}" class="nav-link">
 										Modifier
 									</a>
 								</li>
@@ -277,72 +273,677 @@
 			</div>
 		</nav>
 	</div>
-</body></body></div></div>{% endblock %}
-{% block body %}
-<div class="banner-area-three">
-<div class="container-fluid">
-<div class="banner-content-two">
+</body></body></div></div>{% endblock %}{% block body %}<div class="banner-area-three"><div class="container-fluid"><div class="banner-content-two">
 <span class="wow animate__animated animate__fadeInDown" data-wow-delay="50ms" data-wow-duration="1000ms">Savourez l'art de la cuisine où que vous soyez !</span>
 <h1 class="wow animate__animated animate__fadeInUp" data-wow-delay="100ms" data-wow-duration="1000ms">Bienvenue  !</h1>
-<p class="wow animate__animated animate__fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms">Decouvres des nouvelles recettes avec les chefs les plus connues et partager avec nous vos créations  </p>
+<p class="wow animate__animated animate__fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms">Decouvres des nouvelles recettes avec les chefs les plus connues et partager avec nous vos créations
+</p>
 <div class="banner-btn wow animate__animated animate__fadeInUp" data-wow-delay="300ms" data-wow-duration="1000ms">
-<a href="{{ path('app_login') }}" class="default-btn">login</a>
-<a href="{{ path('app_user_new') }}" class="default-btn two">S'inscrire</a>
+	<a href="{{ path('app_login') }}" class="default-btn">login</a>
+	<a href="{{ path('app_user_new') }}" class="default-btn two">S'inscrire</a>
 </div>
 <div class="banner-content-shape">
-<img src="assets/images/shape/shape2.png" alt="Images">
-<img src="assets/images/shape/shape1.png" alt="Images">
-<img src="assets/images/shape/shape7.png" alt="Images">
-</div>
-</div>
-</div>
-</div>
-
-
-<div class="choose-slider-area pt-100">
-<div class="container">
-<div class="section-title text-center">
+	<img src="assets/images/shape/shape2.png" alt="Images">
+	<img src="assets/images/shape/shape1.png" alt="Images">
+	<img src="assets/images/shape/shape7.png" alt="Images">
+</div></div></div></div><div class="choose-slider-area pt-100"><div class="container"><div class="section-title text-center">
 <span>Choose Category</span>
-<h2>Recipe Categories</h2>
-</div>
-<div class="choose-slider owl-carousel owl-theme pt-45">
+<h2>Recipe Categories</h2></div><div class="choose-slider owl-carousel owl-theme pt-45">
 <div class="choose-item">
-<a href="recipe-details.html">
-<img src="assets/images/choose/choose-img1.png" alt="Images">
-</a>
-<h3><a href="recipe-details.html">Appetizers</a></h3>
-</div>
-<div class="choose-item">
-<a href="recipe-details.html">
-<img src="assets/images/choose/choose-img2.png" alt="Images">
-</a>
-<h3><a href="recipe-details.html">Fish</a></h3>
+	<a  href="#">
+		<img src="assets/images/choose/choose-img1.png" alt="Images">
+	</a>
+	<h3>
+		<a  href="#">Appetizers</a>
+	</h3>
 </div>
 <div class="choose-item">
-<a href="recipe-details.html">
-<img src="assets/images/choose/choose-img3.png" alt="Images">
-</a>
-<h3><a href="recipe-details.html">Chicken</a></h3>
+	<a  href="#">
+		<img src="assets/images/choose/choose-img2.png" alt="Images">
+	</a>
+	<h3>
+		<a  href="#">Fish</a>
+	</h3>
 </div>
 <div class="choose-item">
-<a href="recipe-details.html">
-<img src="assets/images/choose/choose-img4.png" alt="Images">
-</a>
-<h3><a href="recipe-details.html">Vegetable</a></h3>
+	<a  href="#">
+		<img src="assets/images/choose/choose-img3.png" alt="Images">
+	</a>
+	<h3>
+		<a  href="#">Chicken</a>
+	</h3>
 </div>
 <div class="choose-item">
-<a href="recipe-details.html">
-<img src="assets/images/choose/choose-img1.png" alt="Images">
-</a>
-<h3><a href="recipe-details.html">Appetizers</a></h3>
+	<a  href="#">
+		<img src="assets/images/choose/choose-img4.png" alt="Images">
+	</a>
+	<h3>
+		<a  href="#">Vegetable</a>
+	</h3>
 </div>
+<div class="choose-item">
+	<a  href="#">
+		<img src="assets/images/choose/choose-img1.png" alt="Images">
+	</a>
+	<h3>
+		<a  href="#">Appetizers</a>
+	</h3>
+</div></div></div></div><div class="recipe-area pb-70"><div class="container"><div class="section-title text-center">
+<span>Special Recipe</span>
+<h2>Our Most Popular Recipe</h2></div><div class="row pt-45">
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a href="shop-details.html">
+				<img src="assets/images/recipe-img/recipe-img1.jpg" alt="Images">
+			</a>
+			<div class="tag">
+				<a  href="#">Sale</a>
+			</div>
+		</div>
+		<h3>
+			<a  href="#">Spicy Backed Pasta</a>
+		</h3>
+		
+	</div>
 </div>
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img2.jpg" alt="Images">
+			</a>
+		</div>
+		<h3>
+			<a  href="#">Delicious Spicy Thai Crab</a>
+		</h3>
+		
+	</div>
 </div>
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img3.jpg" alt="Images">
+			</a>
+		</div>
+		<h3>
+			<a  href="#">Avocado Toast with Spanish</a>
+		</h3>
+		
+	</div>
 </div>
-{% endblock %}
-
-
-{% block footer %}<footer class="footer-area footer-area-bg"><div class="container"><div class="footer-top pt-100 pb-70">
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img4.jpg" alt="Images">
+			</a>
+			<div class="tag">
+				<a  href="#">Sale</a>
+			</div>
+		</div>
+		<h3>
+			<a  href="#">Beef Kabab with Vegetable</a>
+		</h3>
+		
+	</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img5.jpg" alt="Images">
+			</a>
+			<div class="tag">
+				<a  href="#">Sale</a>
+			</div>
+		</div>
+		<h3>
+			<a  href="#">Backed Egg with Simon</a>
+		</h3>
+		
+	</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img6.jpg" alt="Images">
+			</a>
+		</div>
+		<h3>
+			<a  href="#">Beef Spicy Tandori Masala
+			</a>
+		</h3>
+		
+	</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img7.jpg" alt="Images">
+			</a>
+		</div>
+		<h3>
+			<a  href="#">Tomato with Potato Laurel</a>
+		</h3>
+		
+	</div>
+</div>
+<div class="col-lg-3 col-sm-6">
+	<div class="recipe-card">
+		<div class="recipe-img">
+			<a  href="#">
+				<img src="assets/images/recipe-img/recipe-img8.jpg" alt="Images">
+			</a>
+			<div class="tag">
+				<a  href="#">Sale</a>
+			</div>
+		</div>
+		<h3>
+			<a  href="#">Vegetable Egg Sandwich</a>
+		</h3>
+		
+	</div>
+</div></div></div></div><div class="recent-recipe-area ptb-100"><div class="container"><div class="section-title">
+<span>Recent Recipe</span>
+<h2>Our Latest Recipe</h2></div></div><div class="container-fluid m-0 p-0"><div class="recipe-slider owl-carousel owl-theme pt-45">
+<div class="recent-recipe-item">
+	<a  href="#">
+		<img src="assets/images/recipe-img/recipe-another-img1.jpg" alt="Images">
+	</a>
+	<div class="content">
+		<h3>
+			<a  href="#">Tart Pecan Pie</a>
+		</h3>
+		<div class="rating">
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+		</p>
+		<ul>
+			<li>
+				<img src="assets/images/recipe-img/recipe-user1.jpg" alt="Images">
+			</li>
+			<li>
+				<a href="author.html">By Andres</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="recent-recipe-item">
+	<a  href="#">
+		<img src="assets/images/recipe-img/recipe-another-img2.jpg" alt="Images">
+	</a>
+	<div class="content">
+		<h3>
+			<a  href="#">Delicious Steek Tohma</a>
+		</h3>
+		<div class="rating">
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+		</p>
+		<ul>
+			<li>
+				<img src="assets/images/recipe-img/recipe-user2.jpg" alt="Images">
+			</li>
+			<li>
+				<a href="author.html">By Oliva</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="recent-recipe-item">
+	<a  href="#">
+		<img src="assets/images/recipe-img/recipe-another-img3.jpg" alt="Images">
+	</a>
+	<div class="content">
+		<h3>
+			<a  href="#">Spanish Dishes</a>
+		</h3>
+		<div class="rating">
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+		</p>
+		<ul>
+			<li>
+				<img src="assets/images/recipe-img/recipe-user3.jpg" alt="Images">
+			</li>
+			<li>
+				<a href="author.html">By Willam</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="recent-recipe-item">
+	<a  href="#">
+		<img src="assets/images/recipe-img/recipe-another-img4.jpg" alt="Images">
+	</a>
+	<div class="content">
+		<h3>
+			<a  href="#">Delicious Beef Stack</a>
+		</h3>
+		<div class="rating">
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+		</p>
+		<ul>
+			<li>
+				<img src="assets/images/recipe-img/recipe-user4.jpg" alt="Images">
+			</li>
+			<li>
+				<a href="author.html">By Henrry</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="recent-recipe-item">
+	<a  href="#">
+		<img src="assets/images/recipe-img/recipe-another-img5.jpg" alt="Images">
+	</a>
+	<div class="content">
+		<h3>
+			<a  href="#">Backed Egg with Simon</a>
+		</h3>
+		<div class="rating">
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+			<i class="bx bxs-star"></i>
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+		</p>
+		<ul>
+			<li>
+				<img src="assets/images/recipe-img/recipe-user5.jpg" alt="Images">
+			</li>
+			<li>
+				<a href="author.html">By Emma</a>
+			</li>
+		</ul>
+	</div>
+</div></div></div></div><div class="video-area pb-100"><div class="container"><div class="video-btn-ara">
+<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play video-btn">
+	<i class="bx bx-play"></i>
+</a></div></div></div><div class="blog-area-two blog-bg pt-100 pb-70"><div class="container"><div class="section-title text-center">
+<span>Latest News</span>
+<h2>Latest Recipe From Blog</h2></div><div class="row pt-45 justify-content-center">
+<div class="col-lg-4 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a  href="#">
+				<img src="assets/images/blog/blog-img2.jpg" alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a  href="#">
+					22 April, 2021
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a  href="#">7 Healthy & Simp,gluten free Cookie, Cake Recipes</a>
+			</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore</p>
+			<a  href="#" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-4 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a  href="#">
+				<img src="assets/images/blog/blog-img4.jpg" alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a  href="#">
+					23 April, 2021
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a  href="#">5 Tips For Making Delicious Food For all
+				</a>
+			</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore</p>
+			<a  href="#" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-4 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a  href="#">
+				<img src="assets/images/blog/blog-img5.jpg" alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a  href="#">
+					24 April, 2021
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a  href="#">Top 15 Vegan Easy Recipe to Get More Details
+				</a>
+			</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore</p>
+			<a  href="#" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-4 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a  href="#">
+				<img src="assets/images/blog/blog-img6.jpg" alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a  href="#">
+					25 April, 2021
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a  href="#">Restaurants cafe Popular Recipe from Our Site
+				</a>
+			</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore</p>
+			<a  href="#" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-4 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a  href="#">
+				<img src="assets/images/blog/blog-img7.jpg" alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a  href="#">
+					26 April, 2021
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a  href="#">Restaurants cafe Popular Recipe from Our Site
+				</a>
+			</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore</p>
+			<a  href="#" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div>
+<div class="col-lg-4 col-md-6">
+	<div class="blog-item">
+		<div class="blog-img">
+			<a  href="#">
+				<img src="assets/images/blog/blog-img8.jpg" alt="Blog Images">
+			</a>
+			<div class="tag">
+				<a  href="#">
+					27 April, 2021
+				</a>
+			</div>
+		</div>
+		<div class="content">
+			<h3>
+				<a  href="#">Top 8 Ways for Living Healthy Life Important</a>
+			</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore</p>
+			<a  href="#" class="read-btn">Read More</a>
+		</div>
+	</div>
+</div></div></div></div><div class="gallery-area ptb-100"><div class="container"><div class="gallery-slider owl-carousel owl-theme gallery-view">
+<div class="gallery-img">
+	<img src="assets/images/gallery/gallery-img1.jpg" alt="Image">
+	<a href="assets/images/gallery/gallery-img1.jpg" class="gallery-icon">
+		<i class="bx bxl-instagram-alt"></i>
+	</a>
+</div>
+<div class="gallery-img">
+	<img src="assets/images/gallery/gallery-img2.jpg" alt="Image">
+	<a href="assets/images/gallery/gallery-img2.jpg" class="gallery-icon">
+		<i class="bx bxl-instagram-alt"></i>
+	</a>
+</div>
+<div class="gallery-img">
+	<img src="assets/images/gallery/gallery-img3.jpg" alt="Image">
+	<a href="assets/images/gallery/gallery-img3.jpg" class="gallery-icon">
+		<i class="bx bxl-instagram-alt"></i>
+	</a>
+</div>
+<div class="gallery-img">
+	<img src="assets/images/gallery/gallery-img4.jpg" alt="Image">
+	<a href="assets/images/gallery/gallery-img4.jpg" class="gallery-icon">
+		<i class="bx bxl-instagram-alt"></i>
+	</a>
+</div>
+<div class="gallery-img">
+	<img src="assets/images/gallery/gallery-img5.jpg" alt="Image">
+	<a href="assets/images/gallery/gallery-img5.jpg" class="gallery-icon">
+		<i class="bx bxl-instagram-alt"></i>
+	</a>
+</div>
+<div class="gallery-img">
+	<img src="assets/images/gallery/gallery-img6.jpg" alt="Image">
+	<a href="assets/images/gallery/gallery-img6.jpg" class="gallery-icon">
+		<i class="bx bxl-instagram-alt"></i>
+	</a>
+</div></div></div></div><div class="recipe-video-area pt-100 pb-70"><div class="container"><div class="section-title text-center">
+<span>
+	Recipe Video</span>
+<h2>
+	Most Popular Recipe Video</h2></div><div class="row pt-45">
+<div class="col-lg-6">
+	<div class="recipe-video-card">
+		<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+			<img src="assets/images/recipe-img/recipe-style1.jpg" alt="Images">
+		</a>
+		<div class="content">
+			<h3>
+				<a  href="#">Vegetable with Tomato Salad</a>
+			</h3>
+			<ul>
+				<li>
+					<i class="bx bx-time-five"></i>
+					60 Minutes</li>
+				<li>
+					<i class="bx bx-check"></i>
+					3 Steps</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="col-lg-6">
+	<div class="row">
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img1.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Vegetable Sauce</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							60 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							3 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img3.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Egg Pouch</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							5 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							2 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img2.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Chocolate Chip</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							40 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							4 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img4.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Beef Stack</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							50 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							3 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img5.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Vegetable Salad</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							70 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							5 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img6.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Vegetable Sauce</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							40 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							3 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img7.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Vegan Food</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							60 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							2 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6">
+			<div class="recipe-video-list">
+				<a href="https://www.youtube.com/watch?v=yz0r0huhKeI" class="btn-play">
+					<img src="assets/images/recipe-img/recipe-side-img8.jpg" alt="Images">
+				</a>
+				<div class="content">
+					<h3>
+						<a  href="#">Strawberry Juice</a>
+					</h3>
+					<ul>
+						<li>
+							<i class="bx bx-time-five"></i>
+							60 Minutes</li>
+						<li>
+							<i class="bx bx-check"></i>
+							2 Steps</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div></div>{% endblock %}{% block footer %}<footer class="footer-area footer-area-bg"><div class="container"><div class="footer-top pt-100 pb-70">
 <div class="row">
 	<div class="col-lg-3 col-sm-6">
 		<div class="footer-widget">
@@ -351,7 +952,7 @@
 					<img src={{asset("assets/images/YumLink_logo.png")}} alt="Images">
 				</a>
 			</div>
-			
+
 			<ul class="social-link">
 				<li>
 					<a href="https://www.facebook.com/" target="_blank">
@@ -381,7 +982,7 @@
 			<h3>Useful Links</h3>
 			<ul class="footer-list">
 				<li>
-					<a href="index.html" target="_blank">
+					<a  href="#" target="_blank">
 						Home
 					</a>
 				</li>
@@ -417,13 +1018,13 @@
 					<span>
 						<a href="tel:+50711106">+50711106</a><br>
 						<a href="tel:+26956338">+26956338</a><br>
-                        <a href="tel:+93588870">+93588870</a><br>
+						<a href="tel:+93588870">+93588870</a><br>
 					</span>
 				</li>
 				<li>
 					Email:
 					<span>
-                    
+
 						<a href="">yumlink2@gmail.com</a><br>
 					</span>
 				</li>
@@ -442,14 +1043,14 @@
 			<h3>Newsletter</h3>
 			<p>Hello</p>
 			<!--<div class="newsletter-area">
-				<form class="newsletter-form" data-toggle="validator" method="POST">
-					<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
-					<button class="subscribe-btn" type="submit">
-						Send
-					</button>
-					<div id="validator-newsletter" class="form-result"></div>
-				</form>
-			</div>-->
+							<form class="newsletter-form" data-toggle="validator" method="POST">
+								<input type="email" class="form-control" placeholder="Enter Your Email" name="EMAIL" required autocomplete="off">
+								<button class="subscribe-btn" type="submit">
+									Send
+								</button>
+								<div id="validator-newsletter" class="form-result"></div>
+							</form>
+						</div>-->
 		</div>
 	</div>
 </div></div></div><div class="copyright-area"><div class="container">

@@ -1,0 +1,235 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block title %}Product index
+{% endblock %}
+
+{% block body %}
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				<div class="page-header">
+					<div class="row">
+						<div class="col-md-12 col-sm-12">
+							<div class="title">
+								<h4>Home</h4>
+							</div>
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item">
+										<a href="index.html">Home</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page">
+										Home
+									</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+					<div class="row">
+						<div class="header-left">
+							<div class="header-search">
+								<form action="{{ path('app_oeuvre_index_ss') }}" method="get">
+									<div class="form-group mb-0">
+										<i class="dw dw-search2 search-icon"></i>
+										<input type="text" class="form-control search-input" name="q" value="{{ searchTerm ?? '' }}" placeholder="Search Here"/>
+										<input type="submit" style="display: none;">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div style="display: flex; gap: 20px;">
+					<div class="bg-white pd-20 card-box mb-30" style="flex: 1;">
+						<h4>
+							<strong>Recipes Per Category</strong>
+						</h4>
+						<p>This chart displays the distribution of recipes across different categories.</p>
+						<canvas id="recipesPerCategoryChart" width="400" height="300"></canvas>
+					</div>
+					<div class="bg-white pd-20 card-box mb-30" style="flex: 1;">
+						<h4>
+							<strong>Activity Line Chart</strong>
+						</h4>
+						<p>This chart shows the number of recipes added each month over time.</p>
+						<canvas id="activityChart" width="800" height="400"></canvas>
+					</div>
+				</div>
+
+				<div style="display: flex; gap: 20px;">
+					<div class="bg-white pd-20 card-box mb-30" style="flex: 1;">
+						<h4>
+							<strong>Most Popular Chef</strong>
+						</h4>
+						<p>This chart highlights the chef with the most recipes contributed.</p>
+						<canvas id="popularChefsChart" width="400" height="300"></canvas>
+					</div>
+					<div
+						id="piechart" style="flex: 1; width: 100%; height: 500px;"><!-- Pie chart content goes here -->
+					</div>
+
+
+					
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () { // Recipes Per Category Chart
+var ctx1 = document.getElementById('recipesPerCategoryChart').getContext('2d');
+var recipesPerCategoryData = {
+labels: {{ labelsPerCategory|raw }},
+datasets: [
+{
+data: {{ dataPerCategory|raw }},
+backgroundColor: [
+'rgba(255, 99, 132, 0.5)',
+'rgba(54, 162, 235, 0.5)',
+'rgba(255, 206, 86, 0.5)',
+'rgba(75, 192, 192, 0.5)',
+'rgba(153, 102, 255, 0.5)',
+'rgba(255, 159, 64, 0.5)'
+],
+borderWidth: 1
+}
+]
+};
+var recipesPerCategoryChart = new Chart(ctx1, {
+type: 'doughnut',
+data: recipesPerCategoryData,
+options: {
+cutoutPercentage: 60,
+responsive: false
+}
+});
+
+// Activity Line Chart
+var ctx2 = document.getElementById('activityChart').getContext('2d');
+var activityData = {
+labels: {{ monthsActivity|raw }},
+datasets: [
+{
+label: 'Number of Recipes Added',
+data: {{ recipeCountsActivity|raw }},
+fill: true,
+borderColor: 'rgb(75, 192, 192)',
+tension: 0.1
+}
+]
+};
+var activityChart = new Chart(ctx2, {
+type: 'line',
+data: activityData,
+options: {
+scales: {
+y: {
+
+beginAtZero: true
+}
+
+},
+
+responsive: false
+
+}
+});
+
+// Most Popular Chef Chart
+var ctx3 = document.getElementById('popularChefsChart').getContext('2d');
+var popularChefsData = {
+labels: {{ labelsPopularChefs|raw }},
+datasets: [
+{
+data: {{ dataPopularChefs|raw }},
+backgroundColor: [
+'rgba(255, 99, 132, 0.5)',
+'rgba(54, 162, 235, 0.5)',
+'rgba(255, 206, 86, 0.5)',
+'rgba(75, 192, 192, 0.5)',
+'rgba(153, 102, 255, 0.5)',
+],
+borderWidth: 1
+}
+]
+};
+var popularChefsChart = new Chart(ctx3, {
+type: 'pie',
+data: popularChefsData,
+options: {
+responsive: false
+}
+});
+});
+	</script>
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages': ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+var data = new google.visualization.DataTable();
+data.addColumn('string', 'Role');
+data.addColumn('number', 'Percentage');
+data.addRows([{% for role, percentage in rolePercentages %}
+[
+'{{ role }}', {{ percentage }}
+],{% endfor %}]);
+
+var options = {
+title: 'User Roles Distribution',
+is3D: true
+};
+
+var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+chart.draw(data, options);
+}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<!-- Ajouter un canevas pour le graphique -->
+	<canvas id="commandeChart" width="400" height="200"></canvas>
+
+	<!-- Script JavaScript pour initialiser le graphique -->
+	<script>
+		// Récupérer le contexte du canevas
+var ctx = document.getElementById('commandeChart').getContext('2d');
+
+// Initialiser le graphique avec Chart.js
+var chart = new Chart(ctx, {
+type: 'bar', // Choisissez le type de graphique (bar, line, pie, etc.)
+data: {
+labels: [
+'Total des commandes', 'Montant total'
+],
+datasets: [
+{
+label: 'Statistiques',
+data: [
+{{ stats.total_commandes }}, {{ stats.montant_total * 10 }}
+],
+backgroundColor: [
+'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)',
+],
+borderColor: [
+'rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)',
+],
+borderWidth: 1
+}
+]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
+	</script>
+</body></div></div></div></html>{% endblock %}

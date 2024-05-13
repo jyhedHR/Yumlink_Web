@@ -128,7 +128,7 @@
 				<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item">
-							<a href="#" class="nav-link active">
+							<a href="{{path('ChefHome')}}" class="nav-link active">
 								Home
 
 							</a>
@@ -157,7 +157,7 @@
 								<li class="nav-item">
 									<a href="{{ path('analyse_api') }}" class="nav-link">
 										Analyser Plat
-									</a> 	
+									</a>
 								</li>
 							</ul>
 						</li>
@@ -231,11 +231,7 @@
 											Publications récentes
 										</a>
 									</li>
-									<li class="nav-item">
-										<a href="tags.html" class="nav-link">
-											Tags
-										</a>
-									</li>
+								
 								</ul>
 							{% endif %}
 						</li>
@@ -296,7 +292,7 @@
 </div>
 <p>
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-																					aliqua quis ipsum suspendisse.
+																						aliqua quis ipsum suspendisse.
 </p>
 <ul class="social-link">
 	<li>
@@ -377,9 +373,9 @@
 	<p>Any reclamation ?</p>
 	{% for message in app.flashes('success') %}
 		<div style="color: green;
-																							                                    border: 2px green solid;
-																							                                    text-align: center;
-																							                                    padding: 5px;margin-bottom: 10px;">
+																											                                    border: 2px green solid;
+																											                                    text-align: center;
+																											                                    padding: 5px;margin-bottom: 10px;">
 			{{ message }}
 		</div>
 	{% endfor %}

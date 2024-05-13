@@ -67,10 +67,10 @@ class ParticipantControllerUserController extends AbstractController
     public function delete(Request $request, Participant $participant, EntityManagerInterface $entityManager, SecurityController $session): Response
     {
         $user = $session->getUser();
-        $userId = $user->getIdU();
+        $userId = $user->getIdU();  
     
         // Check if the user attempting to delete is the creator of the participant
-        if ($participant->getUser()->getIdU() === $userId) {
+        if ($participant->getUser()->getIdU() !== $userId) {
             $this->addFlash('error','Vous ne pouvez pas supprimer votre propre participation');
             return $this->redirectToRoute('app_participant_controller_user_index');
         }elseif ($this->isCsrfTokenValid('delete'.$participant->getIdpart(), $request->request->get('_token'))) {

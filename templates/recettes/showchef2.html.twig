@@ -51,6 +51,11 @@
                     <p>
                         {{ recette.description }}
                     </p>
+                    <button class="default-btn" onclick="window.location.href='{{ path('app_recettes_edit', {'idR': recette.idR}) }}'">Edit</button>
+<form action="{{ path('app_recettes_delete', {'idR': recette.idR}) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button class="default-btn" >Delete</button>
+    </form>
                     <div class="recipe-details-video">
                         <h3>Watch Video</h3>
                         <div class="video-btn-ara">

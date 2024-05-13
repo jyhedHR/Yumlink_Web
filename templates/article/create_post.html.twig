@@ -1,4 +1,4 @@
-{% extends 'chefbase.html.twig' %}
+{% extends app.user.role == 'Chef' ? 'chefbase.html.twig' : 'base.html.twig' %}
 
 {% block title %}Yumlink: Blog
 {% endblock %}

@@ -2,8 +2,8 @@
     <div class="container">
         <div class="appointment-form">
             <div>
-                {{ form_start(form) }}
-                
+                    {{ form_start(form , {'attr': {'novalidate':'novalidate', 'autocomplete': 'off'}}) }}
+                 
                 <div class="form-grid">
                     <div class="form-field">
                         <label for="{{ form.age.vars.id }}" class="form-label">Age:</label>

@@ -1,7 +1,116 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-   <h3>bienvenue cher client</h3>
-      <a href="{{ path('app_user_edit', {'idu': app.user.getIdu()}) }}">Edit Profile</a>
-   
-{% endblock %}
+	<div class="inner-banner inner-bg6">
+		<div class="container-fluid">
+			<div class="banner-content-two">
+				<span class="wow animate__animated animate__fadeInDown" data-wow-delay="50ms" data-wow-duration="1000ms">Savourez l'art de la cuisine où que vous soyez !</span>
+				<h1 class="wow animate__animated animate__fadeInUp" data-wow-delay="100ms" data-wow-duration="1000ms">Bienvenue cher client!</h1>
+				<p class="wow animate__animated animate__fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms">Decouvres des nouvelles recettes avec les chefs les plus connues et partager avec nous vos créations
+				</p>
+				<div class="banner-btn wow animate__animated animate__fadeInUp" data-wow-delay="300ms" data-wow-duration="1000ms">
+					<a href="{{ path('app_defis_controller_user_index') }}" class="default-btn">Participer a un defi 
+					</a>
+
+				</div>
+				<div class="banner-content-shape">
+					<img src="assets/images/shape/shape2.png" alt="Images">
+					<img src="assets/images/shape/shape1.png" alt="Images">
+					<img src="assets/images/shape/shape7.png" alt="Images">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="choose-slider-area pt-100">
+		<div class="container">
+			<div class="section-title text-center">
+
+				<h2>Nos recettes</h2>
+				<div class="row pt-45">
+					 {% for recette in recettes %}
+
+						<div class="col-lg-3 col-sm-6">
+							<div class="recipe-card">
+								<div class="recipe-img">
+									   <a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">
+                             <img src="{{ recette.imgsrc }}" alt="Images">
+                          </a>
+                    
+
+								</div>
+
+								<h3>
+									<a href="{{ path('app_recettes_show', {'idR': recette.idR}) }}">{{ recette.nom }}</a>
+								</h3>
+
+
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="blog-area pt-100 pb-70">
+		<div class="container">
+			<div class="section-title text-center">
+				<span>Latest News</span>
+				<h2>Latest Recipe From Blog</h2>
+			</div>
+			<div class="row pt-45">
+				<div class="col-lg-6">
+					<div class="blog-card">
+						<div class="blog-img">
+							<a href="{{ path('app_article_show', {'idArticle': articleBig.idArticle}) }}">
+											<img src={{ asset(articleBig.imgArticle) }} alt="Blog Images">
+										</a>  
+							<div class="tag">
+								<a href="blog-details.html">
+									{{ articleBig.datePublished ? articleBig.datePublished|date('Y-m-d H:i:s') : '' }}
+								</a>
+							</div>
+						</div>
+						<div class="content">
+							<h3>
+							<a href="{{ path('app_article_show', {'idArticle': articleBig.idArticle}) }}">{{ articleBig.titleArticle }}</a>
+							</h3>
+							<p>{{ articleBig.descriptionArticle | slice(0, 100) ~ '...' }}</p>
+							<a href="{{ path('app_article_show', {'idArticle': articleBig.idArticle}) }}" class="read-btn">Read More</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="row">
+						{% for article in articles %}
+
+							<div class="col-lg-12">
+								<div class="blog-side-content">
+									<div class="blog-side-img">
+										<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">
+											<img src={{ asset(article.imgArticle) }} alt="Blog Images">
+										</a>
+									</div>
+									<div class="content">
+										<span>
+											<i class="flaticon-calendar-1"></i>
+											{{ article.datePublished ? article.datePublished|date('Y-m-d H:i:s') : '' }}
+										</span>
+										<h3>
+											<a href="{{ path('app_article_show', {'idArticle': article.idArticle}) }}">{{ article.titleArticle }}</a>
+										</h3>
+										<p>{{ article.descriptionArticle | slice(0, 100) ~ '...' }}</p>
+
+									</div>
+								</div>
+							</div>
+
+  {% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	{% endblock %}
